@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
++ Adjusted active tags display to better highlight excluded tags
 + Updated dependencies
 
 ## [1.3.0] - 2018-08-30

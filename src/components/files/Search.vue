@@ -41,6 +41,9 @@
         :style="{ backgroundColor: tag.color }"
         v-for="tag in activeTags"
         :key="tag.name">
+        <span class="icon" v-if="tag.exclude">
+          <font-awesome-icon icon="eye-slash" />
+        </span>
         <span>{{ tag.name }}</span>
         <button
           type="button"
@@ -229,8 +232,20 @@ export default {
 
         for (const tag of tags) {
           this.activeTags.push({
-            name: tag,
-            color: tagFormatter.getColor(tag, this.colors)
+            name: tag.startsWith('-')
+              ? tag.replace('-', '')
+              : tag.startsWith('\\-')
+                ? tag.replace('\\-', '-')
+                : tag,
+            exclude: tag.startsWith('-'),
+            color: tagFormatter.getColor(
+              tag.startsWith('-')
+                ? tag.replace('-', '')
+                : tag.startsWith('\\-')
+                  ? tag.replace('\\-', '')
+                  : tag,
+              this.colors
+            )
           })
         }
       }
@@ -242,7 +257,13 @@ export default {
         }
       }
 
-      this.tags = this.activeTags.map(tag => tag.name).join(' ')
+      this.tags = this.activeTags.map(
+        tag => tag.exclude
+          ? `-${tag.name}`
+          : tag.name.startsWith('-')
+            ? tag.name.replace('-', '\\-')
+            : tag.name
+      ).join(' ')
 
       this.handleSubmit()
     },
