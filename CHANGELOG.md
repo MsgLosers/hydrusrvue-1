@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 + Unified `meta` tags casing
 + Updated dependencies
 
+### Fixed
+
++ Fixed `restrictImageSize` flag getting set to `null` if there is no value yet
+
 ## [1.4.0] - 2018-09-17
 
 ### Changed
