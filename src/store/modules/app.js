@@ -32,7 +32,7 @@ export default {
         'settings/save',
         {
           restrictImageSize: (
-            JSON.parse(localStorage.getItem('restrictImageSize'))
+            JSON.parse(localStorage.getItem('restrictImageSize')) || false
           ),
           colors: JSON.parse(localStorage.getItem('colors')) || [],
           filesSorting: JSON.parse(localStorage.getItem('filesSorting')) ||
