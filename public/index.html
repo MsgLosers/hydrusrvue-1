@@ -3,8 +3,8 @@
   <head>
     <% if (BASE_URL === './') { %><base href="app://./"><% } %>
     <% if (VUE_APP_NODE_MODULES_PATH !== 'false') { %><script>require('module').globalPaths.push('<%= VUE_APP_NODE_MODULES_PATH %>')</script><% } %>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="<%= VUE_APP_DESCRIPTION %>">
     <meta name="robots" content="<%= VUE_APP_ROBOTS %>">
