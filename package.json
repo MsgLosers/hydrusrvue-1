@@ -1,6 +1,6 @@
 {
   "name": "hydrusrvue",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "A Vue-based frontend for hydrusrv",
   "keywords": [
     "hydrusrv",
@@ -26,24 +26,24 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --modern",
-    "serve:electron": "cross-env BUILD_FOR_ELECTRON=true vue-cli-service serve:electron",
-    "build:electron": "cross-env BUILD_FOR_ELECTRON=true vue-cli-service build:electron",
+    "electron:serve": "cross-env BUILD_FOR_ELECTRON=true vue-cli-service electron:serve",
+    "electron:build": "cross-env BUILD_FOR_ELECTRON=true vue-cli-service electron:build",
     "lint": "vue-cli-service lint",
     "test": "yarn build",
     "postinstall": "electron-builder install-app-deps"
   },
-  "main": "dist_electron/bundled/background.js",
+  "main": "background.js",
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.4",
-    "@fortawesome/free-solid-svg-icons": "^5.3.1",
+    "@fortawesome/fontawesome-svg-core": "^1.2.6",
+    "@fortawesome/free-solid-svg-icons": "^5.4.1",
     "@fortawesome/vue-fontawesome": "^0.1.1",
     "axios": "^0.18.0",
-    "bulma": "^0.7.1",
+    "bulma": "^0.7.2",
     "bulma-extensions": "^3.0.0",
     "electron-cookies": "heap/electron-cookies",
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.11",
-    "plyr": "^3.4.4",
+    "plyr": "^3.4.5",
     "qs": "^6.5.2",
     "v-hotkey": "^0.2.3",
     "vue": "^2.5.17",
@@ -57,18 +57,18 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.4",
-    "@vue/cli-plugin-eslint": "^3.0.4",
-    "@vue/cli-service": "^3.0.4",
-    "@vue/eslint-config-standard": "^3.0.4",
+    "@vue/cli-plugin-babel": "^3.0.5",
+    "@vue/cli-plugin-eslint": "^3.0.5",
+    "@vue/cli-service": "^3.0.5",
+    "@vue/eslint-config-standard": "^3.0.5",
     "cross-env": "^5.2.0",
-    "electron": "^2.0.10",
-    "node-sass": "^4.9.3",
-    "postcss-preset-env": "^6.0.7",
+    "electron": "^3.0.5",
+    "node-sass": "^4.9.4",
+    "postcss-preset-env": "^6.2.0",
     "sass-loader": "^7.1.0",
     "stylelint": "^9.6.0",
     "stylelint-config-sass-guidelines": "^5.2.0",
-    "vue-cli-plugin-electron-builder": "^1.0.0-rc.3",
+    "vue-cli-plugin-electron-builder": "^1.0.0-rc.4",
     "vue-template-compiler": "^2.5.17"
   }
 }
