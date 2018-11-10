@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
++ Fixed application breaking on missing unnamespaced tag default color
+
 ## [1.9.0] - 2018-11-10
 
 ### Added
