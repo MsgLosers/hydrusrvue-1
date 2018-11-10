@@ -24,11 +24,9 @@
           v-for="(file, index) in files"
           :key="index">
           <div class="file-preview">
-            <div
-              class="file-preview-image"
-              :style="{
-                backgroundImage: `url(${file.thumbnailUrl + mediaToken})`
-              }"></div>
+            <div class="file-preview-image">
+              <img :src="file.thumbnailUrl + mediaToken">
+            </div>
             <router-link :to="`/files/${file.id}`" class="file-preview-link">
               View file
             </router-link>
