@@ -1,5 +1,8 @@
 const generateNamespaceColors = environmentVariable => {
-  const colors = []
+  const colors = [{
+    name: 'unnamespaced',
+    color: process.env.VUE_APP_FALLBACK_TAG_COLOR || '#0088fb'
+  }]
 
   for (const color of environmentVariable.split('|')) {
     const splitColor = color.split('#').map(property => property.trim())
@@ -19,7 +22,7 @@ const generateNamespaceColors = environmentVariable => {
 
 export default {
   title: process.env.VUE_APP_TITLE,
-  version: '1.9.0',
+  version: '1.9.1',
   apiUrl: process.env.VUE_APP_API_URL,
   registrationIsEnabled: (process.env.VUE_APP_REGISTRATION_ENABLED === 'true'),
   minPasswordLength: process.env.VUE_APP_MIN_PASSWORD_LENGTH || 16,
@@ -28,5 +31,5 @@ export default {
   defaultNamespaceColors: generateNamespaceColors(
     process.env.VUE_APP_DEFAULT_NAMESPACE_COLORS
   ),
-  fallbackTagColor: process.env.VUE_APP_FALLBACK_TAG_COLOR || '#3498db'
+  fallbackTagColor: process.env.VUE_APP_FALLBACK_TAG_COLOR || '#0088fb'
 }
