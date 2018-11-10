@@ -34,7 +34,9 @@ export default {
           restrictImageSize: (
             JSON.parse(localStorage.getItem('restrictImageSize')) || false
           ),
-          colors: JSON.parse(localStorage.getItem('colors')) || [],
+          colors: JSON.parse(
+            localStorage.getItem('colors')
+          ) || config.defaultNamespaceColors,
           filesSorting: JSON.parse(localStorage.getItem('filesSorting')) ||
             'id',
           filesSortingDirection: JSON.parse(

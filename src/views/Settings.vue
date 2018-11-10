@@ -132,7 +132,11 @@ export default {
 
       this.storeSettings({
         restrictImageSize: this.restrictImageSize,
-        colors: this.colors,
+        colors: config.defaultNamespaceColors.filter(
+          defaultColor => !this.colors.find(
+            color => defaultColor.name === color.name
+          )
+        ).concat(this.colors),
         filesSorting: this.filesSorting,
         filesSortingDirection: this.filesSortingDirection,
         filesSortingNamespaces: this.filesSortingNamespaces,
