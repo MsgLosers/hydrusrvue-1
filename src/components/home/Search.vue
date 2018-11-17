@@ -6,10 +6,11 @@
       <div class="column is-9">
         <div class="field">
           <div class="control">
-            <tags-input
-              :tags.sync="tags"
+            <tag-input
+              :tag.sync="tag"
+              :hasCompletedTag.sync="hasCompletedTag"
               size="is-medium"
-              placeholder="search for files by tags…" />
+              placeholder="search for files by tag…" />
           </div>
         </div>
       </div>
@@ -39,26 +40,34 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import queryFormatter from '@/helpers/query-formatter'
 
-import TagsInput from '@/components/general/TagsInput'
+import TagInput from '@/components/general/TagInput'
 
 export default {
   name: 'Search',
   data: function () {
     return {
-      tags: ''
+      tag: '',
+      hasCompletedTag: false
     }
   },
   methods: {
     handleSubmit: function () {
       this.$router.push({
         path: '/files',
-        query: queryFormatter.generateDefaultFilesQuery(this.tags)
+        query: queryFormatter.generateDefaultFilesQuery(this.tag)
       })
+    }
+  },
+  watch: {
+    hasCompletedTag: function (hasCompletedTag) {
+      if (hasCompletedTag) {
+        this.handleSubmit()
+      }
     }
   },
   components: {
     FontAwesomeIcon,
-    TagsInput
+    TagInput
   }
 }
 </script>

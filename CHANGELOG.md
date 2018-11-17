@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
++ Changed tag handling so spaces are no longer replaced with underscores
++ Overhauled file search forms to improve UX
+
 ## [1.9.1] - 2018-11-11
 
 ### Fixed

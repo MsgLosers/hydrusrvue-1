@@ -249,7 +249,7 @@ export default {
     addNamespace: function () {
       if (this.newNamespace.trim() !== '') {
         this.localSortingNamespaces.push(
-          this.newNamespace.trim().split(' ').join('_')
+          this.newNamespace.trim()
         )
 
         this.newNamespace = ''

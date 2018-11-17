@@ -17,11 +17,5 @@ export default {
     return available
       ? available.color
       : colors.find(color => color.name === 'unnamespaced').color
-  },
-  formatForApp (tag) {
-    return tag.trim().split('_').join('\\ ').split(' ').join('_')
-  },
-  formatForApi (tag) {
-    return tag.trim().split('_').join(' ').split('\\ ').join('_')
   }
 }
