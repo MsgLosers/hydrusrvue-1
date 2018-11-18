@@ -6,9 +6,12 @@
       <div class="column is-5-tablet is-6-desktop">
         <div class="field">
           <div class="control">
-            <tags-input
-              :tags.sync="tags"
-              placeholder="search for files by tags…" />
+            <tag-input
+              ref="tagInput"
+              :tag.sync="tag"
+              :hasCompletedTag.sync="hasCompletedTag"
+              :placeholder="placeholderText"
+              :parentRefs="$refs" />
           </div>
         </div>
       </div>
@@ -36,20 +39,28 @@
     </div>
 
     <div class="file-tags tags" v-if="activeTags.length">
-      <span
+      <a
         class="tag is-medium"
+        href="#"
+        ref="activeTags"
         :style="{ backgroundColor: tag.color }"
-        v-for="tag in activeTags"
-        :key="tag.name">
+        v-for="(tag, index) in activeTags"
+        :key="index"
+        @click.prevent="removeTag(tag.name, true)"
+        @keydown.enter.prevent="removeTag(tag.name, true)"
+        @keydown.delete.prevent="removeTag(tag.name, true)"
+        @keydown.left.prevent="focusActiveTag(index - 1)"
+        @keydown.right.prevent="focusActiveTag(index + 1)"
+        @keydown.tab.prevent="focusActiveTag(activeTags.length - 1)"
+        @keydown.shift.tab.prevent="focusActiveTag(0)"
+        @keydown.esc.prevent="focusTagInput"
+        @keydown.prevent="startTyping">
         <span class="icon" v-if="tag.exclude">
           <font-awesome-icon icon="eye-slash" />
         </span>
         <span>{{ tag.name }}</span>
-        <button
-          type="button"
-          class="delete is-small"
-          @click="removeTag(tag.name)"></button>
-      </span>
+        <span type="button" class="delete is-small"></span>
+      </a>
     </div>
 
   </form>
@@ -65,7 +76,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import queryFormatter from '@/helpers/query-formatter'
 import tagFormatter from '@/helpers/tag-formatter'
 
-import TagsInput from '@/components/general/TagsInput'
+import TagInput from '@/components/general/TagInput'
 import Sorting from '@/components/files/Sorting'
 
 export default {
@@ -86,17 +97,23 @@ export default {
   data: function () {
     return {
       isInitialized: false,
-      tags: '',
+      tag: '',
       sorting: this.$store.state.settings.filesSorting,
       sortingDirection: this.$store.state.settings.filesSortingDirection,
       sortingNamespaces: Object.assign(
         [], this.$store.state.settings.filesSortingNamespaces
       ),
       page: 1,
-      activeTags: []
+      activeTags: [],
+      hasCompletedTag: false
     }
   },
   computed: {
+    placeholderText: function () {
+      return this.activeTags.length
+        ? 'add more tags to your search…'
+        : 'search for files by tag…'
+    },
     ...mapState({
       hasReachedLastPage: state => state.files.hasReachedLastPage,
       colors: state => state.settings.colors
@@ -108,9 +125,7 @@ export default {
         this.page = queryFormatter.ensureValidPage(this.$route.query.page)
 
         if (this.$route.query.tags) {
-          this.tags = this.$route.query.tags.join(' ')
-
-          this.setTags()
+          this.setTags(this.$route.query.tags)
         }
 
         if (
@@ -145,8 +160,6 @@ export default {
           this.loadFiles(false)
         }
 
-        this.blur()
-
         this.finishInitialization()
 
         return
@@ -160,15 +173,15 @@ export default {
       this.finishInitialization()
     },
     handleSubmit: function () {
-      this.blur()
-
       this.page = 1
 
       this.loadFiles(false)
     },
     updateQueryAndGetStrings: function () {
       const query = queryFormatter.generateFilesQuery(
-        this.tags,
+        this.activeTags.map(
+          tag => tag.exclude ? `-${tag.name}` : tag.name
+        ),
         this.sorting,
         this.sortingDirection,
         this.sortingNamespaces,
@@ -177,20 +190,8 @@ export default {
 
       const sanitizedQuery = Object.assign({}, query)
 
-      if (sanitizedQuery.tags) {
-        sanitizedQuery.tags = sanitizedQuery.tags.map(
-          tag => tagFormatter.formatForApi(tag)
-        )
-      }
-
       if (sanitizedQuery.direction && sanitizedQuery.direction === 'default') {
         delete sanitizedQuery.direction
-      }
-
-      if (sanitizedQuery.namespaces) {
-        sanitizedQuery.namespaces = sanitizedQuery.namespaces.map(
-          namespace => tagFormatter.formatForApi(namespace)
-        )
       }
 
       this.$router.replace({
@@ -206,7 +207,17 @@ export default {
       }
     },
     loadFiles: function (fetchNextPage) {
-      this.setTags()
+      this.tag = this.tag.trim().toLowerCase()
+
+      if (this.tag !== '') {
+        this.removeTag(
+          this.tag.startsWith('-') ? this.tag.substr(1) : this.tag
+        )
+
+        this.addTag(this.tag)
+      }
+
+      this.tag = ''
 
       const queryStrings = this.updateQueryAndGetStrings()
 
@@ -220,52 +231,58 @@ export default {
 
       this.fetchFiles(queryStrings.sanitizedQueryString)
     },
-    setTags: function () {
+    addTag: function (tag) {
+      this.activeTags.push({
+        name: tag.startsWith('-')
+          ? tag.replace('-', '')
+          : tag.startsWith('\\-')
+            ? tag.replace('\\-', '-')
+            : tag,
+        exclude: tag.startsWith('-'),
+        color: tagFormatter.getColor(
+          tag.startsWith('-')
+            ? tag.replace('-', '')
+            : tag.startsWith('\\-')
+              ? tag.replace('\\-', '')
+              : tag,
+          this.colors
+        )
+      })
+    },
+    setTags: function (tags) {
       this.activeTags = []
 
-      if (this.tags.length) {
-        const tags = this.tags
-          .split(' ')
+      if (tags.length) {
+        tags = tags
           .map(tag => tag.trim())
           .filter(tag => tag.length)
           .filter((tag, i, tags) => tags.indexOf(tag) === i)
 
         for (const tag of tags) {
-          this.activeTags.push({
-            name: tag.startsWith('-')
-              ? tag.replace('-', '')
-              : tag.startsWith('\\-')
-                ? tag.replace('\\-', '-')
-                : tag,
-            exclude: tag.startsWith('-'),
-            color: tagFormatter.getColor(
-              tag.startsWith('-')
-                ? tag.replace('-', '')
-                : tag.startsWith('\\-')
-                  ? tag.replace('\\-', '')
-                  : tag,
-              this.colors
-            )
-          })
+          this.addTag(tag)
         }
       }
     },
-    removeTag: function (tag) {
+    removeTag: function (tag, submit = false) {
       for (let i = 0; i < this.activeTags.length; i++) {
         if (this.activeTags[i].name === tag) {
           this.activeTags.splice(i, 1)
         }
       }
 
-      this.tags = this.activeTags.map(
-        tag => tag.exclude
-          ? `-${tag.name}`
-          : tag.name.startsWith('-')
-            ? tag.name.replace('-', '\\-')
-            : tag.name
-      ).join(' ')
+      if (submit) {
+        this.handleSubmit()
 
-      this.handleSubmit()
+        this.$nextTick(() => {
+          if (this.activeTags.length) {
+            this.$refs.activeTags[this.$refs.activeTags.length - 1].focus()
+
+            return
+          }
+
+          this.focusTagInput()
+        })
+      }
     },
     finishInitialization: function () {
       /*
@@ -277,9 +294,33 @@ export default {
         this.isInitialized = true
       }, 0)
     },
-    blur: function () {
-      if (document.activeElement !== document.body) {
-        document.activeElement.blur()
+    focusActiveTag: function (index) {
+      this.$nextTick(() => {
+        if (this.activeTags.length) {
+          if (index === -1) {
+            this.$refs.activeTags[this.$refs.activeTags.length - 1].focus()
+
+            return
+          }
+
+          if (index >= this.activeTags.length) {
+            this.$refs.activeTags[0].focus()
+
+            return
+          }
+
+          this.$refs.activeTags[index].focus()
+        }
+      })
+    },
+    focusTagInput: function () {
+      this.$refs.tagInput.$refs.tag.focus()
+    },
+    startTyping: function (event) {
+      if (event.key.match(/^[ -~]$/g)) {
+        this.focusTagInput()
+
+        this.tag = this.tag + event.key.toLowerCase()
       }
     },
     ...mapActions({
@@ -330,6 +371,13 @@ export default {
 
         this.setLastQuery(this.updateQueryAndGetStrings().queryString)
       }
+    },
+    hasCompletedTag: function (hasCompletedTag) {
+      if (hasCompletedTag) {
+        this.hasCompletedTag = false
+
+        this.handleSubmit()
+      }
     }
   },
   mounted: function () {
@@ -337,7 +385,7 @@ export default {
   },
   components: {
     FontAwesomeIcon,
-    TagsInput,
+    TagInput,
     Sorting
   }
 }

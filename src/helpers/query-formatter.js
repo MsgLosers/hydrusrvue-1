@@ -8,11 +8,10 @@ export default {
 
     return validPage > 0 ? validPage : 1
   },
-  generateFilesQuery (tagsString, sort, direction, namespaces, page) {
+  generateFilesQuery (tags, sort, direction, namespaces, page) {
     return {
-      tags: tagsString.length
-        ? tagsString
-          .split(' ')
+      tags: tags.length
+        ? tags
           .map(tag => tag.trim())
           .filter(tag => tag.length)
           .filter((tag, index, tags) => tags.indexOf(tag) === index)
@@ -25,9 +24,9 @@ export default {
       page: page
     }
   },
-  generateDefaultFilesQuery (tags) {
+  generateDefaultFilesQuery (tag) {
     return this.generateFilesQuery(
-      tags || '',
+      tag ? [tag] : [],
       store.state.settings.filesSorting,
       store.state.settings.filesSortingDirection,
       store.state.settings.filesSortingNamespaces,

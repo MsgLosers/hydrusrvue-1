@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.10.0] - 2018-11-18
+
+### Changed
+
++ Changed tag handling so spaces are no longer replaced with underscores
++ Overhauled file search forms to improve UX
++ Updated dependencies
+
 ## [1.9.1] - 2018-11-11
 
 ### Fixed
@@ -108,7 +116,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 + Initial release
 
-[Unreleased]: https://github.com/mserajnik/hydrusrvue/compare/1.9.1...develop
+[Unreleased]: https://github.com/mserajnik/hydrusrvue/compare/1.10.0...develop
+[1.10.0]: https://github.com/mserajnik/hydrusrvue/compare/1.9.1...1.10.0
 [1.9.1]: https://github.com/mserajnik/hydrusrvue/compare/1.9.0...1.9.1
 [1.9.0]: https://github.com/mserajnik/hydrusrvue/compare/1.8.0...1.9.0
 [1.8.0]: https://github.com/mserajnik/hydrusrvue/compare/1.7.0...1.8.0

@@ -5,20 +5,19 @@
       type="text"
       class="input"
       :class="size"
-      ref="tags"
+      ref="tag"
       :placeholder="placeholder"
-      @focus="isTyping = true"
-      @keydown.tab="stopCompleting"
-      @keydown.down.prevent="setFocus(0)"
-      @keyup="updateCursorPosition($event.target.selectionStart)"
-      @click="updateCursorPosition($event.target.selectionStart)"
-      v-model="localTags"
+      @keydown.tab.prevent="focusActiveTags"
+      @keyup="tryCompletion"
+      @click="tryCompletion"
+      @keydown.down.prevent="focusSuggestion(0)"
+      v-model="localTag"
       v-focus>
 
     <div
       class="suggestions dropdown"
-      :class="{ 'is-active': isTyping && !isSearching && suggestions.length }"
-      v-if="isTyping && !isSearching && suggestions.length">
+      :class="{ 'is-active': !isSearching && suggestions.length }"
+      v-if="!isSearching && suggestions.length">
       <div class="dropdown-menu">
         <div class="dropdown-content">
           <a
@@ -28,11 +27,12 @@
             :style="{ color: suggestion.color }"
             v-for="(suggestion, index) in suggestions"
             :key="index"
-            @keydown.up.prevent="setFocus(index - 1)"
-            @keydown.down.prevent="setFocus(index + 1)"
-            @keydown.tab.prevent="setFocus(index)"
+            @keydown.up.prevent="focusSuggestion(index - 1)"
+            @keydown.down.prevent="focusSuggestion(index + 1)"
+            @keydown.tab.prevent="focusSuggestion(index)"
+            @keydown.escape.prevent="focusSuggestion(-1)"
             @click.prevent="completePartialTag(suggestion.name)"
-            @keyup.enter.prevent="completePartialTag(suggestion.name)">
+            @keydown.enter.prevent="completePartialTag(suggestion.name)">
             {{ suggestion.name }}
             <small class="file-amount">{{ suggestion.fileCount }}</small>
             </a>
@@ -53,11 +53,15 @@ import errorHandler from '@/helpers/error-handler'
 import tagFormatter from '@/helpers/tag-formatter'
 
 export default {
-  name: 'TagsInput',
+  name: 'TagInput',
   mixins: [clickaway],
   props: {
-    tags: {
+    tag: {
       type: String,
+      required: true
+    },
+    hasCompletedTag: {
+      type: Boolean,
       required: true
     },
     size: {
@@ -67,24 +71,33 @@ export default {
     placeholder: {
       type: String,
       required: true
+    },
+    parentRefs: {
+      type: Object,
+      required: false
     }
   },
   data: function () {
     return {
-      isTyping: false,
       isSearching: false,
-      cursorPosition: 0,
-      partialTag: {},
       suggestions: []
     }
   },
   computed: {
-    localTags: {
+    localTag: {
       get: function () {
-        return this.tags
+        return this.tag
       },
-      set: function (localTags) {
-        this.$emit('update:tags', localTags)
+      set: function (localTag) {
+        this.$emit('update:tag', localTag)
+      }
+    },
+    localHasCompletedTag: {
+      get: function () {
+        return this.hasCompletedTag
+      },
+      set: function (localHasCompletedTag) {
+        this.$emit('update:hasCompletedTag', localHasCompletedTag)
       }
     },
     ...mapState({
@@ -93,79 +106,30 @@ export default {
     })
   },
   methods: {
-    updateCursorPosition: function (cursorPosition) {
-      this.cursorPosition = cursorPosition
-    },
     tryCompletion: function () {
       this.isSearching = true
 
-      const partialTag = this.extractSingleTag()
-
-      if (partialTag.name === '') {
+      if (['', '-'].includes(this.localTag.trim())) {
         this.isSearching = false
-        this.partialTag = { start: 0, end: 0, name: '' }
         this.suggestions = []
 
         return
       }
 
-      if (partialTag.name === this.partialTag.name) {
-        this.isSearching = false
-
-        return
-      }
-
-      this.partialTag = partialTag
-
-      this.fetchSuggestions()
+      this.fetchSuggestions(
+        this.localTag.startsWith('-') ? this.localTag.substr(1) : this.localTag
+      )
     },
-    extractSingleTag: function () {
-      if (
-        (this.cursorPosition === 0) ||
-        (this.localTags[this.cursorPosition] === ' ') ||
-        (this.localTags[this.cursorPosition - 1] === ' ')
-      ) {
-        return { start: 0, end: 0, name: '' }
-      }
-
-      const tagsStringLength = this.localTags.length
-
-      let start = this.localTags[this.cursorPosition] === ' '
-        ? this.cursorPosition - 1
-        : this.cursorPosition
-      let end = this.cursorPosition
-
-      while (start > 0 && this.localTags[start] !== ' ') {
-        start--
-      }
-
-      while (end < tagsStringLength && this.localTags[end] !== ' ') {
-        end++
-      }
-
-      return {
-        start: this.localTags[start] === ' ' ? start + 1 : start,
-        end: end,
-        name: tagFormatter.formatForApi(this.localTags.substring(start, end))
-      }
-    },
-    fetchSuggestions: function () {
+    fetchSuggestions: function (partialTag) {
       this.suggestions = []
 
       const body = {
-        partialTag: this.partialTag.name
+        partialTag: partialTag.trim().toLowerCase()
       }
 
       api.autocompleteTag(body, this.token)
         .then(res => {
-          res.data = res.data.filter(
-            suggestion => !this.localTags.split(' ').includes(
-              suggestion.name.split(' ').join('_')
-            )
-          )
-
           for (const suggestion of res.data) {
-            suggestion.name = tagFormatter.formatForApp(suggestion.name)
             suggestion.color = tagFormatter.getColor(
               suggestion.name, this.colors
             )
@@ -198,31 +162,34 @@ export default {
       this.isSearching = false
     },
     completePartialTag: function (suggestion) {
-      const localTagsChars = this.localTags.split('')
-
-      localTagsChars.splice(
-        this.partialTag.start,
-        this.partialTag.end - this.partialTag.start,
-        suggestion
-      )
-
-      this.localTags = localTagsChars.join('')
-
-      this.partialTag = { start: 0, end: 0, name: '' }
+      this.localTag = this.localTag.startsWith('-')
+        ? `-${suggestion}`
+        : suggestion
+      this.localHasCompletedTag = true
       this.suggestions = []
 
-      this.$refs.tags.focus()
+      this.$refs.tag.focus()
     },
     stopCompleting: function () {
-      this.isTyping = false
-      this.partialTag = { start: 0, end: 0, name: '' }
       this.suggestions = []
     },
-    setFocus: function (index) {
-      if (this.suggestions.length) {
-        this.$nextTick(() => {
+    focusActiveTags: function () {
+      if (
+        this.parentRefs &&
+        this.parentRefs.activeTags &&
+        this.parentRefs.activeTags.length
+      ) {
+        this.stopCompleting()
+
+        this.parentRefs.activeTags[this.parentRefs.activeTags.length - 1]
+          .focus()
+      }
+    },
+    focusSuggestion: function (index) {
+      this.$nextTick(() => {
+        if (this.suggestions.length) {
           if (index === -1) {
-            this.$refs.tags.focus()
+            this.$refs.tag.focus()
 
             return
           }
@@ -232,13 +199,8 @@ export default {
           }
 
           this.$refs.suggestions[index].focus()
-        })
-      }
-    }
-  },
-  watch: {
-    cursorPosition: function () {
-      this.debouncedCompletion()
+        }
+      })
     }
   },
   created: function () {

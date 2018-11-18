@@ -48,7 +48,6 @@ import qs from 'qs'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import queryFormatter from '@/helpers/query-formatter'
-import tagFormatter from '@/helpers/tag-formatter'
 
 import Sorting from '@/components/tags/Sorting'
 
@@ -86,7 +85,7 @@ export default {
     initialize: function () {
       if (!isEmpty(this.$route.query)) {
         if (this.$route.query.contains) {
-          this.contains = this.$route.query.contains.trim().split(' ').join('_')
+          this.contains = this.$route.query.contains.trim().toLowerCase()
         }
 
         this.page = queryFormatter.ensureValidPage(this.$route.query.page)
@@ -115,8 +114,6 @@ export default {
           this.loadTags(false)
         }
 
-        this.blur()
-
         this.finishInitialization()
 
         return
@@ -130,16 +127,12 @@ export default {
       this.finishInitialization()
     },
     handleSubmit: function () {
-      if (document.activeElement !== document.body) {
-        document.activeElement.blur()
-      }
-
       this.page = 1
 
       this.loadTags(false)
     },
     updateQueryAndGetStrings: function () {
-      this.contains = this.contains.trim().split(' ').join('_')
+      this.contains = this.contains.trim().toLowerCase()
 
       const query = queryFormatter.generateTagsQuery(
         this.contains,
@@ -149,12 +142,6 @@ export default {
       )
 
       const sanitizedQuery = Object.assign({}, query)
-
-      if (sanitizedQuery.contains) {
-        sanitizedQuery.contains = tagFormatter.formatForApi(
-          sanitizedQuery.contains
-        )
-      }
 
       if (sanitizedQuery.direction && sanitizedQuery.direction === 'default') {
         delete sanitizedQuery.direction
@@ -194,11 +181,6 @@ export default {
       setTimeout(() => {
         this.isInitialized = true
       }, 0)
-    },
-    blur: function () {
-      if (document.activeElement !== document.body) {
-        document.activeElement.blur()
-      }
     },
     ...mapActions({
       fetchTags: 'tags/fetch',

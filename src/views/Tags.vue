@@ -90,14 +90,12 @@ export default {
       const tags = []
 
       for (const tag of this.tags) {
-        const name = tagFormatter.formatForApp(tag.name)
-
         tags.push({
-          name: name,
+          name: tag.name,
           path: '/files',
-          query: queryFormatter.generateDefaultFilesQuery(name),
+          query: queryFormatter.generateDefaultFilesQuery(tag.name),
           color: tagFormatter.getColor(
-            name, this.colors
+            tag.name, this.colors
           ),
           fileCount: tag.fileCount
         })
