@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
++ Fixed input from home search form not being sanitized
+
 ## [1.10.0] - 2018-11-18
 
 ### Changed

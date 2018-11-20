@@ -54,7 +54,9 @@ export default {
     handleSubmit: function () {
       this.$router.push({
         path: '/files',
-        query: queryFormatter.generateDefaultFilesQuery(this.tag)
+        query: queryFormatter.generateDefaultFilesQuery(
+          this.tag.trim().toLowerCase()
+        )
       })
     }
   },
