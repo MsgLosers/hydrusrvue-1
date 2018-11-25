@@ -129,6 +129,10 @@ configure your installation:
 + `VUE_APP_REGISTRATION_ENABLED=true`: setting this to `false` disables the
   registration page. This does not disable the registration in your hydrusrv
   installation; to achieve this, use the appropriate hydrusrv setting.
++ `VUE_APP_AUTHENTICATION_REQUIRED=true`: setting this to `false` allows the
+  access of all views aside the user view without logging in. This only affects
+  the frontend and must mirror the setting in hydrusrv for it to work correctly
+  and without creating user experience issues.
 + `VUE_APP_MIN_PASSWORD_LENGTH=16`: sets the minimum password length when
   registering or updating the password. Providing a higher value than `1024`
   will discard the value and use `1024` as the minimum length instead. This

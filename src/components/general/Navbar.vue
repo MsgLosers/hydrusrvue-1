@@ -25,7 +25,9 @@
       :class="{ 'is-active': isOpen }"
       v-if="isInitialized && !error.isFatal">
 
-      <div class="navbar-start" v-if="isAuthorized">
+      <div
+        class="navbar-start"
+        v-if="isAuthorized || !authenticationIsRequired">
         <router-link
           to="/files"
           class="navbar-item"
@@ -42,7 +44,10 @@
 
       <div class="navbar-end">
 
-        <router-link to="/settings" class="navbar-item" v-if="isAuthorized">
+        <router-link
+          to="/settings"
+          class="navbar-item"
+          v-if="isAuthorized || !authenticationIsRequired">
           <span class="icon">
             <font-awesome-icon icon="cog" />
           </span>
@@ -104,6 +109,10 @@ export default {
       required: true
     },
     isAuthorized: {
+      type: Boolean,
+      required: true
+    },
+    authenticationIsRequired: {
       type: Boolean,
       required: true
     },
