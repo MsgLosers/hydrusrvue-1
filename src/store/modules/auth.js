@@ -18,6 +18,7 @@ import {
   SET_AUTHORIZING,
   UNSET_AUTHORIZING
 } from '@/store/mutation-types'
+import config from '@/config'
 import router from '@/router'
 import api from '@/api'
 import errorHandler from '@/helpers/error-handler'
@@ -97,7 +98,7 @@ export default {
     checkAuthorization (context) {
       context.dispatch('error/flush', false, { root: true })
 
-      if (!context.state.token) {
+      if (!context.state.token && config.authenticationIsRequired) {
         return
       }
 

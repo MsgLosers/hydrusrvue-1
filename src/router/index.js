@@ -2,8 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import qs from 'qs'
 
-import store from '@/store'
 import config from '@/config'
+import store from '@/store'
 
 Vue.use(Router)
 
@@ -19,7 +19,7 @@ export default new Router({
       name: 'registration',
       component: () => import(/* webpackChunkName: "registration" */ '@/views/Registration'),
       meta: {
-        noAuth: true
+        noAuthenticationIsRequired: true
       },
       beforeEnter: (to, from, next) => {
         if (!config.registrationIsEnabled) {
@@ -34,7 +34,7 @@ export default new Router({
       name: 'login',
       component: () => import(/* webpackChunkName: "login" */ '@/views/Login'),
       meta: {
-        noAuth: true
+        noAuthenticationIsRequired: true
       }
     },
     {
@@ -54,7 +54,7 @@ export default new Router({
       name: 'user',
       component: () => import(/* webpackChunkName: "user" */ '@/views/User'),
       meta: {
-        auth: true
+        authenticationIsRequired: true
       }
     },
     {
@@ -62,7 +62,7 @@ export default new Router({
       name: 'settings',
       component: () => import(/* webpackChunkName: "settings" */ '@/views/Settings'),
       meta: {
-        auth: true
+        authenticationIsRequired: config.authenticationIsRequired
       }
     },
     {
@@ -70,7 +70,7 @@ export default new Router({
       name: 'tags',
       component: () => import(/* webpackChunkName: "tags" */ '@/views/Tags'),
       meta: {
-        auth: true
+        authenticationIsRequired: config.authenticationIsRequired
       }
     },
     {
@@ -78,7 +78,7 @@ export default new Router({
       name: 'files',
       component: () => import(/* webpackChunkName: "files" */ '@/views/Files'),
       meta: {
-        auth: true
+        authenticationIsRequired: config.authenticationIsRequired
       }
     },
     {
@@ -86,7 +86,7 @@ export default new Router({
       name: 'file',
       component: () => import(/* webpackChunkName: "file" */ '@/views/File'),
       meta: {
-        auth: true
+        authenticationIsRequired: config.authenticationIsRequired
       },
       beforeEnter: (to, from, next) => {
         if (isNaN(to.params.id)) {

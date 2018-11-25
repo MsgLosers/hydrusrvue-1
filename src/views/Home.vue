@@ -6,7 +6,7 @@
     <section class="section">
       <div class="container">
         <h1 class="title has-text-primary has-text-centered">{{ title }}</h1>
-        <search v-if="isAuthorized" />
+        <search v-if="isAuthorized  || !authenticationIsRequired" />
       </div>
     </section>
 
@@ -16,7 +16,7 @@
 
         <div class="content has-text-centered">
 
-          <p v-if="isAuthorized">
+          <p v-if="isAuthorized || !authenticationIsRequired">
             <strong>{{ api.fileCount }}</strong> files,
             <strong>{{ api.tagCount }}</strong> tags
           </p>
@@ -49,6 +49,10 @@ export default {
   name: 'Home',
   props: {
     isAuthorized: {
+      type: Boolean,
+      required: true
+    },
+    authenticationIsRequired: {
       type: Boolean,
       required: true
     }

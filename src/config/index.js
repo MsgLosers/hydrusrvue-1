@@ -22,9 +22,12 @@ const generateNamespaceColors = environmentVariable => {
 
 export default {
   title: process.env.VUE_APP_TITLE,
-  version: '1.11.0',
+  version: '1.12.0',
   apiUrl: process.env.VUE_APP_API_URL,
   registrationIsEnabled: (process.env.VUE_APP_REGISTRATION_ENABLED === 'true'),
+  authenticationIsRequired: process.env.VUE_APP_AUTHENTICATION_REQUIRED
+    ? (process.env.VUE_APP_AUTHENTICATION_REQUIRED === 'true')
+    : true,
   minPasswordLength: process.env.VUE_APP_MIN_PASSWORD_LENGTH || 16,
   fallbackFilesSortingNamespace:
     process.env.VUE_APP_FALLBACK_FILES_SORTING_NAMESPACE || 'namespace',
