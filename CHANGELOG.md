@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   authentication optional instead of needed for accessing
   non-authentication-related views (relates to the setting in hydrusrv)
 
+### Changed
+
++ Updated dependencies
+
 ## [1.11.0] - 2018-11-20
 
 ### Changed
