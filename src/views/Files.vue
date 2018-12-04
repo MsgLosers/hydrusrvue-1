@@ -25,7 +25,7 @@
           :key="index">
           <div class="file-preview">
             <div class="file-preview-image">
-              <img :src="file.thumbnailUrl + mediaToken">
+              <img :src="preparedThumbnailUrls[index]">
             </div>
             <router-link :to="`/files/${file.id}`" class="file-preview-link">
               View file
@@ -36,7 +36,7 @@
               </span>
               <img
                 class="preview-img-item"
-                :src="file.thumbnailUrl + mediaToken"
+                :src="preparedThumbnailUrls[index]"
                 @click="$photoswipe.open(index, galleryItems)">
             </div>
           </div>
@@ -60,12 +60,13 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import throttle from 'lodash/throttle'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import config from '@/config'
+import urlFormatter from '@/util/url-formatter'
 
 import Search from '@/components/files/Search'
 
@@ -86,7 +87,7 @@ export default {
       for (const file of this.files) {
         if (this.isImage(file.mime)) {
           galleryItems.push({
-            src: file.mediaUrl + this.mediaToken,
+            src: urlFormatter.prepareMediaUrl(file.mediaUrl),
             w: file.width,
             h: file.height
           })
@@ -109,13 +110,21 @@ export default {
 
       return galleryItems
     },
+    preparedThumbnailUrls: function () {
+      const preparedThumbnailUrls = []
+
+      for (const file of this.files) {
+        preparedThumbnailUrls.push(
+          urlFormatter.prepareMediaUrl(file.thumbnailUrl)
+        )
+      }
+
+      return preparedThumbnailUrls
+    },
     ...mapState({
       files: state => state.files.items,
       isLoading: state => state.files.isLoading,
       lastQuery: state => state.files.lastQuery
-    }),
-    ...mapGetters({
-      mediaToken: 'auth/mediaTokenQueryString'
     })
   },
   methods: {
@@ -123,6 +132,9 @@ export default {
       return ['image/jpeg', 'image/png', 'image/gif', 'image/bmp'].includes(
         mime
       )
+    },
+    prepareMediaUrl: function (url) {
+      return urlFormatter.prepareMediaUrl(url)
     },
     bottomIsVisible: function () {
       const scrollY = window.scrollY

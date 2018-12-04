@@ -47,7 +47,7 @@ import qs from 'qs'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-import queryFormatter from '@/helpers/query-formatter'
+import queryFormatter from '@/util/query-formatter'
 
 import Sorting from '@/components/tags/Sorting'
 

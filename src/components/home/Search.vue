@@ -38,7 +38,7 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-import queryFormatter from '@/helpers/query-formatter'
+import queryFormatter from '@/util/query-formatter'
 
 import TagInput from '@/components/general/TagInput'
 

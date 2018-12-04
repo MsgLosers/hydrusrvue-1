@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
++ Removed unnecessary media tokens from requests of logged in users when
+  `VUE_APP_AUTHENTICATION_REQUIRED` is set to false
+
 ## [1.12.0] - 2018-11-25
 
 ### Added

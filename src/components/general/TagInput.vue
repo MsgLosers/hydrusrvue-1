@@ -49,8 +49,8 @@ import { mixin as clickaway } from 'vue-clickaway'
 import debounce from 'lodash/debounce'
 
 import api from '@/api'
-import errorHandler from '@/helpers/error-handler'
-import tagFormatter from '@/helpers/tag-formatter'
+import errorHandler from '@/util/error-handler'
+import tagFormatter from '@/util/tag-formatter'
 
 export default {
   name: 'TagInput',
