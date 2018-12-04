@@ -73,8 +73,8 @@ import qs from 'qs'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-import queryFormatter from '@/helpers/query-formatter'
-import tagFormatter from '@/helpers/tag-formatter'
+import queryFormatter from '@/util/query-formatter'
+import tagFormatter from '@/util/tag-formatter'
 
 import TagInput from '@/components/general/TagInput'
 import Sorting from '@/components/files/Sorting'

@@ -24,14 +24,14 @@
           <div class="column">
 
             <file-image
-              :url="file.mediaUrl + mediaToken"
+              :url="preparedMediaUrl"
               :width="file.width"
               :height="file.height"
               v-if="type === 'image'" />
 
             <file-video
-              :url="file.mediaUrl + mediaToken"
-              :posterUrl="file.thumbnailUrl + mediaToken"
+              :url="preparedMediaUrl"
+              :posterUrl="preparedThumbnailUrl"
               :mime="file.mime"
               v-if="type === 'video'" />
 
@@ -43,7 +43,7 @@
               <p>
                 <a
                   class="button is-primary"
-                  :href="file.mediaUrl + mediaToken"
+                  :href="preparedMediaUrl"
                   target="_blank"
                   :download="`${file.id}.${file.mime.split('/')[1]}`">
                   Download file {{ file.id }}
@@ -65,7 +65,7 @@
               :file="file"
               :type="type"
               :tags="tags"
-              :mediaToken="mediaToken" />
+              :preparedMediaUrl="preparedMediaUrl" />
 
           </div>
 
@@ -85,8 +85,9 @@ import Media from 'vue-media'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import config from '@/config'
-import queryFormatter from '@/helpers/query-formatter'
-import tagFormatter from '@/helpers/tag-formatter'
+import queryFormatter from '@/util/query-formatter'
+import tagFormatter from '@/util/tag-formatter'
+import urlFormatter from '@/util/url-formatter'
 
 import Info from '@/components/file/Info'
 import Controls from '@/components/file/Controls'
@@ -133,6 +134,12 @@ export default {
 
       return tags
     },
+    preparedMediaUrl: function () {
+      return urlFormatter.prepareMediaUrl(this.file.mediaUrl)
+    },
+    preparedThumbnailUrl: function () {
+      return urlFormatter.prepareMediaUrl(this.file.thumbnailUrl)
+    },
     ...mapState({
       file: state => state.files.detailItem,
       isLoading: state => state.files.isLoading,
@@ -143,8 +150,7 @@ export default {
       error: state => state.error
     }),
     ...mapGetters({
-      sortedDetailItemTags: 'files/sortedDetailItemTags',
-      mediaToken: 'auth/mediaTokenQueryString'
+      sortedDetailItemTags: 'files/sortedDetailItemTags'
     })
   },
   methods: {

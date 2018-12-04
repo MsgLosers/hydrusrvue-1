@@ -70,8 +70,8 @@ import throttle from 'lodash/throttle'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import config from '@/config'
-import queryFormatter from '@/helpers/query-formatter'
-import tagFormatter from '@/helpers/tag-formatter'
+import queryFormatter from '@/util/query-formatter'
+import tagFormatter from '@/util/tag-formatter'
 
 import Search from '@/components/tags/Search'
 

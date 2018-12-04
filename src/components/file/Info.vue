@@ -25,7 +25,7 @@
       <p>
         <a
           class="button is-primary"
-          :href="file.mediaUrl + mediaToken"
+          :href="preparedMediaUrl"
           target="_blank"
           :download="`${file.id}.${file.mime.split('/')[1]}`">
           Download
@@ -52,7 +52,7 @@ export default {
       type: Array,
       required: true
     },
-    mediaToken: {
+    preparedMediaUrl: {
       type: String,
       required: true
     }

@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.13.0] - 2018-12-04
+
+### Changed
+
++ Removed unnecessary media tokens from requests of logged in users when
+  `VUE_APP_AUTHENTICATION_REQUIRED` is set to false
++ Updated dependencies
+
 ## [1.12.0] - 2018-11-25
 
 ### Added
@@ -138,7 +146,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 + Initial release
 
-[Unreleased]: https://github.com/mserajnik/hydrusrvue/compare/1.12.0...develop
+[Unreleased]: https://github.com/mserajnik/hydrusrvue/compare/1.13.0...develop
+[1.13.0]: https://github.com/mserajnik/hydrusrvue/compare/1.12.0...1.13.0
 [1.12.0]: https://github.com/mserajnik/hydrusrvue/compare/1.11.0...1.12.0
 [1.11.0]: https://github.com/mserajnik/hydrusrvue/compare/1.10.0...1.11.0
 [1.10.0]: https://github.com/mserajnik/hydrusrvue/compare/1.9.1...1.10.0

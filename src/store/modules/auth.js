@@ -21,7 +21,7 @@ import {
 import config from '@/config'
 import router from '@/router'
 import api from '@/api'
-import errorHandler from '@/helpers/error-handler'
+import errorHandler from '@/util/error-handler'
 
 export default {
   namespaced: true,

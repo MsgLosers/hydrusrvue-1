@@ -13,7 +13,7 @@ import {
   SET_LAST_DETAIL_ID
 } from '@/store/mutation-types'
 import api from '@/api'
-import errorHandler from '@/helpers/error-handler'
+import errorHandler from '@/util/error-handler'
 
 export default {
   namespaced: true,

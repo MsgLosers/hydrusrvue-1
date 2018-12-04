@@ -1,6 +1,6 @@
 import { SET_API_STATUS, SET_API_INFO } from '@/store/mutation-types'
 import api from '@/api'
-import errorHandler from '@/helpers/error-handler'
+import errorHandler from '@/util/error-handler'
 
 export default {
   namespaced: true,

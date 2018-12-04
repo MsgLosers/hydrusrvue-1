@@ -11,7 +11,7 @@ import {
   SET_NAMESPACES
 } from '@/store/mutation-types'
 import api from '@/api'
-import errorHandler from '@/helpers/error-handler'
+import errorHandler from '@/util/error-handler'
 
 export default {
   namespaced: true,
