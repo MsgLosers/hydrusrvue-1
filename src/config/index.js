@@ -21,7 +21,7 @@ const generateNamespaceColors = environmentVariable => {
 }
 
 export default {
-  version: '1.13.0',
+  version: '1.14.0',
   title: process.env.VUE_APP_TITLE,
   apiUrl: process.env.VUE_APP_API_URL,
   registrationIsEnabled: (process.env.VUE_APP_REGISTRATION_ENABLED === 'true'),
