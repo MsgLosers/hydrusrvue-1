@@ -20,7 +20,11 @@
 
         <div class="field has-addons" v-if="localSorting !== 'random'">
           <div class="control">
-            <button class="button is-static">Direction</button>
+            <button class="button is-static">
+              <span class="icon">
+                <font-awesome-icon icon="arrows-alt-v" />
+              </span>
+            </button>
           </div>
           <div class="control is-expanded">
             <div class="select is-fullwidth">
@@ -91,7 +95,11 @@
 
     <div class="sorting-field field has-addons">
       <div class="control">
-        <a class="button is-static">Sorting</a>
+        <button class="button is-static">
+          <span class="icon">
+            <font-awesome-icon :icon="sortingIcon" />
+          </span>
+        </button>
       </div>
       <div class="control is-expanded">
         <input
@@ -143,31 +151,54 @@ export default {
         this.$emit('update:sortingDirection', localSortingDirection)
       }
     },
+    sortingIcon: function () {
+      const iconMappings = {
+        id: 'long-arrow-alt-down',
+        'id-asc': 'long-arrow-alt-up',
+        'id-desc': 'long-arrow-alt-down',
+        name: 'long-arrow-alt-up',
+        'name-asc': 'long-arrow-alt-up',
+        'name-desc': 'long-arrow-alt-down',
+        files: 'long-arrow-alt-down',
+        'files-asc': 'long-arrow-alt-up',
+        'files-desc': 'long-arrow-alt-down',
+        contains: 'long-arrow-alt-up',
+        'contains-asc': 'long-arrow-alt-up',
+        'contains-desc': 'long-arrow-alt-down',
+        random: 'random',
+        'random-desc': 'random',
+        'random-asc': 'random'
+      }
+
+      let direction
+
+      switch (this.localSortingDirection) {
+        case 'asc':
+          direction = '-asc'
+
+          break
+        case 'desc':
+          direction = '-desc'
+
+          break
+        default:
+          direction = ''
+      }
+
+      return iconMappings[this.localSorting + direction]
+    },
     sortingDisplay: function () {
       switch (this.localSorting) {
         case 'name':
-          return `name | ${this.sortingDirectionDisplay}`
+          return 'name'
         case 'files':
-          return `amount of files | ${this.sortingDirectionDisplay}`
+          return 'amount of files'
         case 'contains':
-          return `given word | ${this.sortingDirectionDisplay}`
+          return 'given word'
         case 'random':
           return 'random'
-        case 'namespaces':
-          return this.localSortingNamespaces.join(' – ') +
-            ` | ${this.sortingDirectionDisplay}`
         default:
-          return `id | ${this.sortingDirectionDisplay}`
-      }
-    },
-    sortingDirectionDisplay () {
-      switch (this.localSortingDirection) {
-        case 'asc':
-          return 'ascending order'
-        case 'desc':
-          return 'descending order'
-        default:
-          return 'default order'
+          return 'id'
       }
     }
   },

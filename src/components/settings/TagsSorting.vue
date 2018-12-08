@@ -3,7 +3,11 @@
 
     <div class="field has-addons" v-if="localSorting !== 'random'">
       <div class="control">
-        <button class="button is-static">Direction</button>
+        <button class="button is-static">
+          <span class="icon">
+            <font-awesome-icon icon="arrows-alt-v" />
+          </span>
+        </button>
       </div>
       <div class="control is-expanded">
         <div class="select is-fullwidth">
@@ -72,6 +76,8 @@
 </template>
 
 <script>
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 export default {
   name: 'TagsSorting',
   props: {
@@ -101,6 +107,9 @@ export default {
         this.$emit('update:tagsSortingDirection', localSortingDirection)
       }
     }
+  },
+  components: {
+    FontAwesomeIcon
   }
 }
 </script>
