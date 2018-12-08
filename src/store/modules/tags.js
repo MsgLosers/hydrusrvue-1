@@ -64,13 +64,13 @@ export default {
 
       return api.fetchTags(payload, context.rootState.auth.token)
         .then(res => {
-          if (!res.data.length) {
+          if (!res.data.tags.length) {
             context.commit(SET_LAST_TAGS_PAGE_REACHED)
 
             return
           }
 
-          context.commit(SET_TAGS, res.data)
+          context.commit(SET_TAGS, res.data.tags)
         })
         .catch(err => {
           errorHandler.handle(
@@ -119,13 +119,13 @@ export default {
 
       return api.fetchTags(payload, context.rootState.auth.token)
         .then(res => {
-          if (!res.data.length) {
+          if (!res.data.tags.length) {
             context.commit(SET_LAST_TAGS_PAGE_REACHED)
 
             return
           }
 
-          context.commit(APPEND_TAGS, res.data)
+          context.commit(APPEND_TAGS, res.data.tags)
         })
         .catch(err => {
           errorHandler.handle(
@@ -177,7 +177,7 @@ export default {
 
       return api.fetchNamespaces(context.rootState.auth.token)
         .then(res => {
-          const namespaces = res.data
+          const namespaces = res.data.namespaces
           namespaces.unshift({ name: 'unnamespaced' })
 
           context.commit(SET_NAMESPACES, namespaces)

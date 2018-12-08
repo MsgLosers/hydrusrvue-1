@@ -73,13 +73,13 @@ export default {
 
       return api.fetchFiles(payload, context.rootState.auth.token)
         .then(res => {
-          if (!res.data.length) {
+          if (!res.data.files.length) {
             context.commit(SET_LAST_FILES_PAGE_REACHED)
 
             return
           }
 
-          context.commit(SET_FILES, res.data)
+          context.commit(SET_FILES, res.data.files)
         })
         .catch(err => {
           errorHandler.handle(
@@ -138,13 +138,13 @@ export default {
 
       return api.fetchFiles(payload, context.rootState.auth.token)
         .then(res => {
-          if (!res.data.length) {
+          if (!res.data.files.length) {
             context.commit(SET_LAST_FILES_PAGE_REACHED)
 
             return
           }
 
-          context.commit(APPEND_FILES, res.data)
+          context.commit(APPEND_FILES, res.data.files)
         })
         .catch(err => {
           errorHandler.handle(
