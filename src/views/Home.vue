@@ -17,8 +17,8 @@
         <div class="content has-text-centered">
 
           <p v-if="isAuthorized || !authenticationIsRequired">
-            <strong>{{ api.fileCount }}</strong> files,
-            <strong>{{ api.tagCount }}</strong> tags
+            <strong>{{ api.fileCount | formatNumber }}</strong> files,
+            <strong>{{ api.tagCount | formatNumber }}</strong> tags
           </p>
 
           <p>

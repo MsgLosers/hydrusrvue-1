@@ -15,7 +15,7 @@
               :parentRefs="$refs" />
           </div>
           <div class="control">
-            <a class="button is-static">{{ totalCount }}</a>
+            <a class="button is-static">{{ totalCount | formatNumber }}</a>
           </div>
         </div>
 

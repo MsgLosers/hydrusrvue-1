@@ -40,6 +40,14 @@ Vue.directive('focus', {
   }
 })
 
+Vue.filter('formatNumber', number => {
+  if (!number) {
+    return ''
+  }
+
+  return number.toLocaleString()
+})
+
 router.beforeEach((to, from, next) => {
   store.dispatch('app/closeNavigation')
 

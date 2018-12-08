@@ -34,8 +34,10 @@
             @click.prevent="completePartialTag(suggestion.name)"
             @keydown.enter.prevent="completePartialTag(suggestion.name)">
             {{ suggestion.name }}
-            <small class="file-amount">{{ suggestion.fileCount }}</small>
-            </a>
+            <small class="file-amount">
+              {{ suggestion.fileCount | formatNumber }}
+            </small>
+          </a>
         </div>
       </div>
     </div>

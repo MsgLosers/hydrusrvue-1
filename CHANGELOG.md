@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 + Added ability to consume counts when listing files and tags
++ Added number formatting based on locale
 
 ### Changed
 
