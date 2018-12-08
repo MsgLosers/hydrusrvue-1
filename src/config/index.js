@@ -29,6 +29,7 @@ export default {
     ? (process.env.VUE_APP_AUTHENTICATION_REQUIRED === 'true')
     : true,
   minPasswordLength: process.env.VUE_APP_MIN_PASSWORD_LENGTH || 16,
+  countsAreEnabled: (process.env.VUE_APP_COUNTS_ENABLED === 'true'),
   fallbackFilesSortingNamespace:
     process.env.VUE_APP_FALLBACK_FILES_SORTING_NAMESPACE || 'namespace',
   defaultNamespaceColors: generateNamespaceColors(

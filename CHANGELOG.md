@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
++ Added ability to consume counts when listing files and tags
+
 ### Changed
 
 + Updated hydrusrv API consumption to remain compatible

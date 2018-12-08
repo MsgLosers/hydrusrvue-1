@@ -4,7 +4,22 @@
     <div class="columns">
 
       <div class="column is-5-tablet is-6-desktop">
-        <div class="field">
+
+        <div class="field has-addons" v-if="totalCount">
+          <div class="control is-expanded">
+            <tag-input
+              ref="tagInput"
+              :tag.sync="tag"
+              :hasCompletedTag.sync="hasCompletedTag"
+              :placeholder="placeholderText"
+              :parentRefs="$refs" />
+          </div>
+          <div class="control">
+            <a class="button is-static">{{ totalCount }}</a>
+          </div>
+        </div>
+
+        <div class="field" v-else>
           <div class="control">
             <tag-input
               ref="tagInput"
@@ -14,6 +29,7 @@
               :parentRefs="$refs" />
           </div>
         </div>
+
       </div>
 
       <div class="column is-5-tablet is-4-desktop">
@@ -67,12 +83,13 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import { isEmpty } from 'lodash/lang'
 import qs from 'qs'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+import config from '@/config'
 import queryFormatter from '@/util/query-formatter'
 import tagFormatter from '@/util/tag-formatter'
 
@@ -115,8 +132,12 @@ export default {
         : 'search for files by tag…'
     },
     ...mapState({
+      totalCount: state => state.files.totalCount,
       hasReachedLastPage: state => state.files.hasReachedLastPage,
       colors: state => state.settings.colors
+    }),
+    ...mapGetters({
+      countIsConfirmed: 'files/countIsConfirmed'
     })
   },
   methods: {
@@ -367,7 +388,9 @@ export default {
     },
     hasReachedLastPage: function (hasReachedLastPage) {
       if (hasReachedLastPage) {
-        this.page = (this.page - 1) > 0 ? this.page - 1 : 1
+        if (!(config.countsAreEnabled && this.countIsConfirmed)) {
+          this.page = (this.page - 1) > 0 ? this.page - 1 : 1
+        }
 
         this.setLastQuery(this.updateQueryAndGetStrings().queryString)
       }

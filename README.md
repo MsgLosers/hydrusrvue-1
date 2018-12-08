@@ -138,6 +138,9 @@ configure your installation:
   will discard the value and use `1024` as the minimum length instead. This
   is only used for frontend validation and should mirror the setting in
   hydrusrv for the best user experience.
++ `VUE_APP_COUNTS_ENABLED=false`: setting this to `true` enables the display of
+  counts when listing files and tags. The corresponding setting in hydrusrv
+  must also be enabled if set to `true`.
 + `VUE_APP_FALLBACK_FILES_SORTING_NAMESPACE=namespace`: sets the fallback
   sorting namespace that is needed to not break namespace sorting. Should be
   set to something sensible like `creator` or `series`, depending on your

@@ -6,10 +6,13 @@ import {
   UNSET_TAGS,
   SET_LAST_TAGS_QUERY,
   UNSET_LAST_TAGS_QUERY,
+  SET_TOTAL_TAG_COUNT,
+  UNSET_TOTAL_TAG_COUNT,
   SET_LAST_TAGS_PAGE_REACHED,
   UNSET_LAST_TAGS_PAGE_REACHED,
   SET_NAMESPACES
 } from '@/store/mutation-types'
+import config from '@/config'
 import api from '@/api'
 import errorHandler from '@/util/error-handler'
 
@@ -19,6 +22,7 @@ export default {
     items: [],
     isLoading: false,
     lastQuery: null,
+    totalCount: null,
     hasReachedLastPage: false,
     namespaces: []
   },
@@ -44,6 +48,12 @@ export default {
     [UNSET_LAST_TAGS_QUERY] (state) {
       state.lastQuery = null
     },
+    [SET_TOTAL_TAG_COUNT] (state, payload) {
+      state.totalCount = payload
+    },
+    [UNSET_TOTAL_TAG_COUNT] (state) {
+      state.totalCount = null
+    },
     [SET_LAST_TAGS_PAGE_REACHED] (state) {
       state.hasReachedLastPage = true
     },
@@ -59,6 +69,7 @@ export default {
       context.dispatch('error/flush', false, { root: true })
 
       context.commit(UNSET_TAGS)
+      context.commit(UNSET_TOTAL_TAG_COUNT)
       context.commit(UNSET_LAST_TAGS_PAGE_REACHED)
       context.commit(SET_TAGS_LOADING)
 
@@ -71,6 +82,14 @@ export default {
           }
 
           context.commit(SET_TAGS, res.data.tags)
+
+          if (config.countsAreEnabled) {
+            context.commit(SET_TOTAL_TAG_COUNT, res.data.tagCount)
+
+            if (context.state.totalCount === context.state.items.length) {
+              context.commit(SET_LAST_TAGS_PAGE_REACHED)
+            }
+          }
         })
         .catch(err => {
           errorHandler.handle(
@@ -126,6 +145,14 @@ export default {
           }
 
           context.commit(APPEND_TAGS, res.data.tags)
+
+          if (config.countsAreEnabled) {
+            context.commit(SET_TOTAL_TAG_COUNT, res.data.tagCount)
+
+            if (context.state.totalCount === context.state.items.length) {
+              context.commit(SET_LAST_TAGS_PAGE_REACHED)
+            }
+          }
         })
         .catch(err => {
           errorHandler.handle(
@@ -194,5 +221,8 @@ export default {
           )
         })
     }
+  },
+  getters: {
+    countIsConfirmed: state => state.totalCount === state.items.length
   }
 }
