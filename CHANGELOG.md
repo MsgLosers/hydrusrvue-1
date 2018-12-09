@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 + The next page is now fetched slightly before reaching the bottom of the
   window to improve user experience when scrolling
 + Icons are now used for input labels
++ Made some small styling adjustments
 
 ## [1.14.0] - 2018-12-05
 
