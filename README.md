@@ -56,6 +56,7 @@ The most prominent features are:
 + [Install](#install)
   + [Dependencies](#dependencies)
   + [Updating](#updating)
+    + [Upgrading from 1.x to 2.x](#upgrading-from-1x-to-2x)
 + [Usage](#usage)
   + [Configuration](#configuration)
   + [Develop](#develop)
@@ -82,6 +83,7 @@ user@local:hydrusrvue$ yarn
 
 ### Dependencies
 
++ [hydrusrv][hydrusrv] (`5.x` for hydrusrvue `2.x`)
 + [Node.js][node-js]
 + [Yarn][yarn]
 
@@ -108,6 +110,15 @@ therefore always safe to simply install via the routine mentioned before.
 
 When necessary, this section will be expanded with upgrade guides to new major
 versions.
+
+#### Upgrading from 1.x to 2.x
+
+Upgrading from `4.x` to `5.x` can be done via `git pull && yarn` and requires
+only a few setting changes.
+
+The major version bump was made due to the incompatibility of `1.x` with
+hydrusrv `5.x`. So if you are using that, you need to upgrade hydrusrvue to
+`2.x`.
 
 ## Usage
 
