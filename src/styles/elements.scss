@@ -275,11 +275,21 @@
   }
 }
 
+.tags-table {
+  td,
+  th {
+    &:first-child {
+      width: 100%;
+    }
+  }
+}
+
 .settings-block {
   margin-bottom: 1.5rem;
 
   &.settings-colors {
     .table {
+      td,
       th {
         &:first-child {
           width: 100%;

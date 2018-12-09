@@ -34,8 +34,10 @@
             @click.prevent="completePartialTag(suggestion.name)"
             @keydown.enter.prevent="completePartialTag(suggestion.name)">
             {{ suggestion.name }}
-            <small class="file-amount">{{ suggestion.fileCount }}</small>
-            </a>
+            <small class="file-amount">
+              {{ suggestion.fileCount | formatNumber }}
+            </small>
+          </a>
         </div>
       </div>
     </div>
@@ -129,13 +131,13 @@ export default {
 
       api.autocompleteTag(body, this.token)
         .then(res => {
-          for (const suggestion of res.data) {
+          for (const suggestion of res.data.tags) {
             suggestion.color = tagFormatter.getColor(
               suggestion.name, this.colors
             )
           }
 
-          this.suggestions = res.data
+          this.suggestions = res.data.tags
         })
         .catch(err => {
           errorHandler.handle(

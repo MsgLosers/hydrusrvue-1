@@ -34,7 +34,7 @@
                 </router-link>
               </td>
               <td>
-                {{ tag.fileCount }}
+                {{ tag.fileCount | formatNumber }}
               </td>
             </tr>
 
@@ -115,9 +115,9 @@ export default {
       const scrollY = window.scrollY
       const isVisible = document.documentElement.clientHeight
       const pageHeight = document.documentElement.scrollHeight
-      const isAtbottomOfPage = (isVisible + scrollY) >= pageHeight
+      const isAtBottomOfPage = (isVisible + scrollY) >= (pageHeight - 48)
 
-      return isAtbottomOfPage || (pageHeight < isVisible)
+      return isAtBottomOfPage || ((pageHeight - 48) < isVisible)
     }
   },
   created: function () {
