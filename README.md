@@ -56,12 +56,14 @@ The most prominent features are:
 + [Install](#install)
   + [Dependencies](#dependencies)
   + [Updating](#updating)
+    + [Upgrading from 1.x to 2.x](#upgrading-from-1x-to-2x)
 + [Usage](#usage)
   + [Configuration](#configuration)
   + [Develop](#develop)
   + [Build](#build)
   + [Deploy](#deploy)
   + [Electron](#electron)
++ [Disclaimer](#disclaimer)
 + [Demo](#demo) 
 + [Screenshots](#screenshots)
 + [Donate](#donate)
@@ -81,6 +83,7 @@ user@local:hydrusrvue$ yarn
 
 ### Dependencies
 
++ [hydrusrv][hydrusrv] (`5.x` for hydrusrvue `2.x`)
 + [Node.js][node-js]
 + [Yarn][yarn]
 
@@ -107,6 +110,15 @@ therefore always safe to simply install via the routine mentioned before.
 
 When necessary, this section will be expanded with upgrade guides to new major
 versions.
+
+#### Upgrading from 1.x to 2.x
+
+Upgrading from `4.x` to `5.x` can be done via `git pull && yarn` and requires
+only a few setting changes.
+
+The major version bump was made due to the incompatibility of `1.x` with
+hydrusrv `5.x`. So if you are using that, you need to upgrade hydrusrvue to
+`2.x`.
 
 ## Usage
 
@@ -138,6 +150,9 @@ configure your installation:
   will discard the value and use `1024` as the minimum length instead. This
   is only used for frontend validation and should mirror the setting in
   hydrusrv for the best user experience.
++ `VUE_APP_COUNTS_ENABLED=false`: setting this to `true` enables the display of
+  counts when listing files and tags. The corresponding setting in hydrusrv
+  must also be enabled if set to `true`.
 + `VUE_APP_FALLBACK_FILES_SORTING_NAMESPACE=namespace`: sets the fallback
   sorting namespace that is needed to not break namespace sorting. Should be
   set to something sensible like `creator` or `series`, depending on your
@@ -196,6 +211,23 @@ user@local:hydrusrvue$ yarn build:electron --win --x64
 For more elaborate configuration options, take a look at the
 [electron-builder configuration][electron-builder-configuration].
 
+## Disclaimer
+
+In addition to the points described in the [MIT license](LICENSE.md), I,
+[mserajnik][maintainer], creator and maintainer of hydrusrvue, hereby
+explicitly state that hydrusrvue is currently deployed on the following
+official installations:
+
++ [https://hydrusrvue.mser.at][hydrusrvue-demo]
+
+No other installations are in any way affiliated with or controlled by me and I
+do not condone the usage of hydrusrvue for publishing content that is
+copyrighted and/or considered illegal in any country or place. hydrusrvue is
+open source software and it is up to the individual or group using it to make
+sure it is not used for illegal activities. I cannot be held accountable for
+any usage of hydrusrvue that is outside of the aforementioned official
+installations.
+
 ## Demo
 
 You can find a demo installation at
@@ -212,6 +244,11 @@ It contains only safe for work images tagged with `scenery` (take a look at the
 
 Registration is enabled, so feel free to create as many users as you would
 like. __Created users are deleted at 12am every day.__
+
+If you are the creator of one or more of the images used in this demo
+installation and would like to have your content removed, please
+[message me](mailto:hello@mserajnik.at) or [open an issue][issues] and I will
+comply with your request at once.
 
 ## Screenshots
 

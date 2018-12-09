@@ -20,7 +20,11 @@
 
         <div class="field has-addons" v-if="localSorting !== 'random'">
           <div class="control">
-            <button class="button is-static">Direction</button>
+            <button class="button is-static">
+              <span class="icon">
+                <font-awesome-icon icon="arrows-alt-v" />
+              </span>
+            </button>
           </div>
           <div class="control is-expanded">
             <div class="select is-fullwidth">
@@ -144,7 +148,11 @@
 
     <div class="sorting-field field has-addons">
       <div class="control">
-        <a class="button is-static">Sorting</a>
+        <button class="button is-static">
+          <span class="icon">
+            <font-awesome-icon :icon="sortingIcon" />
+          </span>
+        </button>
       </div>
       <div class="control is-expanded">
         <input
@@ -210,33 +218,64 @@ export default {
         this.$emit('update:sortingNamespaces', localSortingNamespaces)
       }
     },
+    sortingIcon: function () {
+      const iconMappings = {
+        id: 'long-arrow-alt-down',
+        'id-asc': 'long-arrow-alt-up',
+        'id-desc': 'long-arrow-alt-down',
+        size: 'long-arrow-alt-down',
+        'size-asc': 'long-arrow-alt-up',
+        'size-desc': 'long-arrow-alt-down',
+        width: 'long-arrow-alt-down',
+        'width-asc': 'long-arrow-alt-up',
+        'width-desc': 'long-arrow-alt-down',
+        height: 'long-arrow-alt-down',
+        'height-asc': 'long-arrow-alt-up',
+        'height-desc': 'long-arrow-alt-down',
+        mime: 'long-arrow-alt-up',
+        'mime-asc': 'long-arrow-alt-up',
+        'mime-desc': 'long-arrow-alt-down',
+        random: 'random',
+        'random-desc': 'random',
+        'random-asc': 'random',
+        namespaces: 'long-arrow-alt-up',
+        'namespaces-asc': 'long-arrow-alt-up',
+        'namespaces-desc': 'long-arrow-alt-down'
+      }
+
+      let direction
+
+      switch (this.localSortingDirection) {
+        case 'asc':
+          direction = '-asc'
+
+          break
+        case 'desc':
+          direction = '-desc'
+
+          break
+        default:
+          direction = ''
+      }
+
+      return iconMappings[this.localSorting + direction]
+    },
     sortingDisplay: function () {
       switch (this.localSorting) {
         case 'size':
-          return `filesize | ${this.sortingDirectionDisplay}`
+          return 'filesize'
         case 'width':
-          return `width | ${this.sortingDirectionDisplay}`
+          return 'width'
         case 'height':
-          return `height | ${this.sortingDirectionDisplay}`
+          return 'height'
         case 'mime':
-          return `mime type | ${this.sortingDirectionDisplay}`
+          return 'mime type'
         case 'random':
           return 'random'
         case 'namespaces':
-          return this.localSortingNamespaces.join(' – ') +
-            ` | ${this.sortingDirectionDisplay}`
+          return this.localSortingNamespaces.join(' – ')
         default:
-          return `id | ${this.sortingDirectionDisplay}`
-      }
-    },
-    sortingDirectionDisplay () {
-      switch (this.localSortingDirection) {
-        case 'asc':
-          return 'ascending order'
-        case 'desc':
-          return 'descending order'
-        default:
-          return 'default order'
+          return 'id'
       }
     }
   },

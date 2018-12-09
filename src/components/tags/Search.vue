@@ -4,7 +4,27 @@
     <div class="columns">
 
       <div class="column is-5-tablet is-6-desktop">
-        <div class="field">
+
+        <div class="field has-addons" v-if="totalCount">
+          <div class="control is-expanded">
+            <input
+              type="text"
+              class="input"
+              placeholder="search for tags containing word…"
+              v-model="contains"
+              v-focus>
+          </div>
+          <div class="control">
+            <button class="button is-static">
+              <span class="icon">
+                <font-awesome-icon icon="equals" />
+              </span>
+              <span>{{ totalCount | formatNumber }}</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="field" v-else>
           <div class="control">
             <input
               type="text"
@@ -14,6 +34,7 @@
               v-focus>
           </div>
         </div>
+
       </div>
 
       <div class="column is-5-tablet is-4-desktop">
@@ -41,12 +62,13 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import { isEmpty } from 'lodash/lang'
 import qs from 'qs'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+import config from '@/config'
 import queryFormatter from '@/util/query-formatter'
 
 import Sorting from '@/components/tags/Sorting'
@@ -77,8 +99,12 @@ export default {
   },
   computed: {
     ...mapState({
+      totalCount: state => state.tags.totalCount,
       hasReachedLastPage: state => state.tags.hasReachedLastPage,
       colors: state => state.settings.colors
+    }),
+    ...mapGetters({
+      countIsConfirmed: 'tags/countIsConfirmed'
     })
   },
   methods: {
@@ -219,7 +245,9 @@ export default {
     },
     hasReachedLastPage: function (hasReachedLastPage) {
       if (hasReachedLastPage) {
-        this.page = (this.page - 1) > 0 ? this.page - 1 : 1
+        if (!(config.countsAreEnabled && this.countIsConfirmed)) {
+          this.page = (this.page - 1) > 0 ? this.page - 1 : 1
+        }
 
         this.setLastQuery(this.updateQueryAndGetStrings().queryString)
       }

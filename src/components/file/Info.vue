@@ -5,8 +5,8 @@
       <li><strong>ID:</strong> {{ file.id }}</li>
       <li><strong>Type:</strong> {{ type }}</li>
       <li><strong>MIME:</strong> {{ file.mime }}</li>
-      <li><strong>Width:</strong> {{ file.width }} px</li>
-      <li><strong>Height:</strong> {{ file.height }} px</li>
+      <li><strong>Width:</strong> {{ file.width | formatNumber }} px</li>
+      <li><strong>Height:</strong> {{ file.height | formatNumber }} px</li>
       <li><strong>Size:</strong> {{ file.size | formatFileSize }}</li>
     </ul>
 
@@ -17,7 +17,7 @@
           :style="{ color: tag.color }">
           {{ tag.name }}
         </router-link>
-        <small class="file-amount">{{ tag.fileCount }}</small>
+        <small class="file-amount">{{ tag.fileCount | formatNumber }}</small>
       </li>
     </ul>
 
@@ -66,7 +66,9 @@ export default {
       const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
       const i = Math.floor(Math.log(bytes) / Math.log(1024))
 
-      return parseFloat((bytes / Math.pow(1024, i)).toFixed(2)) + ` ${sizes[i]}`
+      return parseFloat(
+        (bytes / Math.pow(1024, i)).toFixed(2)
+      ).toLocaleString() + ` ${sizes[i]}`
     }
   }
 }

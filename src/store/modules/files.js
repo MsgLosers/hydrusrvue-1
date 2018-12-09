@@ -6,12 +6,15 @@ import {
   UNSET_FILES,
   SET_LAST_FILES_QUERY,
   UNSET_LAST_FILES_QUERY,
+  SET_TOTAL_FILE_COUNT,
+  UNSET_TOTAL_FILE_COUNT,
   SET_LAST_FILES_PAGE_REACHED,
   UNSET_LAST_FILES_PAGE_REACHED,
   SET_DETAIL_ITEM,
   UNSET_DETAIL_ITEM,
   SET_LAST_DETAIL_ID
 } from '@/store/mutation-types'
+import config from '@/config'
 import api from '@/api'
 import errorHandler from '@/util/error-handler'
 
@@ -21,6 +24,7 @@ export default {
     items: [],
     isLoading: false,
     lastQuery: null,
+    totalCount: null,
     hasReachedLastPage: false,
     detailItem: null,
     lastDetailId: null
@@ -47,6 +51,12 @@ export default {
     [UNSET_LAST_FILES_QUERY] (state) {
       state.lastQuery = null
     },
+    [SET_TOTAL_FILE_COUNT] (state, payload) {
+      state.totalCount = payload
+    },
+    [UNSET_TOTAL_FILE_COUNT] (state) {
+      state.totalCount = null
+    },
     [SET_LAST_FILES_PAGE_REACHED] (state) {
       state.hasReachedLastPage = true
     },
@@ -68,18 +78,27 @@ export default {
       context.dispatch('error/flush', false, { root: true })
 
       context.commit(UNSET_FILES)
+      context.commit(UNSET_TOTAL_FILE_COUNT)
       context.commit(UNSET_LAST_FILES_PAGE_REACHED)
       context.commit(SET_FILES_LOADING)
 
       return api.fetchFiles(payload, context.rootState.auth.token)
         .then(res => {
-          if (!res.data.length) {
+          if (!res.data.files.length) {
             context.commit(SET_LAST_FILES_PAGE_REACHED)
 
             return
           }
 
-          context.commit(SET_FILES, res.data)
+          context.commit(SET_FILES, res.data.files)
+
+          if (config.countsAreEnabled) {
+            context.commit(SET_TOTAL_FILE_COUNT, res.data.fileCount)
+
+            if (context.state.totalCount === context.state.items.length) {
+              context.commit(SET_LAST_FILES_PAGE_REACHED)
+            }
+          }
         })
         .catch(err => {
           errorHandler.handle(
@@ -138,13 +157,21 @@ export default {
 
       return api.fetchFiles(payload, context.rootState.auth.token)
         .then(res => {
-          if (!res.data.length) {
+          if (!res.data.files.length) {
             context.commit(SET_LAST_FILES_PAGE_REACHED)
 
             return
           }
 
-          context.commit(APPEND_FILES, res.data)
+          context.commit(APPEND_FILES, res.data.files)
+
+          if (config.countsAreEnabled) {
+            context.commit(SET_TOTAL_FILE_COUNT, res.data.fileCount)
+
+            if (context.state.totalCount === context.state.items.length) {
+              context.commit(SET_LAST_FILES_PAGE_REACHED)
+            }
+          }
         })
         .catch(err => {
           errorHandler.handle(
@@ -249,6 +276,7 @@ export default {
     }
   },
   getters: {
+    countIsConfirmed: state => state.totalCount === state.items.length,
     sortedDetailItemTags: state => {
       if (!state.detailItem) {
         return []

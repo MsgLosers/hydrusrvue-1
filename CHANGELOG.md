@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
++ Added ability to consume counts when listing files and tags
++ Added number formatting based on locale
+
+### Changed
+
++ Updated hydrusrv API consumption to remain compatible
++ The next page is now fetched slightly before reaching the bottom of the
+  window to improve user experience when scrolling
++ Icons are now used for input labels
++ Made some small styling adjustments
++ Updated dependencies
+
 ## [1.14.0] - 2018-12-05
 
 ### Changed

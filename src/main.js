@@ -6,17 +6,20 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faArrowLeft,
   faArrowRight,
+  faArrowsAltV,
   faCheck,
   faCog,
+  faEquals,
   faEyeSlash,
   faImages,
-  faInfo,
   faLongArrowAltLeft,
+  faLongArrowAltDown,
+  faLongArrowAltUp,
+  faRandom,
   faSave,
   faSearch,
   faSignInAlt,
   faSignOutAlt,
-  faSort,
   faSpinner,
   faTrash,
   faUser,
@@ -38,6 +41,14 @@ Vue.directive('focus', {
   inserted: function (el) {
     el.focus()
   }
+})
+
+Vue.filter('formatNumber', number => {
+  if (!number) {
+    return ''
+  }
+
+  return number.toLocaleString()
 })
 
 router.beforeEach((to, from, next) => {
@@ -71,17 +82,20 @@ router.beforeEach((to, from, next) => {
 library.add(
   faArrowLeft,
   faArrowRight,
+  faArrowsAltV,
   faCheck,
   faCog,
+  faEquals,
   faEyeSlash,
   faImages,
-  faInfo,
   faLongArrowAltLeft,
+  faLongArrowAltDown,
+  faLongArrowAltUp,
+  faRandom,
   faSave,
   faSearch,
   faSignInAlt,
   faSignOutAlt,
-  faSort,
   faSpinner,
   faTrash,
   faUser,
