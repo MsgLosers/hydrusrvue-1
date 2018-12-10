@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
++ Improved `scroll` event handling performance and made sure additional items
+  get loaded automatically (if not already on the last page) in case the
+  document is too short to scroll
+
 ## [2.0.0] - 2018-12-09
 
 ### Added

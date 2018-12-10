@@ -90,6 +90,10 @@ export default {
               context.commit(SET_LAST_TAGS_PAGE_REACHED)
             }
           }
+
+          window.requestAnimationFrame(() => {
+            document.dispatchEvent(new Event('scroll'))
+          })
         })
         .catch(err => {
           errorHandler.handle(
@@ -153,6 +157,10 @@ export default {
               context.commit(SET_LAST_TAGS_PAGE_REACHED)
             }
           }
+
+          window.requestAnimationFrame(() => {
+            document.dispatchEvent(new Event('scroll'))
+          })
         })
         .catch(err => {
           errorHandler.handle(
