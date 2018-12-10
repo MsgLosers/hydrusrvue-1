@@ -16,8 +16,8 @@
 
     <div
       class="suggestions dropdown"
-      :class="{ 'is-active': !isSearching && suggestions.length }"
-      v-if="!isSearching && suggestions.length">
+      :class="{ 'is-active': suggestions.length }"
+      v-if="suggestions.length">
       <div class="dropdown-menu">
         <div class="dropdown-content">
           <a
@@ -123,8 +123,6 @@ export default {
       )
     },
     fetchSuggestions: function (partialTag) {
-      this.suggestions = []
-
       const body = {
         partialTag: partialTag.trim().toLowerCase()
       }

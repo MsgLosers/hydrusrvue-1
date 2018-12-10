@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   get loaded automatically (if not already on the last page) in case the
   document is too short to scroll
 + Optimized count display and made it less jumpy when running a new search
++ Made autocomplete dropdown less jumpy while typing
 
 ## [2.0.0] - 2018-12-09
 
