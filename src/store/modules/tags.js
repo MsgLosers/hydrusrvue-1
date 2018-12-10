@@ -69,7 +69,6 @@ export default {
       context.dispatch('error/flush', false, { root: true })
 
       context.commit(UNSET_TAGS)
-      context.commit(UNSET_TOTAL_TAG_COUNT)
       context.commit(UNSET_LAST_TAGS_PAGE_REACHED)
       context.commit(SET_TAGS_LOADING)
 
@@ -77,6 +76,10 @@ export default {
         .then(res => {
           if (!res.data.tags.length) {
             context.commit(SET_LAST_TAGS_PAGE_REACHED)
+
+            if (config.countsAreEnabled) {
+              context.commit(SET_TOTAL_TAG_COUNT, res.data.tagCount)
+            }
 
             return
           }
@@ -96,6 +99,8 @@ export default {
           })
         })
         .catch(err => {
+          context.commit(UNSET_TOTAL_TAG_COUNT)
+
           errorHandler.handle(
             err.response,
             [
@@ -145,6 +150,10 @@ export default {
           if (!res.data.tags.length) {
             context.commit(SET_LAST_TAGS_PAGE_REACHED)
 
+            if (config.countsAreEnabled) {
+              context.commit(SET_TOTAL_TAG_COUNT, res.data.tagCount)
+            }
+
             return
           }
 
@@ -163,6 +172,8 @@ export default {
           })
         })
         .catch(err => {
+          context.commit(UNSET_TOTAL_TAG_COUNT)
+
           errorHandler.handle(
             err.response,
             [

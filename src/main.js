@@ -44,7 +44,7 @@ Vue.directive('focus', {
 })
 
 Vue.filter('formatNumber', number => {
-  if (!number) {
+  if (typeof number !== 'number') {
     return ''
   }
 
