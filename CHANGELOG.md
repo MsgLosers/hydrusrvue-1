@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.1.0] - 2018-12-10
+
 ### Changed
 
 + Improved `scroll` event handling performance and made sure additional items
@@ -178,7 +180,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 + Initial release
 
-[Unreleased]: https://github.com/mserajnik/hydrusrvue/compare/2.0.0...develop
+[Unreleased]: https://github.com/mserajnik/hydrusrvue/compare/2.1.0...develop
+[2.1.0]: https://github.com/mserajnik/hydrusrvue/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/mserajnik/hydrusrvue/compare/1.14.0...2.0.0
 [1.14.0]: https://github.com/mserajnik/hydrusrvue/compare/1.13.0...1.14.0
 [1.13.0]: https://github.com/mserajnik/hydrusrvue/compare/1.12.0...1.13.0
