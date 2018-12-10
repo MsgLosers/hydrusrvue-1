@@ -1,6 +1,6 @@
 {
   "name": "hydrusrvue",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A Vue-based frontend for hydrusrv",
   "keywords": [
     "hydrusrv",
@@ -46,7 +46,7 @@
     "plyr": "^3.4.7",
     "qs": "^6.6.0",
     "v-hotkey": "^0.3.0",
-    "vue": "^2.5.18",
+    "vue": "^2.5.20",
     "vue-clickaway": "^2.2.2",
     "vue-headful": "^2.0.1",
     "vue-media": "^1.1.1",
@@ -63,12 +63,12 @@
     "@vue/eslint-config-standard": "^4.0.0",
     "cross-env": "^5.2.0",
     "electron": "^3.0.10",
-    "node-sass": "^4.10.0",
+    "node-sass": "^4.11.0",
     "postcss-preset-env": "^6.4.0",
     "sass-loader": "^7.1.0",
     "stylelint": "^9.9.0",
     "stylelint-config-sass-guidelines": "^5.3.0",
     "vue-cli-plugin-electron-builder": "^1.0.0-rc.9",
-    "vue-template-compiler": "^2.5.18"
+    "vue-template-compiler": "^2.5.20"
   }
 }

@@ -150,10 +150,24 @@ export default {
       this.wantsAdditionalFiles = this.bottomIsVisible()
     }, 50)
 
-    window.addEventListener('scroll', scrollListener)
+    window.addEventListener(
+      'scroll',
+      scrollListener,
+      {
+        capture: true,
+        passive: true
+      }
+    )
   },
   beforeRouteLeave: function (to, from, next) {
-    window.removeEventListener('scroll', scrollListener)
+    window.removeEventListener(
+      'scroll',
+      scrollListener,
+      {
+        capture: true,
+        passive: true
+      }
+    )
 
     if (document.querySelector('.pswp--open')) {
       this.$photoswipe.close()

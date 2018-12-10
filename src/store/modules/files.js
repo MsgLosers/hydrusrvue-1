@@ -78,7 +78,6 @@ export default {
       context.dispatch('error/flush', false, { root: true })
 
       context.commit(UNSET_FILES)
-      context.commit(UNSET_TOTAL_FILE_COUNT)
       context.commit(UNSET_LAST_FILES_PAGE_REACHED)
       context.commit(SET_FILES_LOADING)
 
@@ -86,6 +85,10 @@ export default {
         .then(res => {
           if (!res.data.files.length) {
             context.commit(SET_LAST_FILES_PAGE_REACHED)
+
+            if (config.countsAreEnabled) {
+              context.commit(SET_TOTAL_FILE_COUNT, res.data.fileCount)
+            }
 
             return
           }
@@ -99,8 +102,14 @@ export default {
               context.commit(SET_LAST_FILES_PAGE_REACHED)
             }
           }
+
+          window.requestAnimationFrame(() => {
+            document.dispatchEvent(new Event('scroll'))
+          })
         })
         .catch(err => {
+          context.commit(UNSET_TOTAL_FILE_COUNT)
+
           errorHandler.handle(
             err.response,
             [
@@ -160,6 +169,10 @@ export default {
           if (!res.data.files.length) {
             context.commit(SET_LAST_FILES_PAGE_REACHED)
 
+            if (config.countsAreEnabled) {
+              context.commit(SET_TOTAL_FILE_COUNT, res.data.fileCount)
+            }
+
             return
           }
 
@@ -172,8 +185,14 @@ export default {
               context.commit(SET_LAST_FILES_PAGE_REACHED)
             }
           }
+
+          window.requestAnimationFrame(() => {
+            document.dispatchEvent(new Event('scroll'))
+          })
         })
         .catch(err => {
+          context.commit(UNSET_TOTAL_FILE_COUNT)
+
           errorHandler.handle(
             err.response,
             [

@@ -5,7 +5,7 @@
 
       <div class="column is-5-tablet is-6-desktop">
 
-        <div class="field has-addons" v-if="totalCount">
+        <div class="field has-addons" v-if="totalCount !== null">
           <div class="control is-expanded">
             <input
               type="text"
