@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   document is too short to scroll
 + Optimized count display and made it less jumpy when running a new search
 + Made autocomplete dropdown less jumpy while typing
++ Updated dependencies
 
 ## [2.0.0] - 2018-12-09
 
