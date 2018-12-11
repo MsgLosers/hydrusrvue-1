@@ -1,5 +1,9 @@
 import {
-  INITIALIZE_APP, OPEN_NAVIGATION, CLOSE_NAVIGATION
+  INITIALIZE_APP,
+  OPEN_NAVIGATION,
+  CLOSE_NAVIGATION,
+  SET_SAVED_SCROLL_POSITION,
+  UNSET_SAVED_SCROLL_POSITION
 } from '@/store/mutation-types'
 import config from '@/config'
 
@@ -7,17 +11,24 @@ export default {
   namespaced: true,
   state: {
     isInitialized: false,
-    navigationIsOpen: false
+    navigationIsOpen: false,
+    hasSavedScrollPosition: false
   },
   mutations: {
     [INITIALIZE_APP] (state) {
       state.isInitialized = true
     },
-    [OPEN_NAVIGATION] (state, payload) {
+    [OPEN_NAVIGATION] (state) {
       state.navigationIsOpen = true
     },
-    [CLOSE_NAVIGATION] (state, payload) {
+    [CLOSE_NAVIGATION] (state) {
       state.navigationIsOpen = false
+    },
+    [SET_SAVED_SCROLL_POSITION] (state) {
+      state.hasSavedScrollPosition = true
+    },
+    [UNSET_SAVED_SCROLL_POSITION] (state) {
+      state.hasSavedScrollPosition = false
     }
   },
   actions: {
@@ -61,6 +72,12 @@ export default {
     },
     closeNavigation ({ commit }) {
       commit(CLOSE_NAVIGATION)
+    },
+    setSavedScrollPosition ({ commit }) {
+      commit(SET_SAVED_SCROLL_POSITION)
+    },
+    unsetSavedScrollPosition ({ commit }) {
+      commit(UNSET_SAVED_SCROLL_POSITION)
     }
   }
 }

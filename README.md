@@ -136,6 +136,8 @@ configure your installation:
   if provided.
 + `VUE_APP_ROBOTS=noindex, nofollow`: sets the content of
   `<meta name="robots">`.
++ `VUE_APP_PRIMARY_COLOR='#3498db'`: sets the primary color used throughout
+  hydrusrvue. Make sure to use a color that contrasts well with white.
 + `VUE_APP_API_URL=https://example.com/api`: the URL to your hydrusrv
   API. __No trailing slashes.__
 + `VUE_APP_REGISTRATION_ENABLED=true`: setting this to `false` disables the

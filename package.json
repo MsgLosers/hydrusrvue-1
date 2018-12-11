@@ -1,6 +1,6 @@
 {
   "name": "hydrusrvue",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "A Vue-based frontend for hydrusrv",
   "keywords": [
     "hydrusrv",
@@ -62,7 +62,7 @@
     "@vue/cli-service": "^3.2.0",
     "@vue/eslint-config-standard": "^4.0.0",
     "cross-env": "^5.2.0",
-    "electron": "^3.0.10",
+    "electron": "^3.0.11",
     "node-sass": "^4.11.0",
     "postcss-preset-env": "^6.4.0",
     "sass-loader": "^7.1.0",

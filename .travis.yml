@@ -11,8 +11,12 @@ env:
     - VUE_APP_TITLE=hydrusrvue
     - VUE_APP_DESCRIPTION='A Vue-based frontend for hydrusrv'
     - VUE_APP_ROBOTS='noindex, nofollow'
+    - VUE_APP_PRIMARY_COLOR='#3498db'
     - VUE_APP_API_URL='https://example.com/api'
     - VUE_APP_REGISTRATION_ENABLED=true
+    - VUE_APP_AUTHENTICATION_REQUIRED=true
     - VUE_APP_MIN_PASSWORD_LENGTH=16
+    - VUE_APP_COUNTS_ENABLED=false
     - VUE_APP_FALLBACK_FILES_SORTING_NAMESPACE=namespace
+    - VUE_APP_DEFAULT_NAMESPACE_COLORS='character#00b401|creator#bb1800|meta#000000|person#008f00|series#bb2cb9|studio#941100'
     - VUE_APP_FALLBACK_TAG_COLOR='#3498db'

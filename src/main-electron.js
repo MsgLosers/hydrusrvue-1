@@ -42,12 +42,16 @@ Vue.use(PhotoSwipe)
 
 Vue.directive('focus', {
   inserted: function (el) {
-    el.focus()
+    Vue.nextTick(() => {
+      if (!store.state.app.hasSavedScrollPosition) {
+        el.focus()
+      }
+    })
   }
 })
 
 Vue.filter('formatNumber', number => {
-  if (!number) {
+  if (typeof number !== 'number') {
     return ''
   }
 
