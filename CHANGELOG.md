@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 + Added ability to change primary color via environment variable
 
+### Changed
+
++ Updated dependencies
+
 ### Fixed
 
 + Fixed scroll preservation not working correctly when navigating back due to
