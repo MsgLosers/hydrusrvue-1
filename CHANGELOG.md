@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.2.1] - 2018-12-11
+
+### Fixed
+
++ Fixed scroll jumping when loading files or tags
+
 ## [2.2.0] - 2018-12-11
 
 ### Added
@@ -196,7 +202,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 + Initial release
 
-[Unreleased]: https://github.com/mserajnik/hydrusrvue/compare/2.2.0...develop
+[Unreleased]: https://github.com/mserajnik/hydrusrvue/compare/2.2.1...develop
+[2.2.1]: https://github.com/mserajnik/hydrusrvue/compare/2.2.0...2.2.1
 [2.2.0]: https://github.com/mserajnik/hydrusrvue/compare/2.1.0...2.2.0
 [2.1.0]: https://github.com/mserajnik/hydrusrvue/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/mserajnik/hydrusrvue/compare/1.14.0...2.0.0

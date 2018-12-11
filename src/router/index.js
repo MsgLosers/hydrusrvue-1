@@ -107,7 +107,11 @@ export default new Router({
 
     store.dispatch('app/unsetSavedScrollPosition', false)
 
-    return { x: 0, y: 0 }
+    if (['home', 'registration', 'login', 'user', 'settings', 'file'].includes(
+      to.name
+    )) {
+      return { x: 0, y: 0 }
+    }
   },
   parseQuery: query => {
     return qs.parse(query)
