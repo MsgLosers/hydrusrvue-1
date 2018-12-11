@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
++ Fixed scroll jumping when loading files or tags
+
 ## [2.2.0] - 2018-12-11
 
 ### Added
