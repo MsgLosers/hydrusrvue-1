@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 + Fixed scroll preservation not working correctly when navigating back due to
   autofocus always jumping to the input field
++ Fixed count sometimes not showing correctly in Electron
 
 ## [2.1.0] - 2018-12-10
 
