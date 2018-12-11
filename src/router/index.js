@@ -100,8 +100,14 @@ export default new Router({
   ],
   scrollBehavior: (to, from, savedPosition) => {
     if (savedPosition) {
+      store.dispatch('app/setSavedScrollPosition', true)
+
       return savedPosition
     }
+
+    store.dispatch('app/unsetSavedScrollPosition', false)
+
+    return { x: 0, y: 0 }
   },
   parseQuery: query => {
     return qs.parse(query)

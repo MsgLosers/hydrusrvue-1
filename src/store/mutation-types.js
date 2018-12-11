@@ -2,6 +2,8 @@
 export const INITIALIZE_APP = 'initializeApp'
 export const OPEN_NAVIGATION = 'openNavigation'
 export const CLOSE_NAVIGATION = 'closeNavigation'
+export const SET_SAVED_SCROLL_POSITION = 'setSavedScrollPosition'
+export const UNSET_SAVED_SCROLL_POSITION = 'unsetSavedScrollPosition'
 
 // api
 export const SET_API_STATUS = 'setApiStatus'

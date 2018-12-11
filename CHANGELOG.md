@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 + Added ability to change primary color via environment variable
 
+### Fixed
+
++ Fixed scroll preservation not working correctly when navigating back due to
+  autofocus always jumping to the input field
+
 ## [2.1.0] - 2018-12-10
 
 ### Changed

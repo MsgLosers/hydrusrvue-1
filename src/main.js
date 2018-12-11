@@ -39,7 +39,11 @@ Vue.use(PhotoSwipe)
 
 Vue.directive('focus', {
   inserted: function (el) {
-    el.focus()
+    Vue.nextTick(() => {
+      if (!store.state.app.hasSavedScrollPosition) {
+        el.focus()
+      }
+    })
   }
 })
 
