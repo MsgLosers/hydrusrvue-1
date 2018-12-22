@@ -6,6 +6,10 @@
     <section class="section">
       <div class="container">
         <h1 class="title has-text-primary has-text-centered">{{ title }}</h1>
+        <h2
+          class="subtitle has-text-centered"
+          v-if="subtitle"
+          v-html="subtitle"></h2>
         <search v-if="isAuthorized  || !authenticationIsRequired" />
       </div>
     </section>
@@ -61,7 +65,8 @@ export default {
   data: function () {
     return {
       version: `hydrusrvue@${config.version}`,
-      title: config.title
+      title: config.title,
+      subtitle: config.subtitle
     }
   },
   computed: {

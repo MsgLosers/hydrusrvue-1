@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 + Added support for sorting files by amount of tags
++ Added the ability to display a subtitle on the home view
 
 ## [2.2.1] - 2018-12-11
 

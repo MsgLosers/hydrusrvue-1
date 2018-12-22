@@ -130,6 +130,9 @@ configure your installation:
 + `VUE_APP_TITLE=hydrusrvue`: sets the title of your installation. It is used
   throughout the whole application, making it possible to add some personal
   flavor/branding.
++ `VUE_APP_SUBTITLE=A Vue-based frontend for <a href="https://github.com/mserajnik/hydrusrv" target="_blank" rel="noopener">hydrusrv</a>`:
+  if not empty, sets a subtitle that is displayed on the home view. Allows the
+  usage of HTML (e.g., to display links).
 + `VUE_APP_DESCRIPTION=A Vue-based frontend for hydrusrv`: sets the content
   of `<meta name="description">`. Be advised that hydrusrvue is not opmitized
   for search engines and that they might decide to ignore the description even
