@@ -74,6 +74,16 @@
       <input
         type="radio"
         class="is-checkradio is-aligned"
+        id="sorting-files-tags"
+        value="tags"
+        v-model="localSorting">
+      <label for="sorting-files-tags">Sort by amount of tags</label>
+    </div>
+
+    <div class="field">
+      <input
+        type="radio"
+        class="is-checkradio is-aligned"
         id="sorting-files-random"
         value="random"
         v-model="localSorting">

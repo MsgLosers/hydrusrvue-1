@@ -91,6 +91,16 @@
           <input
             type="radio"
             class="is-checkradio is-aligned"
+            id="sorting-tags"
+            value="tags"
+            v-model="localSorting">
+          <label for="sorting-tags">Sort by amount of tags</label>
+        </div>
+
+        <div class="field">
+          <input
+            type="radio"
+            class="is-checkradio is-aligned"
             id="sorting-random"
             value="random"
             v-model="localSorting">
@@ -235,6 +245,9 @@ export default {
         mime: 'long-arrow-alt-up',
         'mime-asc': 'long-arrow-alt-up',
         'mime-desc': 'long-arrow-alt-down',
+        tags: 'long-arrow-alt-down',
+        'tags-asc': 'long-arrow-alt-up',
+        'tags-desc': 'long-arrow-alt-down',
         random: 'random',
         'random-desc': 'random',
         'random-asc': 'random',
@@ -270,6 +283,8 @@ export default {
           return 'height'
         case 'mime':
           return 'mime type'
+        case 'tags':
+          return 'amount of tags'
         case 'random':
           return 'random'
         case 'namespaces':

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
++ Added support for sorting files by amount of tags
+
 ## [2.2.1] - 2018-12-11
 
 ### Fixed
