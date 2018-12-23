@@ -12,6 +12,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 + Added support for sorting files by amount of tags
 + Added the ability to display a subtitle on the home view
 
+### Changed
+
++ Improved the tag autocomplete handling so it cancels unnecessary pending
+  requests and no longer displays suggestions from requests that resolve after
+  a search has been started
+
 ## [2.2.1] - 2018-12-11
 
 ### Fixed

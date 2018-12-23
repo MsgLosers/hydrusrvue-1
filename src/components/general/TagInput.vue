@@ -48,6 +48,7 @@
 <script>
 import { mapState } from 'vuex'
 import { mixin as clickaway } from 'vue-clickaway'
+import axios from 'axios'
 import debounce from 'lodash/debounce'
 
 import api from '@/api'
@@ -109,6 +110,8 @@ export default {
   },
   methods: {
     tryCompletion: function () {
+      api.cancelPendingTagAutocompleteRequest()
+
       this.isSearching = true
 
       if (['', '-'].includes(this.localTag.trim())) {
@@ -129,6 +132,10 @@ export default {
 
       api.autocompleteTag(body, this.token)
         .then(res => {
+          if (this.tag === '') {
+            return
+          }
+
           for (const suggestion of res.data.tags) {
             suggestion.color = tagFormatter.getColor(
               suggestion.name, this.colors
@@ -138,6 +145,10 @@ export default {
           this.suggestions = res.data.tags
         })
         .catch(err => {
+          if (axios.isCancel(err)) {
+            return
+          }
+
           errorHandler.handle(
             err.response,
             [

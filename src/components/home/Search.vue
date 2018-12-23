@@ -38,6 +38,7 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+import api from '@/api'
 import queryFormatter from '@/util/query-formatter'
 
 import TagInput from '@/components/general/TagInput'
@@ -52,6 +53,8 @@ export default {
   },
   methods: {
     handleSubmit: function () {
+      api.cancelPendingTagAutocompleteRequest()
+
       this.$router.push({
         path: '/files',
         query: queryFormatter.generateDefaultFilesQuery(

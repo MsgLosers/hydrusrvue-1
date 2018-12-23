@@ -2,6 +2,8 @@ import axios from 'axios'
 
 import config from '@/config'
 
+let source
+
 export default {
   fetchApiStatus () {
     return axios.get(config.apiUrl)
@@ -71,6 +73,8 @@ export default {
     })
   },
   autocompleteTag (body, token) {
+    source = axios.CancelToken.source()
+
     const headers = {}
 
     if (token) {
@@ -79,8 +83,16 @@ export default {
 
     return axios.post(`${config.apiUrl}/autocomplete-tag`,
       body,
-      { headers: headers }
+      {
+        headers: headers,
+        cancelToken: source.token
+      }
     )
+  },
+  cancelPendingTagAutocompleteRequest () {
+    if (source) {
+      source.cancel()
+    }
   },
   fetchNamespaces (token) {
     const headers = {}

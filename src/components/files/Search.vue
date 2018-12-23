@@ -95,6 +95,7 @@ import qs from 'qs'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import config from '@/config'
+import api from '@/api'
 import queryFormatter from '@/util/query-formatter'
 import tagFormatter from '@/util/tag-formatter'
 
@@ -199,6 +200,8 @@ export default {
       this.finishInitialization()
     },
     handleSubmit: function () {
+      api.cancelPendingTagAutocompleteRequest()
+
       this.page = 1
 
       this.loadFiles(false)
