@@ -126,5 +126,16 @@ export default {
     return axios.get(`${config.apiUrl}/files/${id}`, {
       headers: headers
     })
+  },
+  fetchMimeTypes (token) {
+    const headers = {}
+
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`
+    }
+
+    return axios.get(`${config.apiUrl}/mime-types`, {
+      headers: headers
+    })
   }
 }

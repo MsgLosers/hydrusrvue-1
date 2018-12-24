@@ -21,6 +21,7 @@ import {
   faSignInAlt,
   faSignOutAlt,
   faSpinner,
+  faTools,
   faTrash,
   faUser,
   faUserPlus
@@ -101,6 +102,7 @@ library.add(
   faSignInAlt,
   faSignOutAlt,
   faSpinner,
+  faTools,
   faTrash,
   faUser,
   faUserPlus

@@ -12,11 +12,13 @@ import {
   UNSET_LAST_FILES_PAGE_REACHED,
   SET_DETAIL_ITEM,
   UNSET_DETAIL_ITEM,
-  SET_LAST_DETAIL_ID
+  SET_LAST_DETAIL_ID,
+  SET_MIME_TYPES
 } from '@/store/mutation-types'
 import config from '@/config'
 import api from '@/api'
 import errorHandler from '@/util/error-handler'
+import tagsHelper from '@/util/tags-helper'
 
 export default {
   namespaced: true,
@@ -27,7 +29,8 @@ export default {
     totalCount: null,
     hasReachedLastPage: false,
     detailItem: null,
-    lastDetailId: null
+    lastDetailId: null,
+    mimeTypes: []
   },
   mutations: {
     [SET_FILES] (state, payload) {
@@ -71,6 +74,9 @@ export default {
     },
     [SET_LAST_DETAIL_ID] (state, payload) {
       state.lastDetailId = payload
+    },
+    [SET_MIME_TYPES] (state, payload) {
+      state.mimeTypes = payload
     }
   },
   actions: {
@@ -127,6 +133,11 @@ export default {
               },
               {
                 name: 'InvalidTagsParameterError',
+                isFatal: false,
+                isLocal: false
+              },
+              {
+                name: 'InvalidConstraintsParameterError',
                 isFatal: false,
                 isLocal: false
               },
@@ -214,6 +225,11 @@ export default {
                 isLocal: false
               },
               {
+                name: 'InvalidConstraintsParameterError',
+                isFatal: false,
+                isLocal: false
+              },
+              {
                 name: 'InvalidSortParameterError',
                 isFatal: false,
                 isLocal: false
@@ -292,6 +308,25 @@ export default {
     },
     setLastDetailId ({ commit }, payload) {
       commit(SET_LAST_DETAIL_ID, payload)
+    },
+    fetchMimeTypes (context) {
+      context.dispatch('error/flush', false, { root: true })
+
+      return api.fetchMimeTypes(context.rootState.auth.token)
+        .then(res => {
+          context.commit(SET_MIME_TYPES, res.data.mimeTypes)
+        })
+        .catch(err => {
+          errorHandler.handle(
+            err.response,
+            [
+              { name: 'MissingTokenError', isFatal: false, isLocal: false },
+              { name: 'InvalidTokenError', isFatal: false, isLocal: false },
+              { name: 'ShuttingDownError', isFatal: true, isLocal: false },
+              { name: 'InternalServerError', isFatal: true, isLocal: false }
+            ]
+          )
+        })
     }
   },
   getters: {
@@ -301,21 +336,7 @@ export default {
         return []
       }
 
-      const unsortedTags = state.detailItem.tags.slice()
-      const sortedTags = []
-
-      for (let i = 0; i < unsortedTags.length; i++) {
-        if (
-          (!unsortedTags[i].name.startsWith(':')) &&
-          (!unsortedTags[i].name.endsWith(':')) &&
-          unsortedTags[i].name.includes(':')
-        ) {
-          sortedTags.push(unsortedTags[i])
-          unsortedTags[i] = ''
-        }
-      }
-
-      return sortedTags.concat(unsortedTags.filter(tag => tag !== ''))
+      return tagsHelper.getSortedTags(state.detailItem.tags)
     }
   }
 }

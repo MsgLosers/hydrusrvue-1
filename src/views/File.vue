@@ -86,7 +86,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import config from '@/config'
 import queryFormatter from '@/util/query-formatter'
-import tagFormatter from '@/util/tag-formatter'
+import tagsHelper from '@/util/tags-helper'
 import urlFormatter from '@/util/url-formatter'
 
 import Info from '@/components/file/Info'
@@ -127,7 +127,7 @@ export default {
           name: tag.name,
           path: '/files',
           query: queryFormatter.generateDefaultFilesQuery(tag.name),
-          color: tagFormatter.getColor(tag.name, this.colors),
+          color: tagsHelper.getColor(tag.name, this.colors),
           fileCount: tag.fileCount
         })
       }

@@ -15,6 +15,10 @@
   }
 
   .dropdown-item {
+    &.constraint {
+      color: $dark;
+    }
+
     &:focus {
       background-color: $dropdown-item-hover-background-color;
     }
@@ -26,12 +30,16 @@
 }
 
 .tags {
-  &.file-tags {
+  &.file-filters {
     .tag {
       background-color: $primary;
       color: $white;
       overflow-x: hidden;
       text-decoration: none;
+
+      &.constraint {
+        background-color: $dark;
+      }
 
       span {
         &:not(.delete) {
