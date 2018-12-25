@@ -30,7 +30,7 @@
           class="button is-primary"
           :href="preparedMediaUrl"
           target="_blank"
-          :download="file.id | addFileExtension(file.mime)">
+          :download="file.hash | addFileExtension(file.mime)">
           Download
         </a>
       </p>
