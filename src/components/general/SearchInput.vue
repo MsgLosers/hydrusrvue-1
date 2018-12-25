@@ -41,7 +41,7 @@
             <span class="icon" v-if="suggestion.type === 'constraint'">
               <font-awesome-icon icon="tools" />
             </span>
-            {{ suggestion.name }}
+            <span>{{ suggestion.name }}</span>
             <small class="file-amount" v-if="suggestion.type === 'tag'">
               {{ suggestion.fileCount | formatNumber }}
             </small>

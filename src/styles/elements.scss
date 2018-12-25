@@ -9,22 +9,43 @@
   }
 }
 
+.navbar-item {
+  display: flex;
+}
+
 .dropdown {
   &.suggestions {
     display: block !important;
-  }
 
-  .dropdown-item {
-    &.constraint {
-      color: $dark;
-    }
+    .dropdown-menu {
+      max-width: calc(100vw - 48px);
 
-    &:focus {
-      background-color: $dropdown-item-hover-background-color;
-    }
+      .dropdown-item {
+        display: flex;
 
-    .file-amount {
-      color: $grey-light;
+        &.constraint {
+          color: $dark;
+        }
+
+        &:focus {
+          background-color: $dropdown-item-hover-background-color;
+        }
+
+        span {
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .icon {
+          min-width: 1.5rem;
+        }
+
+        .file-amount {
+          align-self: flex-end;
+          color: $grey-light;
+          margin-left: 5px;
+        }
+      }
     }
   }
 }

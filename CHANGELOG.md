@@ -20,6 +20,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   requests and no longer displays suggestions from requests that resolve after
   a search has been started
 
+### Fixed
+
++ Fixed the alignment of items in dropdowns when an icon is present
+
 ## [2.2.1] - 2018-12-11
 
 ### Fixed
