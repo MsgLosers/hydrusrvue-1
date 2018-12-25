@@ -6,7 +6,7 @@
         <input
           type="password"
           class="input"
-          placeholder="new password"
+          :placeholder="'New password' | formatToConfiguredLetterCase"
           required
           :minlength="minPasswordLength"
           maxlength="1024"
@@ -21,7 +21,7 @@
         <input
           type="password"
           class="input"
-          placeholder="current password"
+          :placeholder="'Current password' | formatToConfiguredLetterCase"
           required
           :disabled="isWorking || hasSaved"
           autocomplete="current-password"
@@ -35,6 +35,7 @@
           type="submit"
           class="button"
           :class="{
+            'is-lowercase': !useNormalLetterCase,
             'is-primary': !hasUpdatedPassword,
             'is-success': hasUpdatedPassword
           }"
@@ -110,7 +111,8 @@ export default {
       minPasswordLength: config.minPasswordLength < 1024
         ? config.minPasswordLength
         : 1024,
-      currentPassword: ''
+      currentPassword: '',
+      useNormalLetterCase: config.useNormalLetterCase
     }
   },
   methods: {

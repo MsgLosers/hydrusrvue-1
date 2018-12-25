@@ -141,6 +141,10 @@ configure your installation:
   `<meta name="robots">`.
 + `VUE_APP_PRIMARY_COLOR='#3498db'`: sets the primary color used throughout
   hydrusrvue. Make sure to use a color that contrasts well with white.
++ `VUE_APP_USE_NORMAL_LETTER_CASE=false`: by default, hydrusrvue uses lowercase
+  text throughout most of the application (like hydrus client) for aesthestic
+  reasons. If you do not want that, setting this to `false` disables these case
+  transformations.
 + `VUE_APP_API_URL=https://example.com/api`: the URL to your hydrusrv
   API. __No trailing slashes.__
 + `VUE_APP_REGISTRATION_ENABLED=true`: setting this to `false` disables the

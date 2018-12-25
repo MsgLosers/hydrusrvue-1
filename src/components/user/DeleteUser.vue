@@ -6,7 +6,7 @@
         <input
           type="password"
           class="input"
-          placeholder="current password"
+          :placeholder="'Current password' | formatToConfiguredLetterCase"
           required
           :disabled="isWorking || hasSaved"
           autocomplete="current-password"
@@ -19,6 +19,7 @@
         <button
           type="submit"
           class="button is-danger"
+          :class="{ 'is-lowercase': !useNormalLetterCase }"
           :disabled="
             isUpdatingUsername ||
             hasUpdatedUsername ||
@@ -48,6 +49,8 @@
 import { mapActions } from 'vuex'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+import config from '@/config'
 
 export default {
   name: 'DeleteUser',
@@ -83,7 +86,8 @@ export default {
   },
   data: function () {
     return {
-      currentPassword: ''
+      currentPassword: '',
+      useNormalLetterCase: config.useNormalLetterCase
     }
   },
   methods: {

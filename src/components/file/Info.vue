@@ -7,7 +7,10 @@
       <li><strong>MIME:</strong> {{ file.mime }}</li>
       <li><strong>Width:</strong> {{ file.width | formatNumber }} px</li>
       <li><strong>Height:</strong> {{ file.height | formatNumber }} px</li>
-      <li><strong>Size:</strong> {{ file.size | formatFileSize }}</li>
+      <li>
+        <strong>Size:</strong>
+        <span class="is-normal-case"> {{ file.size | formatFileSize }}</span>
+      </li>
     </ul>
 
     <ul class="file-detail-tags" v-if="tags.length">

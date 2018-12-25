@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
 
-    <vue-headful :title="title" />
+    <vue-headful :title="title | formatToConfiguredLetterCase" />
 
     <section class="section">
       <div class="container">
@@ -21,9 +21,9 @@
         <div class="content has-text-centered">
 
           <p v-if="isAuthorized || !authenticationIsRequired">
-            <strong>{{ api.fileCount | formatNumber }}</strong> files
+            <strong>{{ api.fileCount | formatNumber }}</strong> Files
             |
-            <strong>{{ api.tagCount | formatNumber }}</strong> tags
+            <strong>{{ api.tagCount | formatNumber }}</strong> Tags
           </p>
 
           <p>

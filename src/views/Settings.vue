@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
 
-    <vue-headful :title="title" />
+    <vue-headful :title="title | formatToConfiguredLetterCase" />
 
     <section class="section">
 
@@ -63,6 +63,7 @@
                         type="submit"
                         class="button"
                         :class="{
+                          'is-lowercase': !useNormalLetterCase,
                           'is-primary': !hasSaved,
                           'is-success': hasSaved
                         }">
@@ -121,7 +122,8 @@ export default {
       tagsSorting: this.$store.state.settings.tagsSorting,
       tagsSortingDirection: this.$store.state.settings.tagsSortingDirection,
       hasSaved: false,
-      title: `settings – ${config.title}`
+      title: `Settings – ${config.title}`,
+      useNormalLetterCase: config.useNormalLetterCase
     }
   },
   methods: {

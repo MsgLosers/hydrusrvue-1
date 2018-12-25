@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
 
-    <vue-headful :title="title" />
+    <vue-headful :title="title | formatToConfiguredLetterCase" />
 
     <div class="container-fluid" v-if="!error.name">
 
@@ -100,7 +100,7 @@ export default {
     return {
       canPreserveScrollPosition: true,
       appTitle: config.title,
-      title: `file ${this.$route.params.id} – ${config.title}`
+      title: `File ${this.$route.params.id} – ${config.title}`
     }
   },
   computed: {

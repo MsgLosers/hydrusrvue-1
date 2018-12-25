@@ -27,6 +27,7 @@ import {
   faUserPlus
 } from '@fortawesome/free-solid-svg-icons'
 
+import config from '@/config'
 import router from '@/router'
 import store from '@/store'
 
@@ -46,6 +47,14 @@ Vue.directive('focus', {
       }
     })
   }
+})
+
+Vue.filter('formatToConfiguredLetterCase', text => {
+  if (!text) {
+    return ''
+  }
+
+  return config.useNormalLetterCase ? text : text.toLowerCase()
 })
 
 Vue.filter('formatNumber', number => {

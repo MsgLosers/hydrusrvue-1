@@ -10,7 +10,10 @@
               :search.sync="search"
               :hasCompletedSearch.sync="hasCompletedSearch"
               size="is-medium"
-              placeholder="search for files by tag or constraint…" />
+              :placeholder="
+                'Search for files by tag or constraint…' |
+                  formatToConfiguredLetterCase
+              " />
           </div>
         </div>
       </div>
@@ -20,7 +23,8 @@
           <div class="control">
             <button
               type="submit"
-              class="button is-primary is-medium is-fullwidth">
+              class="button is-primary is-medium is-fullwidth"
+              :class="{ 'is-lowercase': !useNormalLetterCase }">
               <span class="icon">
                 <font-awesome-icon icon="search" />
               </span>
@@ -38,6 +42,7 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+import config from '@/config'
 import api from '@/api'
 import queryFormatter from '@/util/query-formatter'
 
@@ -48,7 +53,8 @@ export default {
   data: function () {
     return {
       search: '',
-      hasCompletedSearch: false
+      hasCompletedSearch: false,
+      useNormalLetterCase: config.useNormalLetterCase
     }
   },
   methods: {

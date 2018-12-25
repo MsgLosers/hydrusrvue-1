@@ -6,9 +6,9 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="<%= VUE_APP_DESCRIPTION %>">
+    <meta name="description" content="<%= typeof VUE_APP_USE_NORMAL_LETTER_CASE !== 'undefined' && VUE_APP_USE_NORMAL_LETTER_CASE === 'true' ? VUE_APP_DESCRIPTION : VUE_APP_DESCRIPTION.toLowerCase() %>">
     <meta name="robots" content="<%= VUE_APP_ROBOTS %>">
-    <title><%= VUE_APP_TITLE %></title>
+    <title><%= typeof VUE_APP_USE_NORMAL_LETTER_CASE !== 'undefined' && VUE_APP_USE_NORMAL_LETTER_CASE === 'true' ? VUE_APP_TITLE : VUE_APP_TITLE.toLowerCase() %></title>
     <link rel="apple-touch-icon" sizes="180x180" href="<%= BASE_URL %>apple-touch-icon.png">
     <link rel="apple-touch-startup-image" href="<%= BASE_URL %>apple-touch-startup-image-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
     <link rel="apple-touch-startup-image" href="<%= BASE_URL %>apple-touch-startup-image-750x1294.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">

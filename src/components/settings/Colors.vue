@@ -7,8 +7,8 @@
 
         <thead>
           <tr>
-            <th>namespace</th>
-            <th>color</th>
+            <th>Namespace</th>
+            <th>Color</th>
           </tr>
         </thead>
 

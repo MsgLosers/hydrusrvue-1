@@ -11,7 +11,7 @@
               ref="searchInput"
               :search.sync="search"
               :hasCompletedSearch.sync="hasCompletedSearch"
-              :placeholder="placeholderText"
+              :placeholder="placeholderText | formatToConfiguredLetterCase"
               :parentRefs="$refs" />
           </div>
           <div class="control">
@@ -30,7 +30,7 @@
               ref="searchInput"
               :search.sync="search"
               :hasCompletedSearch.sync="hasCompletedSearch"
-              :placeholder="placeholderText"
+              :placeholder="placeholderText | formatToConfiguredLetterCase"
               :parentRefs="$refs" />
           </div>
         </div>
@@ -47,7 +47,10 @@
       <div class="column is-2">
         <div class="field">
           <div class="control">
-            <button type="submit" class="button is-primary is-fullwidth">
+            <button
+              type="submit"
+              class="button is-primary is-fullwidth"
+              :class="{ 'is-lowercase': !useNormalLetterCase }">
               <span class="icon">
                 <font-awesome-icon icon="search" />
               </span>
@@ -136,7 +139,8 @@ export default {
       page: 1,
       activeTags: [],
       activeConstraints: [],
-      hasCompletedSearch: false
+      hasCompletedSearch: false,
+      useNormalLetterCase: config.useNormalLetterCase
     }
   },
   computed: {
@@ -150,8 +154,8 @@ export default {
     },
     placeholderText: function () {
       return this.activeFilters.length
-        ? 'add more tags or constraints to your search…'
-        : 'search for files by tag or constraint…'
+        ? 'Add more tags or constraints to your search…'
+        : 'Search for files by tag or constraint…'
     },
     ...mapState({
       totalCount: state => state.files.totalCount,
@@ -184,7 +188,16 @@ export default {
         }
 
         if (
-          ['id', 'size', 'width', 'height', 'mime', 'random', 'namespaces']
+          [
+            'id',
+            'size',
+            'width',
+            'height',
+            'mime',
+            'tags',
+            'random',
+            'namespaces'
+          ]
             .includes(
               this.$route.query.sort
             )

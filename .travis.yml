@@ -13,6 +13,7 @@ env:
     - VUE_APP_DESCRIPTION='A Vue-based frontend for hydrusrv'
     - VUE_APP_ROBOTS='noindex, nofollow'
     - VUE_APP_PRIMARY_COLOR='#3498db'
+    - VUE_APP_USE_NORMAL_LETTER_CASE=false
     - VUE_APP_API_URL='https://example.com/api'
     - VUE_APP_REGISTRATION_ENABLED=true
     - VUE_APP_AUTHENTICATION_REQUIRED=true

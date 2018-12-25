@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
 
-    <vue-headful :title="title" />
+    <vue-headful :title="title | formatToConfiguredLetterCase" />
 
     <section class="section">
 
@@ -18,8 +18,8 @@
 
           <thead>
             <tr>
-              <th>tag</th>
-              <th>files</th>
+              <th>Tag</th>
+              <th>Files</th>
             </tr>
           </thead>
 
@@ -82,7 +82,7 @@ export default {
   data: function () {
     return {
       wantsAdditionalTags: false,
-      title: `tags – ${config.title}`
+      title: `Tags – ${config.title}`
     }
   },
   computed: {
