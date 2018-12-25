@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 
 + Fixed the alignment of items in dropdowns when an icon is present
++ Fixed wrong file extensions when downloading a file
 
 ## [2.2.1] - 2018-12-11
 
