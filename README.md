@@ -56,6 +56,7 @@ The most prominent features are:
 + [Install](#install)
   + [Dependencies](#dependencies)
   + [Updating](#updating)
+    + [Upgrading from 2.x to 3.x](#upgrading-from-2x-to-3x)
     + [Upgrading from 1.x to 2.x](#upgrading-from-1x-to-2x)
 + [Usage](#usage)
   + [Configuration](#configuration)
@@ -83,7 +84,7 @@ user@local:hydrusrvue$ yarn
 
 ### Dependencies
 
-+ [hydrusrv][hydrusrv] (`5.x` for hydrusrvue `2.x`)
++ [hydrusrv][hydrusrv] (`6.x` for hydrusrvue `3.x`)
 + [Node.js][node-js]
 + [Yarn][yarn]
 
@@ -111,9 +112,17 @@ therefore always safe to simply install via the routine mentioned before.
 When necessary, this section will be expanded with upgrade guides to new major
 versions.
 
+#### Upgrading from 2.x to 3.x
+
+Upgrading from `2.x` to `3.x` can be done via `git pull && yarn`.
+
+The major version bump was made due to the incompatibility of `2.x` with
+hydrusrv `6.x`. So if you are using that, you need to upgrade hydrusrvue to
+`6.x`.
+
 #### Upgrading from 1.x to 2.x
 
-Upgrading from `4.x` to `5.x` can be done via `git pull && yarn` and requires
+Upgrading from `1.x` to `2.x` can be done via `git pull && yarn` and requires
 only a few setting changes.
 
 The major version bump was made due to the incompatibility of `1.x` with
@@ -130,6 +139,9 @@ configure your installation:
 + `VUE_APP_TITLE=hydrusrvue`: sets the title of your installation. It is used
   throughout the whole application, making it possible to add some personal
   flavor/branding.
++ `VUE_APP_SUBTITLE=A Vue-based frontend for <a href="https://github.com/mserajnik/hydrusrv" target="_blank" rel="noopener">hydrusrv</a>`:
+  if not empty, sets a subtitle that is displayed on the home view. Allows the
+  usage of HTML (e.g., to display links).
 + `VUE_APP_DESCRIPTION=A Vue-based frontend for hydrusrv`: sets the content
   of `<meta name="description">`. Be advised that hydrusrvue is not opmitized
   for search engines and that they might decide to ignore the description even
@@ -138,6 +150,10 @@ configure your installation:
   `<meta name="robots">`.
 + `VUE_APP_PRIMARY_COLOR='#3498db'`: sets the primary color used throughout
   hydrusrvue. Make sure to use a color that contrasts well with white.
++ `VUE_APP_USE_NORMAL_LETTER_CASE=false`: by default, hydrusrvue uses lowercase
+  text throughout most of the application (like hydrus client) for aesthestic
+  reasons. If you do not want that, setting this to `false` disables these case
+  transformations.
 + `VUE_APP_API_URL=https://example.com/api`: the URL to your hydrusrv
   API. __No trailing slashes.__
 + `VUE_APP_REGISTRATION_ENABLED=true`: setting this to `false` disables the

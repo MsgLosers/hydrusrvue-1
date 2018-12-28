@@ -2,12 +2,11 @@ a {
   outline: none;
 }
 
-select,
-button {
-  text-transform: lowercase;
-}
-
 ::selection {
   background-color: $primary;
   color: $white;
+}
+
+.is-normal-case {
+  text-transform: none !important;
 }

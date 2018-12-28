@@ -60,6 +60,7 @@ export const UNSET_LAST_FILES_PAGE_REACHED = 'unsetLastFilesPageReached'
 export const SET_DETAIL_ITEM = 'setFileDetailItem'
 export const UNSET_DETAIL_ITEM = 'unsetFileDetailItem'
 export const SET_LAST_DETAIL_ID = 'setLastFileDetailId'
+export const SET_MIME_TYPES = 'setMimeTypes'
 
 // settings
 export const SET_RESTRICT_IMAGE_SIZE = 'setRestrictImageSize'

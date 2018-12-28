@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
 
-    <vue-headful :title="title" />
+    <vue-headful :title="title | formatToConfiguredLetterCase" />
 
     <section class="section">
 
@@ -63,6 +63,7 @@
                 <p>
                   <button
                     class="button is-primary"
+                    :class="{ 'is-lowercase': !useNormalLetterCase }"
                     @click="logOutEverywhere"
                     :disabled="isWorking || hasSaved">
                     <span class="icon">
@@ -130,7 +131,8 @@ export default {
   name: 'User',
   data: function () {
     return {
-      title: `user – ${config.title}`
+      title: `User – ${config.title}`,
+      useNormalLetterCase: config.useNormalLetterCase
     }
   },
   computed: {

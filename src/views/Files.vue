@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
 
-    <vue-headful :title="title" />
+    <vue-headful :title="title | formatToConfiguredLetterCase" />
 
     <section class="section">
 
@@ -77,7 +77,7 @@ export default {
   data: function () {
     return {
       wantsAdditionalFiles: false,
-      title: `files – ${config.title}`
+      title: `Files – ${config.title}`
     }
   },
   computed: {

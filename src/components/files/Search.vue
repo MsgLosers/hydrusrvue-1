@@ -7,11 +7,11 @@
 
         <div class="field has-addons" v-if="totalCount !== null">
           <div class="control is-expanded">
-            <tag-input
-              ref="tagInput"
-              :tag.sync="tag"
-              :hasCompletedTag.sync="hasCompletedTag"
-              :placeholder="placeholderText"
+            <search-input
+              ref="searchInput"
+              :search.sync="search"
+              :hasCompletedSearch.sync="hasCompletedSearch"
+              :placeholder="placeholderText | formatToConfiguredLetterCase"
               :parentRefs="$refs" />
           </div>
           <div class="control">
@@ -26,11 +26,11 @@
 
         <div class="field" v-else>
           <div class="control">
-            <tag-input
-              ref="tagInput"
-              :tag.sync="tag"
-              :hasCompletedTag.sync="hasCompletedTag"
-              :placeholder="placeholderText"
+            <search-input
+              ref="searchInput"
+              :search.sync="search"
+              :hasCompletedSearch.sync="hasCompletedSearch"
+              :placeholder="placeholderText | formatToConfiguredLetterCase"
               :parentRefs="$refs" />
           </div>
         </div>
@@ -47,7 +47,10 @@
       <div class="column is-2">
         <div class="field">
           <div class="control">
-            <button type="submit" class="button is-primary is-fullwidth">
+            <button
+              type="submit"
+              class="button is-primary is-fullwidth"
+              :class="{ 'is-lowercase': !useNormalLetterCase }">
               <span class="icon">
                 <font-awesome-icon icon="search" />
               </span>
@@ -59,27 +62,33 @@
 
     </div>
 
-    <div class="file-tags tags" v-if="activeTags.length">
+    <div class="file-filters tags" v-if="activeFilters.length">
       <a
         class="tag is-medium"
+        :class="{ 'constraint': filter.type === 'constraint' }"
         href="#"
-        ref="activeTags"
-        :style="{ backgroundColor: tag.color }"
-        v-for="(tag, index) in activeTags"
+        ref="activeFilters"
+        :style="
+          { backgroundColor: filter.type === 'tag' ? filter.color : null }
+        "
+        v-for="(filter, index) in activeFilters"
         :key="index"
-        @click.prevent="removeTag(tag.name, true)"
-        @keydown.enter.prevent="removeTag(tag.name, true)"
-        @keydown.delete.prevent="removeTag(tag.name, true)"
-        @keydown.left.prevent="focusActiveTag(index - 1)"
-        @keydown.right.prevent="focusActiveTag(index + 1)"
-        @keydown.tab.prevent="focusActiveTag(activeTags.length - 1)"
-        @keydown.shift.tab.prevent="focusActiveTag(0)"
-        @keydown.esc.prevent="focusTagInput"
+        @click.prevent="removeFilter(filter.name, filter.type, true)"
+        @keydown.enter.prevent="removeFilter(filter.name, filter.type, true)"
+        @keydown.delete.prevent="removeFilter(filter.name, filter.type, true)"
+        @keydown.left.prevent="focusActiveFilter(index - 1)"
+        @keydown.right.prevent="focusActiveFilter(index + 1)"
+        @keydown.tab.prevent="focusActiveFilter(activeFilters.length - 1)"
+        @keydown.shift.tab.prevent="focusActiveFilter(0)"
+        @keydown.esc.prevent="focusSearchInput"
         @keydown.prevent="startTyping">
-        <span class="icon" v-if="tag.exclude">
+        <span class="icon" v-if="filter.exclude">
           <font-awesome-icon icon="eye-slash" />
         </span>
-        <span>{{ tag.name }}</span>
+        <span class="icon" v-if="filter.type === 'constraint'">
+          <font-awesome-icon icon="tools" />
+        </span>
+        <span>{{ filter.name }}</span>
         <span type="button" class="delete is-small"></span>
       </a>
     </div>
@@ -95,10 +104,12 @@ import qs from 'qs'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import config from '@/config'
+import api from '@/api'
 import queryFormatter from '@/util/query-formatter'
-import tagFormatter from '@/util/tag-formatter'
+import tagsHelper from '@/util/tags-helper'
+import constraintsHelper from '@/util/constraints-helper'
 
-import TagInput from '@/components/general/TagInput'
+import SearchInput from '@/components/general/SearchInput'
 import Sorting from '@/components/files/Sorting'
 
 export default {
@@ -119,7 +130,7 @@ export default {
   data: function () {
     return {
       isInitialized: false,
-      tag: '',
+      search: '',
       sorting: this.$store.state.settings.filesSorting,
       sortingDirection: this.$store.state.settings.filesSortingDirection,
       sortingNamespaces: Object.assign(
@@ -127,14 +138,24 @@ export default {
       ),
       page: 1,
       activeTags: [],
-      hasCompletedTag: false
+      activeConstraints: [],
+      hasCompletedSearch: false,
+      useNormalLetterCase: config.useNormalLetterCase
     }
   },
   computed: {
+    activeFilters: function () {
+      const sortedActiveConstraints = this.activeConstraints.slice()
+      sortedActiveConstraints.sort((a, b) => a.name.localeCompare(b.name))
+
+      return sortedActiveConstraints.concat(
+        tagsHelper.getSortedTags(this.activeTags.slice(), true)
+      )
+    },
     placeholderText: function () {
-      return this.activeTags.length
-        ? 'add more tags to your search…'
-        : 'search for files by tag…'
+      return this.activeFilters.length
+        ? 'Add more tags or constraints to your search…'
+        : 'Search for files by tag or constraint…'
     },
     ...mapState({
       totalCount: state => state.files.totalCount,
@@ -151,11 +172,32 @@ export default {
         this.page = queryFormatter.ensureValidPage(this.$route.query.page)
 
         if (this.$route.query.tags) {
-          this.setTags(this.$route.query.tags)
+          this.setFilters(this.$route.query.tags)
+        }
+
+        if (this.$route.query.constraints) {
+          const constraints = []
+
+          for (const constraint of this.$route.query.constraints) {
+            if (constraintsHelper.isValidConstraint(constraint)) {
+              constraints.push(constraint)
+            }
+          }
+
+          this.setFilters(constraints)
         }
 
         if (
-          ['id', 'size', 'width', 'height', 'mime', 'random', 'namespaces']
+          [
+            'id',
+            'size',
+            'width',
+            'height',
+            'mime',
+            'tags',
+            'random',
+            'namespaces'
+          ]
             .includes(
               this.$route.query.sort
             )
@@ -199,6 +241,8 @@ export default {
       this.finishInitialization()
     },
     handleSubmit: function () {
+      api.cancelPendingTagAutocompleteRequest()
+
       this.page = 1
 
       this.loadFiles(false)
@@ -208,6 +252,7 @@ export default {
         this.activeTags.map(
           tag => tag.exclude ? `-${tag.name}` : tag.name
         ),
+        this.activeConstraints.map(constraint => constraint.name),
         this.sorting,
         this.sortingDirection,
         this.sortingNamespaces,
@@ -233,17 +278,20 @@ export default {
       }
     },
     loadFiles: function (fetchNextPage) {
-      this.tag = this.tag.trim().toLowerCase()
+      this.search = this.search.trim().toLowerCase()
 
-      if (this.tag !== '') {
-        this.removeTag(
-          this.tag.startsWith('-') ? this.tag.substr(1) : this.tag
+      if (this.search !== '') {
+        this.removeFilter(
+          this.search.startsWith('-') ? this.search.substr(1) : this.search,
+          constraintsHelper.isValidConstraint(this.search)
+            ? 'constraint'
+            : 'tag'
         )
 
-        this.addTag(this.tag)
+        this.addFilter(this.search)
       }
 
-      this.tag = ''
+      this.search = ''
 
       const queryStrings = this.updateQueryAndGetStrings()
 
@@ -257,42 +305,58 @@ export default {
 
       this.fetchFiles(queryStrings.sanitizedQueryString)
     },
-    addTag: function (tag) {
+    addFilter: function (filter) {
+      if (constraintsHelper.isValidConstraint(filter)) {
+        this.activeConstraints.push({
+          type: 'constraint',
+          name: filter
+        })
+
+        return
+      }
+
       this.activeTags.push({
-        name: tag.startsWith('-')
-          ? tag.replace('-', '')
-          : tag.startsWith('\\-')
-            ? tag.replace('\\-', '-')
-            : tag,
-        exclude: tag.startsWith('-'),
-        color: tagFormatter.getColor(
-          tag.startsWith('-')
-            ? tag.replace('-', '')
-            : tag.startsWith('\\-')
-              ? tag.replace('\\-', '')
-              : tag,
+        type: 'tag',
+        name: filter.startsWith('-')
+          ? filter.replace('-', '')
+          : filter.startsWith('\\-')
+            ? filter.replace('\\-', '-')
+            : filter,
+        exclude: filter.startsWith('-'),
+        color: tagsHelper.getColor(
+          filter.startsWith('-')
+            ? filter.replace('-', '')
+            : filter.startsWith('\\-')
+              ? filter.replace('\\-', '')
+              : filter,
           this.colors
         )
       })
     },
-    setTags: function (tags) {
-      this.activeTags = []
+    setFilters: function (filters) {
+      if (filters.length) {
+        filters = filters
+          .map(filter => filter.trim())
+          .filter(filter => filter.length)
+          .filter((filter, i, filters) => filters.indexOf(filter) === i)
 
-      if (tags.length) {
-        tags = tags
-          .map(tag => tag.trim())
-          .filter(tag => tag.length)
-          .filter((tag, i, tags) => tags.indexOf(tag) === i)
-
-        for (const tag of tags) {
-          this.addTag(tag)
+        for (const filter of filters) {
+          this.addFilter(filter)
         }
       }
     },
-    removeTag: function (tag, submit = false) {
-      for (let i = 0; i < this.activeTags.length; i++) {
-        if (this.activeTags[i].name === tag) {
-          this.activeTags.splice(i, 1)
+    removeFilter: function (filter, type, submit = false) {
+      if (type === 'constraint') {
+        for (let i = 0; i < this.activeConstraints.length; i++) {
+          if (this.activeConstraints[i].name === filter) {
+            this.activeConstraints.splice(i, 1)
+          }
+        }
+      } else {
+        for (let i = 0; i < this.activeTags.length; i++) {
+          if (this.activeTags[i].name === filter) {
+            this.activeTags.splice(i, 1)
+          }
         }
       }
 
@@ -300,13 +364,14 @@ export default {
         this.handleSubmit()
 
         this.$nextTick(() => {
-          if (this.activeTags.length) {
-            this.$refs.activeTags[this.$refs.activeTags.length - 1].focus()
+          if (this.activeFilters.length) {
+            this.$refs.activeFilters[this.$refs.activeFilters.length - 1]
+              .focus()
 
             return
           }
 
-          this.focusTagInput()
+          this.focusSearchInput()
         })
       }
     },
@@ -320,33 +385,34 @@ export default {
         this.isInitialized = true
       }, 0)
     },
-    focusActiveTag: function (index) {
+    focusActiveFilter: function (index) {
       this.$nextTick(() => {
-        if (this.activeTags.length) {
+        if (this.activeFilters.length) {
           if (index === -1) {
-            this.$refs.activeTags[this.$refs.activeTags.length - 1].focus()
+            this.$refs.activeFilters[this.$refs.activeFilters.length - 1]
+              .focus()
 
             return
           }
 
-          if (index >= this.activeTags.length) {
-            this.$refs.activeTags[0].focus()
+          if (index >= this.activeFilters.length) {
+            this.$refs.activeFilters[0].focus()
 
             return
           }
 
-          this.$refs.activeTags[index].focus()
+          this.$refs.activeFilters[index].focus()
         }
       })
     },
-    focusTagInput: function () {
-      this.$refs.tagInput.$refs.tag.focus()
+    focusSearchInput: function () {
+      this.$refs.searchInput.$refs.search.focus()
     },
     startTyping: function (event) {
       if (event.key.match(/^[ -~]$/g)) {
-        this.focusTagInput()
+        this.focusSearchInput()
 
-        this.tag = this.tag + event.key.toLowerCase()
+        this.search = this.search + event.key.toLowerCase()
       }
     },
     ...mapActions({
@@ -400,9 +466,9 @@ export default {
         this.setLastQuery(this.updateQueryAndGetStrings().queryString)
       }
     },
-    hasCompletedTag: function (hasCompletedTag) {
-      if (hasCompletedTag) {
-        this.hasCompletedTag = false
+    hasCompletedSearch: function (hasCompletedSearch) {
+      if (hasCompletedSearch) {
+        this.hasCompletedSearch = false
 
         this.handleSubmit()
       }
@@ -413,7 +479,7 @@ export default {
   },
   components: {
     FontAwesomeIcon,
-    TagInput,
+    SearchInput,
     Sorting
   }
 }

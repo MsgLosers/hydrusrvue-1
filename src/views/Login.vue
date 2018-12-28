@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
 
-    <vue-headful :title="title" />
+    <vue-headful :title="title | formatToConfiguredLetterCase" />
 
     <section class="section">
 
@@ -33,7 +33,7 @@
                       <input
                         type="text"
                         class="input"
-                        placeholder="username"
+                        :placeholder="'Username' | formatToConfiguredLetterCase"
                         required
                         :disabled="isLoggingIn"
                         autocomplete="username"
@@ -47,7 +47,7 @@
                       <input
                         type="password"
                         class="input"
-                        placeholder="password"
+                        :placeholder="'Password' | formatToConfiguredLetterCase"
                         required
                         :disabled="isLoggingIn"
                         autocomplete="current-password"
@@ -69,7 +69,8 @@
                     <div class="control">
                       <button
                         type="submit"
-                        class="button is-primary">
+                        class="button is-primary"
+                        :class="{ 'is-lowercase': !useNormalLetterCase }">
                         <span class="icon" v-if="!isLoggingIn">
                           <font-awesome-icon icon="sign-in-alt" />
                         </span>
@@ -113,7 +114,8 @@ export default {
       username: '',
       password: '',
       long: false,
-      title: `login – ${config.title}`
+      title: `Login – ${config.title}`,
+      useNormalLetterCase: config.useNormalLetterCase
     }
   },
   computed: {

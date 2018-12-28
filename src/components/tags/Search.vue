@@ -10,7 +10,10 @@
             <input
               type="text"
               class="input"
-              placeholder="search for tags containing word…"
+              :placeholder="
+                'Search for tags containing word…'
+                  | formatToConfiguredLetterCase
+              "
               v-model="contains"
               v-focus>
           </div>
@@ -29,7 +32,10 @@
             <input
               type="text"
               class="input"
-              placeholder="search for tags containing word…"
+              :placeholder="
+                'Search for tags containing word…'
+                  | formatToConfiguredLetterCase
+              "
               v-model="contains"
               v-focus>
           </div>
@@ -46,7 +52,10 @@
       <div class="column is-2">
         <div class="field">
           <div class="control">
-            <button type="submit" class="button is-primary is-fullwidth">
+            <button
+              type="submit"
+              class="button is-primary is-fullwidth"
+              :class="{ 'is-lowercase': !useNormalLetterCase }">
               <span class="icon">
                 <font-awesome-icon icon="search" />
               </span>
@@ -94,7 +103,8 @@ export default {
       contains: '',
       sorting: this.$store.state.settings.tagsSorting,
       sortingDirection: this.$store.state.settings.tagsSortingDirection,
-      page: 1
+      page: 1,
+      useNormalLetterCase: config.useNormalLetterCase
     }
   },
   computed: {

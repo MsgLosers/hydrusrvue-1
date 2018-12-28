@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
 
-    <vue-headful :title="title" />
+    <vue-headful :title="title | formatToConfiguredLetterCase" />
 
     <section class="section">
 
@@ -33,7 +33,7 @@
                       <input
                         type="text"
                         class="input"
-                        placeholder="username"
+                        :placeholder="'Username' | formatToConfiguredLetterCase"
                         required
                         maxlength="1024"
                         :disabled="isRegistering"
@@ -48,7 +48,7 @@
                       <input
                         type="password"
                         class="input"
-                        placeholder="password"
+                        :placeholder="'Password' | formatToConfiguredLetterCase"
                         required
                         :minlength="minPasswordLength"
                         maxlength="1024"
@@ -62,7 +62,8 @@
                     <div class="control">
                       <button
                         type="submit"
-                        class="button is-primary">
+                        class="button is-primary"
+                        :class="{ 'is-lowercase': !useNormalLetterCase }">
                         <span class="icon" v-if="!isRegistering">
                           <font-awesome-icon
                             icon="user-plus"
@@ -110,7 +111,8 @@ export default {
       minPasswordLength: config.minPasswordLength < 1024
         ? config.minPasswordLength
         : 1024,
-      title: `registration – ${config.title}`
+      title: `Registration – ${config.title}`,
+      useNormalLetterCase: config.useNormalLetterCase
     }
   },
   computed: {

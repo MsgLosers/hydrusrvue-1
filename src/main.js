@@ -12,6 +12,7 @@ import {
   faEquals,
   faEyeSlash,
   faImages,
+  faInfo,
   faLongArrowAltLeft,
   faLongArrowAltDown,
   faLongArrowAltUp,
@@ -21,11 +22,13 @@ import {
   faSignInAlt,
   faSignOutAlt,
   faSpinner,
+  faTools,
   faTrash,
   faUser,
   faUserPlus
 } from '@fortawesome/free-solid-svg-icons'
 
+import config from '@/config'
 import router from '@/router'
 import store from '@/store'
 
@@ -47,12 +50,44 @@ Vue.directive('focus', {
   }
 })
 
+Vue.filter('formatToConfiguredLetterCase', text => {
+  if (!text) {
+    return ''
+  }
+
+  return config.useNormalLetterCase ? text : text.toLowerCase()
+})
+
 Vue.filter('formatNumber', number => {
   if (typeof number !== 'number') {
     return ''
   }
 
   return number.toLocaleString()
+})
+
+Vue.filter('addFileExtension', (name, mime) => {
+  if (!(name && mime)) {
+    return ''
+  }
+
+  const extensions = {
+    'image/jpeg': 'jpg',
+    'image/png': 'png',
+    'image/gif': 'gif',
+    'image/bmp': 'bmp',
+    'video/x-flv': 'flv',
+    'video/mp4': 'mp4',
+    'video/x-ms-wmv': 'wmv',
+    'video/x-matroska': 'mkv',
+    'video/webm': 'webm',
+    'image/apng': 'apng',
+    'video/mpeg': 'mpeg',
+    'video/quicktime': 'mov',
+    'video/x-msvideo': 'avi'
+  }
+
+  return `${name}.${extensions[mime]}`
 })
 
 router.beforeEach((to, from, next) => {
@@ -92,6 +127,7 @@ library.add(
   faEquals,
   faEyeSlash,
   faImages,
+  faInfo,
   faLongArrowAltLeft,
   faLongArrowAltDown,
   faLongArrowAltUp,
@@ -101,6 +137,7 @@ library.add(
   faSignInAlt,
   faSignOutAlt,
   faSpinner,
+  faTools,
   faTrash,
   faUser,
   faUserPlus

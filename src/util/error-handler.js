@@ -21,6 +21,8 @@ const messages = {
   missingPageParameterError: 'No <code>page</code> parameter provided.',
   invalidPageParameterError: 'Invalid <code>page</code> parameter provided.',
   invalidTagsParameterError: 'Invalid <code>tags</code> parameter provided.',
+  invalidConstraintsParameterError:
+    'Invalid <code>constraints</code> parameter provided.',
   invalidSortParameterError: 'Invalid <code>sort</code> parameter provided.',
   invalidDirectionParameterError: 'Invalid <code>direction</code> parameter ' +
     'provided.',
@@ -58,6 +60,7 @@ const mappings = {
   'MissingPageParameterError': messages.missingPageParameterError,
   'InvalidPageParameterError': messages.invalidPageParameterError,
   'InvalidTagsParameterError': messages.invalidTagsParameterError,
+  'InvalidConstraintsParameterError': messages.invalidConstraintsParameterError,
   'InvalidSortParameterError': messages.invalidSortParameterError,
   'InvalidDirectionParameterError': messages.invalidDirectionParameterError,
   'MissingNamespacesParameterError': messages.missingNamespacesParameterError,

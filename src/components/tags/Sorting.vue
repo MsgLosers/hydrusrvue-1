@@ -28,7 +28,9 @@
           </div>
           <div class="control is-expanded">
             <div class="select is-fullwidth">
-              <select v-model="localSortingDirection">
+              <select
+                :class="{ 'is-lowercase': !useNormalLetterCase }"
+                v-model="localSortingDirection">
                 <option value="default">Default (based on the field)</option>
                 <option value="asc">Ascending</option>
                 <option value="desc">Descending</option>
@@ -117,6 +119,8 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+import config from '@/config'
+
 export default {
   name: 'Sorting',
   props: {
@@ -131,7 +135,8 @@ export default {
   },
   data: function () {
     return {
-      isOpen: false
+      isOpen: false,
+      useNormalLetterCase: config.useNormalLetterCase
     }
   },
   computed: {
@@ -190,15 +195,17 @@ export default {
     sortingDisplay: function () {
       switch (this.localSorting) {
         case 'name':
-          return 'name'
+          return this.$options.filters.formatToConfiguredLetterCase('Name')
         case 'files':
-          return 'amount of files'
+          return this.$options.filters.formatToConfiguredLetterCase(
+            'Amount of files'
+          )
         case 'contains':
-          return 'given word'
+          return this.$options.filters.formatToConfiguredLetterCase('Given word')
         case 'random':
-          return 'random'
+          return this.$options.filters.formatToConfiguredLetterCase('Random')
         default:
-          return 'id'
+          return this.$options.filters.formatToConfiguredLetterCase('ID')
       }
     }
   },
