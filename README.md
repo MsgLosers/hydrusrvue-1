@@ -118,7 +118,7 @@ Upgrading from `2.x` to `3.x` can be done via `git pull && yarn`.
 
 The major version bump was made due to the incompatibility of `2.x` with
 hydrusrv `6.x`. So if you are using that, you need to upgrade hydrusrvue to
-`6.x`.
+`3.x`.
 
 #### Upgrading from 1.x to 2.x
 
