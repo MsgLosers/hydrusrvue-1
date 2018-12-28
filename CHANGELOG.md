@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.0.1] - 2018-12-28
+
+### Fixed
+
++ Fixed wrong version number in upgrade instructions
+
 ## [3.0.0] - 2018-12-28
 
 ### Added
@@ -225,7 +231,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 + Initial release
 
-[Unreleased]: https://github.com/mserajnik/hydrusrvue/compare/3.0.0...develop
+[Unreleased]: https://github.com/mserajnik/hydrusrvue/compare/3.0.1...develop
+[3.0.1]: https://github.com/mserajnik/hydrusrvue/compare/3.0.0...3.0.1
 [3.0.0]: https://github.com/mserajnik/hydrusrvue/compare/2.2.1...3.0.0
 [2.2.1]: https://github.com/mserajnik/hydrusrvue/compare/2.2.0...2.2.1
 [2.2.0]: https://github.com/mserajnik/hydrusrvue/compare/2.1.0...2.2.0
