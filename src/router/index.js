@@ -66,6 +66,14 @@ export default new Router({
       }
     },
     {
+      path: '/help',
+      name: 'help',
+      component: () => import(/* webpackChunkName: "settings" */ '@/views/Help'),
+      meta: {
+        authenticationIsRequired: config.authenticationIsRequired
+      }
+    },
+    {
       path: '/tags',
       name: 'tags',
       component: () => import(/* webpackChunkName: "tags" */ '@/views/Tags'),

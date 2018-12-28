@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 + Added support for filtering files by constraints
 + Added the ability to display a subtitle on the home view
 + Added the ability to use normal letter case throughout the application
++ Added the help view
 
 ### Changed
 
