@@ -45,6 +45,16 @@
       <div class="navbar-end">
 
         <router-link
+          to="/help"
+          class="navbar-item"
+          v-if="isAuthorized || !authenticationIsRequired">
+          <span class="icon">
+            <font-awesome-icon icon="info" />
+          </span>
+          <span>Help</span>
+        </router-link>
+
+        <router-link
           to="/settings"
           class="navbar-item"
           v-if="isAuthorized || !authenticationIsRequired">

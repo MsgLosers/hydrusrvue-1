@@ -6,7 +6,7 @@
         <input
           type="text"
           class="input"
-          placeholder="new username"
+          :placeholder="'New username' | formatToConfiguredLetterCase"
           required
           maxlength="1024"
           :disabled="isWorking || hasSaved"
@@ -20,7 +20,7 @@
         <input
           type="password"
           class="input"
-          placeholder="current password"
+          :placeholder="'Current password' | formatToConfiguredLetterCase"
           required
           :disabled="isWorking || hasSaved"
           autocomplete="current-password"
@@ -34,6 +34,7 @@
           type="submit"
           class="button"
           :class="{
+            'is-lowercase': !useNormalLetterCase,
             'is-primary': !hasUpdatedUsername,
             'is-success': hasUpdatedUsername
           }"
@@ -68,6 +69,8 @@
 import { mapActions } from 'vuex'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+import config from '@/config'
 
 export default {
   name: 'ChangeUsername',
@@ -104,7 +107,8 @@ export default {
   data: function () {
     return {
       newUsername: '',
-      currentPassword: ''
+      currentPassword: '',
+      useNormalLetterCase: config.useNormalLetterCase
     }
   },
   methods: {

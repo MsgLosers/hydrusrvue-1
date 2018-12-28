@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
 
-    <vue-headful :title="title" />
+    <vue-headful :title="title | formatToConfiguredLetterCase" />
 
     <div class="container-fluid" v-if="!error.name">
 
@@ -45,7 +45,7 @@
                   class="button is-primary"
                   :href="preparedMediaUrl"
                   target="_blank"
-                  :download="`${file.id}.${file.mime.split('/')[1]}`">
+                  :download="file.hash | addFileExtension(file.mime)">
                   Download file {{ file.id }}
                 </a>
               </p>
@@ -86,7 +86,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import config from '@/config'
 import queryFormatter from '@/util/query-formatter'
-import tagFormatter from '@/util/tag-formatter'
+import tagsHelper from '@/util/tags-helper'
 import urlFormatter from '@/util/url-formatter'
 
 import Info from '@/components/file/Info'
@@ -100,7 +100,7 @@ export default {
     return {
       canPreserveScrollPosition: true,
       appTitle: config.title,
-      title: `file ${this.$route.params.id} – ${config.title}`
+      title: `File ${this.$route.params.id} – ${config.title}`
     }
   },
   computed: {
@@ -127,7 +127,7 @@ export default {
           name: tag.name,
           path: '/files',
           query: queryFormatter.generateDefaultFilesQuery(tag.name),
-          color: tagFormatter.getColor(tag.name, this.colors),
+          color: tagsHelper.getColor(tag.name, this.colors),
           fileCount: tag.fileCount
         })
       }

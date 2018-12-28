@@ -106,6 +106,7 @@ export default {
         .then(async res => {
           context.dispatch('api/setInfo', res.data, { root: true })
           await context.dispatch('tags/fetchNamespaces', false, { root: true })
+          await context.dispatch('files/fetchMimeTypes', false, { root: true })
         })
         .catch(err => {
           errorHandler.handle(

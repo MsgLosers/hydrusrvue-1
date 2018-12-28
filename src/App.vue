@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="is-lowercase">
+  <div id="app" :class="{ 'is-lowercase': !useNormalLetterCase }">
     <navbar
       :isInitialized="isInitialized"
       :isAuthorized="isAuthorized"
@@ -30,7 +30,8 @@ export default {
   name: 'App',
   data: function () {
     return {
-      authenticationIsRequired: config.authenticationIsRequired
+      authenticationIsRequired: config.authenticationIsRequired,
+      useNormalLetterCase: config.useNormalLetterCase
     }
   },
   computed: {

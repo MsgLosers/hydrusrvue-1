@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.0.0] - 2018-12-28
+
+### Added
+
++ Added support for sorting files by amount of tags
++ Added support for filtering files by constraints
++ Added the ability to display a subtitle on the home view
++ Added the ability to use normal letter case throughout the application
++ Added the help view
+
+### Changed
+
++ Improved the tag autocomplete handling so it cancels unnecessary pending
+  requests and no longer displays suggestions from requests that resolve after
+  a search has been started
++ Changed file downloads so the hash is used as the file name instead of the ID
++ Updated dependencies
+
+### Fixed
+
++ Fixed the alignment of items in dropdowns when an icon is present
++ Fixed wrong file extensions when downloading a file
+
 ## [2.2.1] - 2018-12-11
 
 ### Fixed
@@ -202,7 +225,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 + Initial release
 
-[Unreleased]: https://github.com/mserajnik/hydrusrvue/compare/2.2.1...develop
+[Unreleased]: https://github.com/mserajnik/hydrusrvue/compare/3.0.0...develop
+[3.0.0]: https://github.com/mserajnik/hydrusrvue/compare/2.2.1...3.0.0
 [2.2.1]: https://github.com/mserajnik/hydrusrvue/compare/2.2.0...2.2.1
 [2.2.0]: https://github.com/mserajnik/hydrusrvue/compare/2.1.0...2.2.0
 [2.1.0]: https://github.com/mserajnik/hydrusrvue/compare/2.0.0...2.1.0

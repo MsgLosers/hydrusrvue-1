@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
 
-    <vue-headful :title="title" />
+    <vue-headful :title="title | formatToConfiguredLetterCase" />
 
     <section class="section">
 
@@ -18,8 +18,8 @@
 
           <thead>
             <tr>
-              <th>tag</th>
-              <th>files</th>
+              <th>Tag</th>
+              <th>Files</th>
             </tr>
           </thead>
 
@@ -71,7 +71,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import config from '@/config'
 import queryFormatter from '@/util/query-formatter'
-import tagFormatter from '@/util/tag-formatter'
+import tagsHelper from '@/util/tags-helper'
 
 import Search from '@/components/tags/Search'
 
@@ -82,7 +82,7 @@ export default {
   data: function () {
     return {
       wantsAdditionalTags: false,
-      title: `tags – ${config.title}`
+      title: `Tags – ${config.title}`
     }
   },
   computed: {
@@ -94,7 +94,7 @@ export default {
           name: tag.name,
           path: '/files',
           query: queryFormatter.generateDefaultFilesQuery(tag.name),
-          color: tagFormatter.getColor(
+          color: tagsHelper.getColor(
             tag.name, this.colors
           ),
           fileCount: tag.fileCount

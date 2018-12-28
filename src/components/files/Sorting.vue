@@ -28,7 +28,9 @@
           </div>
           <div class="control is-expanded">
             <div class="select is-fullwidth">
-              <select v-model="localSortingDirection">
+              <select
+                :class="{ 'is-lowercase': !useNormalLetterCase }"
+                v-model="localSortingDirection">
                 <option value="default">Default (based on the field)</option>
                 <option value="asc">Ascending</option>
                 <option value="desc">Descending</option>
@@ -54,7 +56,7 @@
             id="sorting-size"
             value="size"
             v-model="localSorting">
-          <label for="sorting-size">Sort by filesize</label>
+          <label for="sorting-size">Sort by file size</label>
         </div>
 
         <div class="field">
@@ -85,6 +87,16 @@
             value="mime"
             v-model="localSorting">
           <label for="sorting-mime">Sort by MIME type</label>
+        </div>
+
+        <div class="field">
+          <input
+            type="radio"
+            class="is-checkradio is-aligned"
+            id="sorting-tags"
+            value="tags"
+            v-model="localSorting">
+          <label for="sorting-tags">Sort by amount of tags</label>
         </div>
 
         <div class="field">
@@ -135,6 +147,7 @@
             <button
               type="button"
               class="button is-primary"
+              :class="{ 'is-lowercase': !useNormalLetterCase }"
               @click="addNamespace">
               Add
             </button>
@@ -171,6 +184,8 @@
 import Draggable from 'vuedraggable'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+import config from '@/config'
+
 export default {
   name: 'Sorting',
   props: {
@@ -190,7 +205,8 @@ export default {
   data: function () {
     return {
       isOpen: false,
-      newNamespace: ''
+      newNamespace: '',
+      useNormalLetterCase: config.useNormalLetterCase
     }
   },
   computed: {
@@ -235,6 +251,9 @@ export default {
         mime: 'long-arrow-alt-up',
         'mime-asc': 'long-arrow-alt-up',
         'mime-desc': 'long-arrow-alt-down',
+        tags: 'long-arrow-alt-down',
+        'tags-asc': 'long-arrow-alt-up',
+        'tags-desc': 'long-arrow-alt-down',
         random: 'random',
         'random-desc': 'random',
         'random-asc': 'random',
@@ -263,19 +282,23 @@ export default {
     sortingDisplay: function () {
       switch (this.localSorting) {
         case 'size':
-          return 'filesize'
+          return this.$options.filters.formatToConfiguredLetterCase('File size')
         case 'width':
-          return 'width'
+          return this.$options.filters.formatToConfiguredLetterCase('Width')
         case 'height':
-          return 'height'
+          return this.$options.filters.formatToConfiguredLetterCase('Height')
         case 'mime':
-          return 'mime type'
+          return this.$options.filters.formatToConfiguredLetterCase('MIME type')
+        case 'tags':
+          return this.$options.filters.formatToConfiguredLetterCase(
+            'Amount of tags'
+          )
         case 'random':
-          return 'random'
+          return this.$options.filters.formatToConfiguredLetterCase('Random')
         case 'namespaces':
           return this.localSortingNamespaces.join(' – ')
         default:
-          return 'id'
+          return this.$options.filters.formatToConfiguredLetterCase('ID')
       }
     }
   },
