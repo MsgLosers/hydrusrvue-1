@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   requests and no longer displays suggestions from requests that resolve after
   a search has been started
 + Changed file downloads so the hash is used as the file name instead of the ID
++ Updated dependencies
 
 ### Fixed
 
