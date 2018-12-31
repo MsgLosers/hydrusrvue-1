@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.0.2] - 2018-12-31
+
+### Fixed
+
++ Fixed the constraint autocompletion stopping after the first step when
+  clicking on a suggestion (instead of using the keyboard to select it)
+
 ## [3.0.1] - 2018-12-28
 
 ### Fixed
@@ -231,7 +238,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 + Initial release
 
-[Unreleased]: https://github.com/mserajnik/hydrusrvue/compare/3.0.1...develop
+[Unreleased]: https://github.com/mserajnik/hydrusrvue/compare/3.0.2...develop
+[3.0.2]: https://github.com/mserajnik/hydrusrvue/compare/3.0.1...3.0.2
 [3.0.1]: https://github.com/mserajnik/hydrusrvue/compare/3.0.0...3.0.1
 [3.0.0]: https://github.com/mserajnik/hydrusrvue/compare/2.2.1...3.0.0
 [2.2.1]: https://github.com/mserajnik/hydrusrvue/compare/2.2.0...2.2.1
