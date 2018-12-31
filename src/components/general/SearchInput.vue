@@ -10,6 +10,7 @@
       @keydown.tab.prevent="focusActiveFilters"
       @keyup="tryCompletion"
       @click="tryCompletion"
+      @focus="tryCompletion"
       @keydown.down.prevent="focusSuggestion(0)"
       v-model="localSearch"
       v-focus>
@@ -270,7 +271,9 @@ export default {
 
       this.suggestions = []
 
-      this.$refs.search.focus()
+      this.$nextTick(() => {
+        this.$refs.search.focus()
+      })
     },
     stopCompleting: function () {
       this.suggestions = []

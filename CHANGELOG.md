@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
++ Fixed the constraint autocompletion stopping after the first step when
+  clicking on a suggestion (instead of using the keyboard to select it)
+
 ## [3.0.1] - 2018-12-28
 
 ### Fixed
