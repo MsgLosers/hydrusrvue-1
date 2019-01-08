@@ -1,5 +1,8 @@
 <template>
-  <nav class="navbar is-primary is-fixed-top" v-on-clickaway="closeNavigation">
+  <nav
+    id="navbar"
+    class="navbar is-primary is-fixed-top"
+    v-on-clickaway="closeNavigation">
 
     <div class="navbar-brand">
 
@@ -10,8 +13,8 @@
       <div
         role="button"
         class="navbar-burger"
-        :class="{ 'is-active': isOpen }"
-        @click="toggleNavigation(!isOpen)"
+        :class="{ 'is-active': navigationIsOpen }"
+        @click="toggleNavigation(!navigationIsOpen)"
         v-if="isInitialized && !error.isFatal">
         <span></span>
         <span></span>
@@ -22,7 +25,7 @@
 
     <div
       class="navbar-menu"
-      :class="{ 'is-active': isOpen }"
+      :class="{ 'is-active': navigationIsOpen }"
       v-if="isInitialized && !error.isFatal">
 
       <div
@@ -31,13 +34,15 @@
         <router-link
           to="/files"
           class="navbar-item"
-          :event="isFilesView ? '' : 'click'">
+          event=""
+          @click.native.prevent="navigateOrScrollToTop('/files')">
           Files
         </router-link>
         <router-link
           to="/tags"
           class="navbar-item"
-          :event="isTagsView ? '' : 'click'">
+          event=""
+          @click.native.prevent="navigateOrScrollToTop('/tags')">
           Tags
         </router-link>
       </div>
@@ -138,14 +143,8 @@ export default {
     }
   },
   computed: {
-    isFilesView: function () {
-      return this.$route.name === 'files'
-    },
-    isTagsView: function () {
-      return this.$route.name === 'tags'
-    },
     ...mapState({
-      isOpen: state => state.app.navigationIsOpen
+      navigationIsOpen: state => state.app.navigationIsOpen
     })
   },
   methods: {
@@ -157,6 +156,22 @@ export default {
       }
 
       this.closeNavigation()
+    },
+    navigateOrScrollToTop: function (route) {
+      if (route === this.$route.path) {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        })
+
+        if (this.navigationIsOpen) {
+          this.closeNavigation()
+        }
+
+        return
+      }
+
+      this.$router.push(route)
     },
     ...mapActions({
       openNavigation: 'app/openNavigation',

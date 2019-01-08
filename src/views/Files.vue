@@ -1,5 +1,7 @@
 <template>
-  <div class="wrapper">
+  <div
+    class="wrapper"
+    :class="{ 'has-scroll-to-top-bar': showScrollToTopBar }">
 
     <vue-headful :title="title | formatToConfiguredLetterCase" />
 
@@ -10,7 +12,7 @@
         :lastQuery="lastQuery"
         :wantsAdditionalFiles="wantsAdditionalFiles" />
 
-      <hr>
+      <hr id="results-separator">
 
       <div class="columns is-multiline is-mobile" v-if="files.length">
 
@@ -56,6 +58,8 @@
 
     </section>
 
+    <scroll-to-top-bar v-if="showScrollToTopBar" />
+
   </div>
 </template>
 
@@ -67,8 +71,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import config from '@/config'
 import urlFormatter from '@/util/url-formatter'
+import visibilityHelper from '@/util/visibility-helper'
 
 import Search from '@/components/files/Search'
+import ScrollToTopBar from '@/components/general/ScrollToTopBar'
 
 let scrollListener
 
@@ -77,6 +83,7 @@ export default {
   data: function () {
     return {
       wantsAdditionalFiles: false,
+      showScrollToTopBar: false,
       title: `Files – ${config.title}`
     }
   },
@@ -135,19 +142,18 @@ export default {
     },
     prepareMediaUrl: function (url) {
       return urlFormatter.prepareMediaUrl(url)
-    },
-    bottomIsVisible: function () {
-      const scrollY = window.scrollY
-      const isVisible = document.documentElement.clientHeight
-      const pageHeight = document.documentElement.scrollHeight
-      const isAtBottomOfPage = (isVisible + scrollY) >= (pageHeight - 48)
-
-      return isAtBottomOfPage || ((pageHeight - 48) < isVisible)
     }
   },
-  created: function () {
+  mounted: function () {
+    this.showScrollToTopBar = visibilityHelper.isPageScrolledPastElement(
+      'results-separator'
+    )
+
     scrollListener = throttle(() => {
-      this.wantsAdditionalFiles = this.bottomIsVisible()
+      this.wantsAdditionalFiles = visibilityHelper.isBottomOfPageVisible(88)
+      this.showScrollToTopBar = visibilityHelper.isPageScrolledPastElement(
+        'results-separator'
+      )
     }, 50)
 
     window.addEventListener(
@@ -177,7 +183,8 @@ export default {
   },
   components: {
     FontAwesomeIcon,
-    Search
+    Search,
+    ScrollToTopBar
   }
 }
 </script>

@@ -12,6 +12,14 @@
       }
     }
   }
+
+  &.has-scroll-to-top-bar {
+    .section {
+      &:last-of-type {
+        padding-bottom: 5.5rem;
+      }
+    }
+  }
 }
 
 .columns {
