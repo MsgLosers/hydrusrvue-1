@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="wrapper"
-    :class="{ 'has-scroll-to-top-bar': showScrollToTopBar }">
+  <div class="wrapper has-scroll-to-top-bar">
 
     <vue-headful :title="title | formatToConfiguredLetterCase" />
 

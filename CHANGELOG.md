@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
++ Fixed scroll jumping when toggling the scroll to top bar
+
 ## [3.1.0] - 2019-01-08
 
 ### Added
