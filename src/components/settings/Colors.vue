@@ -1,5 +1,5 @@
 <template>
-  <div class="settings-colors settings-block">
+  <div class="settings-colors has-margin-bottom">
 
     <div class="table-container">
 
@@ -7,17 +7,14 @@
 
         <thead>
           <tr>
-            <th>Namespace</th>
+            <th class="is-fullwidth">Namespace</th>
             <th>Color</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr
-            v-for="namespace in localColors"
-            :key="namespace.name">
-            <td
-              :style="{ color: namespace.color }">
+          <tr v-for="namespace in localColors" :key="namespace.name">
+            <td class="is-fullwidth" :style="{ color: namespace.color }">
               {{ namespace.name }}
             </td>
             <td>

@@ -16,11 +16,11 @@
 
       <div class="table-container" v-if="formattedTags.length">
 
-        <table class="tags-table table is-fullwidth is-striped is-hoverable">
+        <table class="table is-fullwidth is-striped is-hoverable">
 
           <thead>
             <tr>
-              <th>Tag</th>
+              <th class="is-fullwidth">Tag</th>
               <th>Files</th>
             </tr>
           </thead>
@@ -28,7 +28,7 @@
           <tbody>
 
             <tr v-for="tag in formattedTags" :key="tag.name">
-              <td>
+              <td class="is-fullwidth">
                 <router-link
                   :to="{ path: tag.path, query: tag.query }"
                   :style="{ color: tag.color }">

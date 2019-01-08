@@ -3,7 +3,7 @@ import store from '@/store'
 
 export default {
   prepareMediaUrl (url) {
-    return config.authenticationIsRequired
+    return config.isAuthenticationRequired
       ? url + store.getters['auth/mediaTokenQueryString']
       : url
   }

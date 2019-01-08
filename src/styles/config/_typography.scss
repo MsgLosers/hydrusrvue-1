@@ -2,11 +2,6 @@ a {
   outline: none;
 }
 
-::selection {
-  background-color: $primary;
-  color: $white;
-}
-
 .is-normal-case {
   text-transform: none !important;
 }

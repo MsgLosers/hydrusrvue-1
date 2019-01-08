@@ -95,7 +95,7 @@
 
     </div>
 
-    <div class="sorting-field field has-addons">
+    <div class="field has-pointer has-addons">
       <div class="control">
         <button class="button is-static">
           <span class="icon">

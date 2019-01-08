@@ -1,5 +1,5 @@
 <template>
-  <div class="settings-sorting settings-block">
+  <div class="settings-sorting has-margin-bottom">
 
     <div class="field has-addons" v-if="localSorting !== 'random'">
       <div class="control">

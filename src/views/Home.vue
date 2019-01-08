@@ -10,7 +10,7 @@
           class="subtitle has-text-centered"
           v-if="subtitle"
           v-html="subtitle"></h2>
-        <search v-if="isAuthorized  || !authenticationIsRequired" />
+        <search v-if="isAuthorized  || !isAuthenticationRequired" />
       </div>
     </section>
 
@@ -20,7 +20,7 @@
 
         <div class="content has-text-centered">
 
-          <p v-if="isAuthorized || !authenticationIsRequired">
+          <p v-if="isAuthorized || !isAuthenticationRequired">
             <strong>{{ api.fileCount | formatNumber }}</strong> Files
             |
             <strong>{{ api.tagCount | formatNumber }}</strong> Tags
@@ -57,7 +57,7 @@ export default {
       type: Boolean,
       required: true
     },
-    authenticationIsRequired: {
+    isAuthenticationRequired: {
       type: Boolean,
       required: true
     }

@@ -16,7 +16,7 @@
       v-focus>
 
     <div
-      class="suggestions dropdown"
+      class="file-search-suggestions dropdown"
       :class="{ 'is-active': suggestions.length }"
       v-if="suggestions.length">
       <div class="dropdown-menu">

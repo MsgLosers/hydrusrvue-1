@@ -1,5 +1,5 @@
 <template>
-  <div class="settings-image-size settings-block">
+  <div class="settings-image-size has-margin-bottom">
     <div class="field">
       <input
         type="checkbox"

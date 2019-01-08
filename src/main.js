@@ -100,19 +100,19 @@ router.beforeEach((to, from, next) => {
     store.dispatch('auth/checkCookie')
   }
 
-  const authenticationIsRequired = to.matched.some(
-    route => route.meta.authenticationIsRequired
+  const isAuthenticationRequired = to.matched.some(
+    route => route.meta.isAuthenticationRequired
   )
-  const noAuthenticationIsRequired = to.matched.some(
-    route => route.meta.noAuthenticationIsRequired
+  const isNoAuthenticationRequired = to.matched.some(
+    route => route.meta.isNoAuthenticationRequired
   )
   const isAuthorized = store.state.auth.isAuthorized
 
-  if (authenticationIsRequired && !isAuthorized) {
+  if (isAuthenticationRequired && !isAuthorized) {
     return next('/login')
   }
 
-  if (noAuthenticationIsRequired && isAuthorized) {
+  if (isNoAuthenticationRequired && isAuthorized) {
     return next('/')
   }
 

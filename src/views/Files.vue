@@ -25,14 +25,16 @@
           "
           v-for="(file, index) in files"
           :key="index">
-          <div class="file-preview">
-            <div class="file-preview-image">
+          <div class="file-search-preview">
+            <div class="file-search-preview-image">
               <img :src="preparedThumbnailUrls[index]">
             </div>
-            <router-link :to="`/files/${file.id}`" class="file-preview-link">
+            <router-link
+              :to="`/files/${file.id}`"
+              class="file-search-preview-link">
               View file
             </router-link>
-            <div class="file-preview-gallery-button">
+            <div class="file-search-preview-gallery-button">
               <span class="icon is-large">
                 <font-awesome-icon icon="images" class="fa-2x" />
               </span>

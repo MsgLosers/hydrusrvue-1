@@ -13,8 +13,8 @@
       <div
         role="button"
         class="navbar-burger"
-        :class="{ 'is-active': navigationIsOpen }"
-        @click="toggleNavigation(!navigationIsOpen)"
+        :class="{ 'is-active': isNavigationOpen }"
+        @click="toggleNavigation(!isNavigationOpen)"
         v-if="isInitialized && !error.isFatal">
         <span></span>
         <span></span>
@@ -25,12 +25,12 @@
 
     <div
       class="navbar-menu"
-      :class="{ 'is-active': navigationIsOpen }"
+      :class="{ 'is-active': isNavigationOpen }"
       v-if="isInitialized && !error.isFatal">
 
       <div
         class="navbar-start"
-        v-if="isAuthorized || !authenticationIsRequired">
+        v-if="isAuthorized || !isAuthenticationRequired">
         <router-link
           to="/files"
           class="navbar-item"
@@ -52,7 +52,7 @@
         <router-link
           to="/help"
           class="navbar-item"
-          v-if="isAuthorized || !authenticationIsRequired">
+          v-if="isAuthorized || !isAuthenticationRequired">
           <span class="icon">
             <font-awesome-icon icon="info" />
           </span>
@@ -62,7 +62,7 @@
         <router-link
           to="/settings"
           class="navbar-item"
-          v-if="isAuthorized || !authenticationIsRequired">
+          v-if="isAuthorized || !isAuthenticationRequired">
           <span class="icon">
             <font-awesome-icon icon="cog" />
           </span>
@@ -93,7 +93,7 @@
         <router-link
           to="/registration"
           class="navbar-item"
-          v-if="!isAuthorized && registrationIsEnabled">
+          v-if="!isAuthorized && isRegistrationEnabled">
           <span class="icon">
             <font-awesome-icon icon="user-plus" />
           </span>
@@ -127,7 +127,7 @@ export default {
       type: Boolean,
       required: true
     },
-    authenticationIsRequired: {
+    isAuthenticationRequired: {
       type: Boolean,
       required: true
     },
@@ -139,12 +139,12 @@ export default {
   data: function () {
     return {
       title: config.title,
-      registrationIsEnabled: config.registrationIsEnabled
+      isRegistrationEnabled: config.isRegistrationEnabled
     }
   },
   computed: {
     ...mapState({
-      navigationIsOpen: state => state.app.navigationIsOpen
+      isNavigationOpen: state => state.app.isNavigationOpen
     })
   },
   methods: {
@@ -164,7 +164,7 @@ export default {
           behavior: 'smooth'
         })
 
-        if (this.navigationIsOpen) {
+        if (this.isNavigationOpen) {
           this.closeNavigation()
         }
 

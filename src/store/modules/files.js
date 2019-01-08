@@ -330,7 +330,7 @@ export default {
     }
   },
   getters: {
-    countIsConfirmed: state => state.totalCount === state.items.length,
+    isCountConfirmed: state => state.totalCount === state.items.length,
     sortedDetailItemTags: state => {
       if (!state.detailItem) {
         return []

@@ -3,7 +3,7 @@
     <navbar
       :isInitialized="isInitialized"
       :isAuthorized="isAuthorized"
-      :authenticationIsRequired="authenticationIsRequired"
+      :isAuthenticationRequired="isAuthenticationRequired"
       :error="error" />
 
     <error :error="error" v-if="error.name && !error.isLocal" />
@@ -12,7 +12,7 @@
 
     <router-view
       :isAuthorized="isAuthorized"
-      :authenticationIsRequired="authenticationIsRequired"
+      :isAuthenticationRequired="isAuthenticationRequired"
       v-if="isInitialized && !error.isFatal" />
   </div>
 </template>
@@ -30,7 +30,7 @@ export default {
   name: 'App',
   data: function () {
     return {
-      authenticationIsRequired: config.authenticationIsRequired,
+      isAuthenticationRequired: config.isAuthenticationRequired,
       useNormalLetterCase: config.useNormalLetterCase
     }
   },
