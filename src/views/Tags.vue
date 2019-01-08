@@ -60,7 +60,9 @@
 
     </section>
 
-    <scroll-to-top-bar v-if="showScrollToTopBar" />
+    <media :query="{ minWidth: 1088 }" v-if="showScrollToTopBar">
+      <scroll-to-top-bar />
+    </media>
 
   </div>
 </template>
@@ -70,6 +72,7 @@ import { mapState } from 'vuex'
 import throttle from 'lodash/throttle'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import Media from 'vue-media'
 
 import config from '@/config'
 import queryFormatter from '@/util/query-formatter'
@@ -150,6 +153,7 @@ export default {
   },
   components: {
     FontAwesomeIcon,
+    Media,
     Search,
     ScrollToTopBar
   }

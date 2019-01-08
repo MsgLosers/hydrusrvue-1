@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
++ The scroll to top bar is now hidden on smaller screens since there is no
+  real benefit (mobile browsers usually have a shortcut button/gesture)
+
 ### Fixed
 
 + Fixed scroll jumping when toggling the scroll to top bar

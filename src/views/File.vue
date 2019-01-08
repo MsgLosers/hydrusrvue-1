@@ -80,9 +80,9 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
-import Media from 'vue-media'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import Media from 'vue-media'
 
 import config from '@/config'
 import queryFormatter from '@/util/query-formatter'
