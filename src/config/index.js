@@ -21,13 +21,13 @@ const generateNamespaceColors = environmentVariable => {
 }
 
 export default {
-  version: '3.0.2',
+  version: '3.1.0',
   title: process.env.VUE_APP_TITLE,
   subtitle: process.env.VUE_APP_SUBTITLE,
   useNormalLetterCase: process.env.VUE_APP_USE_NORMAL_LETTER_CASE === 'true',
   apiUrl: process.env.VUE_APP_API_URL,
-  registrationIsEnabled: process.env.VUE_APP_REGISTRATION_ENABLED === 'true',
-  authenticationIsRequired: process.env.VUE_APP_AUTHENTICATION_REQUIRED
+  isRegistrationEnabled: process.env.VUE_APP_REGISTRATION_ENABLED === 'true',
+  isAuthenticationRequired: process.env.VUE_APP_AUTHENTICATION_REQUIRED
     ? process.env.VUE_APP_AUTHENTICATION_REQUIRED === 'true'
     : true,
   minPasswordLength: process.env.VUE_APP_MIN_PASSWORD_LENGTH || 16,

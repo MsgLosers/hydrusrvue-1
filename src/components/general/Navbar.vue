@@ -1,5 +1,8 @@
 <template>
-  <nav class="navbar is-primary is-fixed-top" v-on-clickaway="closeNavigation">
+  <nav
+    id="navbar"
+    class="navbar is-primary is-fixed-top"
+    v-on-clickaway="closeNavigation">
 
     <div class="navbar-brand">
 
@@ -10,8 +13,8 @@
       <div
         role="button"
         class="navbar-burger"
-        :class="{ 'is-active': isOpen }"
-        @click="toggleNavigation(!isOpen)"
+        :class="{ 'is-active': isNavigationOpen }"
+        @click="toggleNavigation(!isNavigationOpen)"
         v-if="isInitialized && !error.isFatal">
         <span></span>
         <span></span>
@@ -22,22 +25,24 @@
 
     <div
       class="navbar-menu"
-      :class="{ 'is-active': isOpen }"
+      :class="{ 'is-active': isNavigationOpen }"
       v-if="isInitialized && !error.isFatal">
 
       <div
         class="navbar-start"
-        v-if="isAuthorized || !authenticationIsRequired">
+        v-if="isAuthorized || !isAuthenticationRequired">
         <router-link
           to="/files"
           class="navbar-item"
-          :event="isFilesView ? '' : 'click'">
+          event=""
+          @click.native.prevent="navigateOrScrollToTop('/files')">
           Files
         </router-link>
         <router-link
           to="/tags"
           class="navbar-item"
-          :event="isTagsView ? '' : 'click'">
+          event=""
+          @click.native.prevent="navigateOrScrollToTop('/tags')">
           Tags
         </router-link>
       </div>
@@ -47,7 +52,7 @@
         <router-link
           to="/help"
           class="navbar-item"
-          v-if="isAuthorized || !authenticationIsRequired">
+          v-if="isAuthorized || !isAuthenticationRequired">
           <span class="icon">
             <font-awesome-icon icon="info" />
           </span>
@@ -57,7 +62,7 @@
         <router-link
           to="/settings"
           class="navbar-item"
-          v-if="isAuthorized || !authenticationIsRequired">
+          v-if="isAuthorized || !isAuthenticationRequired">
           <span class="icon">
             <font-awesome-icon icon="cog" />
           </span>
@@ -88,7 +93,7 @@
         <router-link
           to="/registration"
           class="navbar-item"
-          v-if="!isAuthorized && registrationIsEnabled">
+          v-if="!isAuthorized && isRegistrationEnabled">
           <span class="icon">
             <font-awesome-icon icon="user-plus" />
           </span>
@@ -122,7 +127,7 @@ export default {
       type: Boolean,
       required: true
     },
-    authenticationIsRequired: {
+    isAuthenticationRequired: {
       type: Boolean,
       required: true
     },
@@ -134,18 +139,12 @@ export default {
   data: function () {
     return {
       title: config.title,
-      registrationIsEnabled: config.registrationIsEnabled
+      isRegistrationEnabled: config.isRegistrationEnabled
     }
   },
   computed: {
-    isFilesView: function () {
-      return this.$route.name === 'files'
-    },
-    isTagsView: function () {
-      return this.$route.name === 'tags'
-    },
     ...mapState({
-      isOpen: state => state.app.navigationIsOpen
+      isNavigationOpen: state => state.app.isNavigationOpen
     })
   },
   methods: {
@@ -157,6 +156,22 @@ export default {
       }
 
       this.closeNavigation()
+    },
+    navigateOrScrollToTop: function (route) {
+      if (route === this.$route.path) {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        })
+
+        if (this.isNavigationOpen) {
+          this.closeNavigation()
+        }
+
+        return
+      }
+
+      this.$router.push(route)
     },
     ...mapActions({
       openNavigation: 'app/openNavigation',

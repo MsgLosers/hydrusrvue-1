@@ -62,7 +62,7 @@
 
     </div>
 
-    <div class="file-filters tags" v-if="activeFilters.length">
+    <div class="file-search-filters tags" v-if="activeFilters.length">
       <a
         class="tag is-medium"
         :class="{ 'constraint': filter.type === 'constraint' }"
@@ -163,7 +163,7 @@ export default {
       colors: state => state.settings.colors
     }),
     ...mapGetters({
-      countIsConfirmed: 'files/countIsConfirmed'
+      isCountConfirmed: 'files/isCountConfirmed'
     })
   },
   methods: {
@@ -459,7 +459,7 @@ export default {
     },
     hasReachedLastPage: function (hasReachedLastPage) {
       if (hasReachedLastPage) {
-        if (!(config.countsAreEnabled && this.countIsConfirmed)) {
+        if (!(config.countsAreEnabled && this.isCountConfirmed)) {
           this.page = (this.page - 1) > 0 ? this.page - 1 : 1
         }
 

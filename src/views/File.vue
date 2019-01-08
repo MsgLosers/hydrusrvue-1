@@ -11,7 +11,7 @@
         </span>
       </section>
 
-      <section class="section" v-if="!isLoading && file">
+      <section class="file-detail section" v-if="!isLoading && file">
 
         <media :query="{ maxWidth: 1087 }">
           <controls

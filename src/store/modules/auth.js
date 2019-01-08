@@ -98,7 +98,7 @@ export default {
     checkAuthorization (context) {
       context.dispatch('error/flush', false, { root: true })
 
-      if (!context.state.token && config.authenticationIsRequired) {
+      if (!context.state.token && config.isAuthenticationRequired) {
         return
       }
 

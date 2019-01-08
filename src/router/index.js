@@ -19,10 +19,10 @@ export default new Router({
       name: 'registration',
       component: () => import(/* webpackChunkName: "registration" */ '@/views/Registration'),
       meta: {
-        noAuthenticationIsRequired: true
+        isNoAuthenticationRequired: true
       },
       beforeEnter: (to, from, next) => {
-        if (!config.registrationIsEnabled) {
+        if (!config.isRegistrationEnabled) {
           return next('/login')
         }
 
@@ -34,7 +34,7 @@ export default new Router({
       name: 'login',
       component: () => import(/* webpackChunkName: "login" */ '@/views/Login'),
       meta: {
-        noAuthenticationIsRequired: true
+        isNoAuthenticationRequired: true
       }
     },
     {
@@ -54,7 +54,7 @@ export default new Router({
       name: 'user',
       component: () => import(/* webpackChunkName: "user" */ '@/views/User'),
       meta: {
-        authenticationIsRequired: true
+        isAuthenticationRequired: true
       }
     },
     {
@@ -62,7 +62,7 @@ export default new Router({
       name: 'settings',
       component: () => import(/* webpackChunkName: "settings" */ '@/views/Settings'),
       meta: {
-        authenticationIsRequired: config.authenticationIsRequired
+        isAuthenticationRequired: config.isAuthenticationRequired
       }
     },
     {
@@ -70,7 +70,7 @@ export default new Router({
       name: 'help',
       component: () => import(/* webpackChunkName: "settings" */ '@/views/Help'),
       meta: {
-        authenticationIsRequired: config.authenticationIsRequired
+        isAuthenticationRequired: config.isAuthenticationRequired
       }
     },
     {
@@ -78,7 +78,7 @@ export default new Router({
       name: 'tags',
       component: () => import(/* webpackChunkName: "tags" */ '@/views/Tags'),
       meta: {
-        authenticationIsRequired: config.authenticationIsRequired
+        isAuthenticationRequired: config.isAuthenticationRequired
       }
     },
     {
@@ -86,7 +86,7 @@ export default new Router({
       name: 'files',
       component: () => import(/* webpackChunkName: "files" */ '@/views/Files'),
       meta: {
-        authenticationIsRequired: config.authenticationIsRequired
+        isAuthenticationRequired: config.isAuthenticationRequired
       }
     },
     {
@@ -94,7 +94,7 @@ export default new Router({
       name: 'file',
       component: () => import(/* webpackChunkName: "file" */ '@/views/File'),
       meta: {
-        authenticationIsRequired: config.authenticationIsRequired
+        isAuthenticationRequired: config.isAuthenticationRequired
       },
       beforeEnter: (to, from, next) => {
         if (isNaN(to.params.id)) {

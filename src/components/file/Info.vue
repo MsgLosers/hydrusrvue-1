@@ -13,7 +13,7 @@
       </li>
     </ul>
 
-    <ul class="file-detail-tags" v-if="tags.length">
+    <ul class="file-detail-tags has-margin-top" v-if="tags.length">
       <li v-for="tag in tags" :key="tag.name">
         <router-link
           :to="{ path: tag.path, query: tag.query }"
@@ -24,7 +24,7 @@
       </li>
     </ul>
 
-    <div class="file-detail-actions">
+    <div class="file-detail-actions has-margin-top">
       <p>
         <a
           class="button is-primary"

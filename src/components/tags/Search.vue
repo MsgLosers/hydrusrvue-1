@@ -114,7 +114,7 @@ export default {
       colors: state => state.settings.colors
     }),
     ...mapGetters({
-      countIsConfirmed: 'tags/countIsConfirmed'
+      isCountConfirmed: 'tags/isCountConfirmed'
     })
   },
   methods: {
@@ -255,7 +255,7 @@ export default {
     },
     hasReachedLastPage: function (hasReachedLastPage) {
       if (hasReachedLastPage) {
-        if (!(config.countsAreEnabled && this.countIsConfirmed)) {
+        if (!(config.countsAreEnabled && this.isCountConfirmed)) {
           this.page = (this.page - 1) > 0 ? this.page - 1 : 1
         }
 

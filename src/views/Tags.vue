@@ -1,5 +1,7 @@
 <template>
-  <div class="wrapper">
+  <div
+    class="wrapper"
+    :class="{ 'has-scroll-to-top-bar': showScrollToTopBar }">
 
     <vue-headful :title="title | formatToConfiguredLetterCase" />
 
@@ -10,15 +12,15 @@
         :lastQuery="lastQuery"
         :wantsAdditionalTags="wantsAdditionalTags" />
 
-      <hr>
+      <hr id="results-separator">
 
       <div class="table-container" v-if="formattedTags.length">
 
-        <table class="tags-table table is-fullwidth is-striped is-hoverable">
+        <table class="table is-fullwidth is-striped is-hoverable">
 
           <thead>
             <tr>
-              <th>Tag</th>
+              <th class="is-fullwidth">Tag</th>
               <th>Files</th>
             </tr>
           </thead>
@@ -26,7 +28,7 @@
           <tbody>
 
             <tr v-for="tag in formattedTags" :key="tag.name">
-              <td>
+              <td class="is-fullwidth">
                 <router-link
                   :to="{ path: tag.path, query: tag.query }"
                   :style="{ color: tag.color }">
@@ -60,6 +62,8 @@
 
     </section>
 
+    <scroll-to-top-bar v-if="showScrollToTopBar" />
+
   </div>
 </template>
 
@@ -72,8 +76,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import config from '@/config'
 import queryFormatter from '@/util/query-formatter'
 import tagsHelper from '@/util/tags-helper'
+import visibilityHelper from '@/util/visibility-helper'
 
 import Search from '@/components/tags/Search'
+import ScrollToTopBar from '@/components/general/ScrollToTopBar'
 
 let scrollListener
 
@@ -82,6 +88,7 @@ export default {
   data: function () {
     return {
       wantsAdditionalTags: false,
+      showScrollToTopBar: false,
       title: `Tags – ${config.title}`
     }
   },
@@ -110,19 +117,16 @@ export default {
       colors: state => state.settings.colors
     })
   },
-  methods: {
-    bottomIsVisible: function () {
-      const scrollY = window.scrollY
-      const isVisible = document.documentElement.clientHeight
-      const pageHeight = document.documentElement.scrollHeight
-      const isAtBottomOfPage = (isVisible + scrollY) >= (pageHeight - 48)
+  mounted: function () {
+    this.showScrollToTopBar = visibilityHelper.isPageScrolledPastElement(
+      'results-separator'
+    )
 
-      return isAtBottomOfPage || ((pageHeight - 48) < isVisible)
-    }
-  },
-  created: function () {
     scrollListener = throttle(() => {
-      this.wantsAdditionalTags = this.bottomIsVisible()
+      this.wantsAdditionalTags = visibilityHelper.isBottomOfPageVisible(88)
+      this.showScrollToTopBar = visibilityHelper.isPageScrolledPastElement(
+        'results-separator'
+      )
     }, 50)
 
     window.addEventListener(
@@ -148,7 +152,8 @@ export default {
   },
   components: {
     FontAwesomeIcon,
-    Search
+    Search,
+    ScrollToTopBar
   }
 }
 </script>

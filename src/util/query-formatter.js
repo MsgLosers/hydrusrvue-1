@@ -36,11 +36,11 @@ export default {
     }
   },
   generateDefaultFilesQuery (search) {
-    const searchIsConstraint = constraintsHelper.isValidConstraint(search)
+    const isSearchConstraint = constraintsHelper.isValidConstraint(search)
 
     return this.generateFilesQuery(
-      !searchIsConstraint ? [search] : [],
-      searchIsConstraint ? [search] : [],
+      !isSearchConstraint ? [search] : [],
+      isSearchConstraint ? [search] : [],
       store.state.settings.filesSorting,
       store.state.settings.filesSortingDirection,
       store.state.settings.filesSortingNamespaces,

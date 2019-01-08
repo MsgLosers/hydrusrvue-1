@@ -11,7 +11,7 @@ export default {
   namespaced: true,
   state: {
     isInitialized: false,
-    navigationIsOpen: false,
+    isNavigationOpen: false,
     hasSavedScrollPosition: false
   },
   mutations: {
@@ -19,10 +19,10 @@ export default {
       state.isInitialized = true
     },
     [OPEN_NAVIGATION] (state) {
-      state.navigationIsOpen = true
+      state.isNavigationOpen = true
     },
     [CLOSE_NAVIGATION] (state) {
-      state.navigationIsOpen = false
+      state.isNavigationOpen = false
     },
     [SET_SAVED_SCROLL_POSITION] (state) {
       state.hasSavedScrollPosition = true
