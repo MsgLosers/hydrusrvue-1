@@ -4,7 +4,7 @@
     <input
       type="text"
       class="input"
-      :class="size"
+      :class="{ 'is-medium': size === 'large' }"
       ref="search"
       :placeholder="placeholder"
       @keydown.tab.prevent="focusActiveFilters"
@@ -17,7 +17,10 @@
 
     <div
       class="file-search-suggestions dropdown"
-      :class="{ 'is-active': suggestions.length }"
+      :class="{
+        'has-restricted-width': size === 'large',
+        'is-active': suggestions.length
+      }"
       v-if="suggestions.length">
       <div class="dropdown-menu">
         <div class="dropdown-content">
@@ -42,7 +45,9 @@
             <span class="icon" v-if="suggestion.type === 'constraint'">
               <font-awesome-icon icon="tools" />
             </span>
-            <span>{{ suggestion.name }}</span>
+            <span :class="{
+              'tag-name': suggestion.type === 'tag'
+            }">{{ suggestion.name }}</span>
             <small class="file-amount" v-if="suggestion.type === 'tag'">
               {{ suggestion.fileCount | formatNumber }}
             </small>

@@ -9,7 +9,7 @@
             <search-input
               :search.sync="search"
               :hasCompletedSearch.sync="hasCompletedSearch"
-              size="is-medium"
+              size="large"
               :placeholder="
                 'Search for files by tag or constraint…' |
                   formatToConfiguredLetterCase

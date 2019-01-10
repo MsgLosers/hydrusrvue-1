@@ -3,7 +3,7 @@
     display: block !important;
 
     .dropdown-menu {
-      max-width: calc(100vw - 48px);
+      max-width: calc(100vw - 3rem);
 
       .dropdown-item {
         display: flex;
@@ -19,17 +19,28 @@
         span {
           overflow: hidden;
           text-overflow: ellipsis;
-        }
 
-        .icon {
-          min-width: 1.5rem;
+          &.icon {
+            min-width: 1.5rem;
+          }
+
+          &.tag-name {
+            &::after {
+              content: '\00a0';
+            }
+          }
         }
 
         .file-amount {
           align-self: flex-end;
           color: $grey-light;
-          margin-left: 5px;
         }
+      }
+    }
+
+    &.has-restricted-width {
+      .dropdown-menu {
+        max-width: 100%;
       }
     }
   }

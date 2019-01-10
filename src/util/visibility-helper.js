@@ -14,8 +14,10 @@ export default {
 
     const element = document.getElementById(elementId)
 
-    return element.getBoundingClientRect().bottom +
-      parseInt(window.getComputedStyle(element).marginBottom) <
-      document.getElementById('navbar').offsetHeight
+    return element
+      ? element.getBoundingClientRect().bottom +
+        parseInt(window.getComputedStyle(element).marginBottom) <
+        document.getElementById('navbar').offsetHeight
+      : false
   }
 }

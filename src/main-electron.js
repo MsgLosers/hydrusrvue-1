@@ -40,6 +40,8 @@ import App from '@/App'
 
 import '@/styles/main'
 
+Vue.config.productionTip = false
+
 Vue.component('vue-headful', VueHeadful)
 Vue.use(VueHotkey)
 Vue.use(PhotoSwipe)
