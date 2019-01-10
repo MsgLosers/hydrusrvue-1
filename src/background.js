@@ -1,6 +1,3 @@
-import * as path from 'path'
-import { format as formatUrl } from 'url'
-
 import { app, protocol, BrowserWindow, Menu } from 'electron'
 import {
   createProtocol,
@@ -9,51 +6,31 @@ import {
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
-if (isDevelopment) {
-  require('module').globalPaths.push(process.env.NODE_MODULES_PATH)
-}
-
 let mainWindow
 
 protocol.registerStandardSchemes(['app'], { secure: true })
 
-function createMainWindow () {
-  const window = new BrowserWindow({
+function createWindow () {
+  mainWindow = new BrowserWindow({
     width: 1280,
     height: 800
   })
 
-  if (isDevelopment) {
-    window.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
+  if (process.env.WEBPACK_DEV_SERVER_URL) {
+    mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
 
     if (!process.env.IS_TEST) {
-      window.webContents.openDevTools()
+      mainWindow.webContents.openDevTools()
     }
   } else {
     createProtocol('app')
 
-    window.loadURL(
-      formatUrl({
-        pathname: path.join(__dirname, 'index.html'),
-        protocol: 'file',
-        slashes: true
-      })
-    )
+    mainWindow.loadURL('app://./index.html')
   }
 
-  window.on('closed', () => {
+  mainWindow.on('closed', () => {
     mainWindow = null
   })
-
-  window.webContents.on('devtools-opened', () => {
-    window.focus()
-
-    setImmediate(() => {
-      window.focus()
-    })
-  })
-
-  return window
 }
 
 function createMenu () {
@@ -132,7 +109,7 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
   if (mainWindow === null) {
-    mainWindow = createMainWindow()
+    createWindow()
   }
 })
 
@@ -141,7 +118,20 @@ app.on('ready', async () => {
     await installVueDevtools()
   }
 
-  mainWindow = createMainWindow()
-
+  createWindow()
   createMenu()
 })
+
+if (isDevelopment) {
+  if (process.platform === 'win32') {
+    process.on('message', data => {
+      if (data === 'graceful-exit') {
+        app.quit()
+      }
+    })
+  } else {
+    process.on('SIGTERM', () => {
+      app.quit()
+    })
+  }
+}
