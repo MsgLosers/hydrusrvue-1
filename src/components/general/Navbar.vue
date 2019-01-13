@@ -69,11 +69,14 @@
           <span>Settings</span>
         </router-link>
 
-        <router-link to="/user" class="navbar-item" v-if="isAuthorized">
+        <router-link
+          to="/user"
+          class="navbar-item has-restricted-width"
+          v-if="isAuthorized && user">
           <span class="icon">
             <font-awesome-icon icon="user" />
           </span>
-          <span>User</span>
+          <span>{{ user.username }}</span>
         </router-link>
 
         <router-link to="/logout" class="navbar-item" v-if="isAuthorized">
@@ -144,7 +147,8 @@ export default {
   },
   computed: {
     ...mapState({
-      isNavigationOpen: state => state.app.isNavigationOpen
+      isNavigationOpen: state => state.app.isNavigationOpen,
+      user: state => state.auth.user
     })
   },
   methods: {

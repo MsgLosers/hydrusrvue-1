@@ -1,8 +1,12 @@
 import cookies from 'js-cookie'
 
 import {
+  SET_USER,
+  UNSET_USER,
   AUTHORIZE,
   DEAUTHORIZE,
+  SET_AUTHORIZING,
+  UNSET_AUTHORIZING,
   SET_CREATING_USER,
   UNSET_CREATING_USER,
   SET_UPDATING_USERNAME,
@@ -14,11 +18,8 @@ import {
   SET_UPDATED_PASSWORD,
   UNSET_UPDATED_PASSWORD,
   SET_DELETING_USER,
-  UNSET_DELETING_USER,
-  SET_AUTHORIZING,
-  UNSET_AUTHORIZING
+  UNSET_DELETING_USER
 } from '@/store/mutation-types'
-import config from '@/config'
 import router from '@/router'
 import api from '@/api'
 import errorHandler from '@/util/error-handler'
@@ -26,21 +27,28 @@ import errorHandler from '@/util/error-handler'
 export default {
   namespaced: true,
   state: {
+    user: null,
+    token: cookies.get('token'),
+    mediaToken: cookies.get('mediaToken'),
     isAuthorized: (
       (typeof cookies.get('token') !== 'undefined') &&
       (typeof cookies.get('mediaToken') !== 'undefined')
     ),
+    isAuthorizing: false,
     isCreatingUser: false,
     isUpdatingUsername: false,
     hasUpdatedUsername: false,
     isUpdatingPassword: false,
     hasUpdatedPassword: false,
-    isDeletingUser: false,
-    isAuthorizing: false,
-    token: cookies.get('token'),
-    mediaToken: cookies.get('mediaToken')
+    isDeletingUser: false
   },
   mutations: {
+    [SET_USER] (state, payload) {
+      state.user = payload
+    },
+    [UNSET_USER] (state) {
+      state.user = null
+    },
     [AUTHORIZE] (state, payload) {
       state.isAuthorized = payload.isAuthorized
       state.token = payload.token
@@ -50,6 +58,12 @@ export default {
       state.isAuthorized = false
       state.token = null
       state.mediaToken = null
+    },
+    [SET_AUTHORIZING] (state) {
+      state.isAuthorizing = true
+    },
+    [UNSET_AUTHORIZING] (state) {
+      state.isAuthorizing = false
     },
     [SET_CREATING_USER] (state) {
       state.isCreatingUser = true
@@ -86,27 +100,19 @@ export default {
     },
     [UNSET_DELETING_USER] (state) {
       state.isDeletingUser = false
-    },
-    [SET_AUTHORIZING] (state) {
-      state.isAuthorizing = true
-    },
-    [UNSET_AUTHORIZING] (state) {
-      state.isAuthorizing = false
     }
   },
   actions: {
-    checkAuthorization (context) {
+    fetchUser (context) {
       context.dispatch('error/flush', false, { root: true })
 
-      if (!context.state.token && config.isAuthenticationRequired) {
+      if (!context.state.token) {
         return
       }
 
-      return api.fetchInfo(context.state.token)
-        .then(async res => {
-          context.dispatch('api/setInfo', res.data, { root: true })
-          await context.dispatch('tags/fetchNamespaces', false, { root: true })
-          await context.dispatch('files/fetchMimeTypes', false, { root: true })
+      return api.fetchUser(context.state.token)
+        .then(res => {
+          context.commit(SET_USER, res.data)
         })
         .catch(err => {
           errorHandler.handle(
@@ -120,26 +126,12 @@ export default {
           )
         })
     },
-    checkCookie ({ commit, state }) {
-      if (!state.isAuthorized) {
-        return
-      }
-
-      if (!(cookies.get('token') && cookies.get('mediaToken'))) {
-        commit(DEAUTHORIZE)
-
-        errorHandler.handle(
-          { data: { error: 'InvalidTokenError' } },
-          [{ name: 'InvalidTokenError', isFatal: false, isLocal: false }]
-        )
-      }
-    },
     createUser (context, payload) {
-      context.commit(SET_CREATING_USER)
-
       context.dispatch('error/flush', false, { root: true })
 
-      api.createUser({
+      context.commit(SET_CREATING_USER)
+
+      return api.createUser({
         username: payload.username,
         password: payload.password
       })
@@ -204,7 +196,8 @@ export default {
             top: 0,
             behavior: 'smooth'
           })
-
+        })
+        .finally(() => {
           context.commit(UNSET_CREATING_USER)
         })
     },
@@ -213,14 +206,12 @@ export default {
 
       context.commit(SET_DELETING_USER)
 
-      api.deleteUser(
-        {
-          password: payload.currentPassword
-        },
+      return api.deleteUser(
+        { password: payload.currentPassword },
         context.state.token
       )
-        .then(res => {
-          context.dispatch('deauthorize')
+        .then(async res => {
+          await context.dispatch('deauthorize')
         })
         .catch(async err => {
           await errorHandler.handle(
@@ -258,7 +249,7 @@ export default {
 
       context.commit(SET_UPDATING_USERNAME)
 
-      api.updateUser(
+      return api.updateUser(
         {
           username: payload.newUsername,
           currentPassword: payload.currentPassword
@@ -268,6 +259,7 @@ export default {
         .then(res => {
           context.commit(UNSET_UPDATING_USERNAME)
           context.commit(SET_UPDATED_USERNAME)
+          context.commit(SET_USER, res.data)
 
           setTimeout(() => {
             context.commit(UNSET_UPDATED_USERNAME)
@@ -321,7 +313,7 @@ export default {
 
       context.commit(SET_UPDATING_PASSWORD)
 
-      api.updateUser(
+      return api.updateUser(
         {
           password: payload.newPassword,
           currentPassword: payload.currentPassword
@@ -331,6 +323,7 @@ export default {
         .then(res => {
           context.commit(UNSET_UPDATING_PASSWORD)
           context.commit(SET_UPDATED_PASSWORD)
+          context.commit(SET_USER, res.data)
 
           setTimeout(() => {
             context.commit(UNSET_UPDATED_PASSWORD)
@@ -380,22 +373,26 @@ export default {
         })
     },
     authorize (context, payload) {
-      context.commit(SET_AUTHORIZING)
-
       context.dispatch('error/flush', false, { root: true })
 
-      api.authorize({
+      context.commit(SET_AUTHORIZING)
+
+      return api.authorize({
         username: payload.username,
         password: payload.password,
         long: payload.long
       })
         .then(async res => {
-          const expires = payload.long
-            ? new Date(new Date().getTime() + 129595 * 60 * 1000)
-            : new Date(new Date().getTime() + 1435 * 60 * 1000)
-
-          cookies.set('token', res.data.token, { expires: expires })
-          cookies.set('mediaToken', res.data.mediaToken, { expires: expires })
+          cookies.set(
+            'token',
+            res.data.token,
+            { expires: new Date(res.data.expiresAt) }
+          )
+          cookies.set(
+            'mediaToken',
+            res.data.mediaToken,
+            { expires: new Date(res.data.expiresAt) }
+          )
 
           context.commit(
             AUTHORIZE,
@@ -406,7 +403,10 @@ export default {
             }
           )
 
-          await context.dispatch('checkAuthorization')
+          await context.dispatch('api/fetchInfo', false, { root: true })
+          await context.dispatch('fetchUser')
+          await context.dispatch('tags/fetchNamespaces', false, { root: true })
+          await context.dispatch('files/fetchMimeTypes', false, { root: true })
 
           router.push('/')
         })
@@ -451,23 +451,50 @@ export default {
           context.commit(UNSET_CREATING_USER)
         })
     },
-    async deauthorize ({ commit, state }, payload) {
-      cookies.remove('token')
-      cookies.remove('mediaToken')
+    deauthorize ({ commit, state }, payload) {
+      return new Promise(async (resolve, reject) => {
+        cookies.remove('token')
+        cookies.remove('mediaToken')
 
-      if (state.token) {
-        await api.deauthorize({ all: payload }, state.token)
-          .then(() => {
-            commit(DEAUTHORIZE)
-          })
-          .catch(() => {
-            commit(DEAUTHORIZE)
-          })
-      } else {
-        commit(DEAUTHORIZE)
+        if (state.token) {
+          await api.deauthorize({ all: payload }, state.token)
+            .then(() => {
+              commit(DEAUTHORIZE)
+              commit(UNSET_USER)
+            })
+            .catch(() => {
+              commit(DEAUTHORIZE)
+              commit(UNSET_USER)
+            })
+            .finally(() => {
+              router.push('/login')
+
+              resolve()
+            })
+        } else {
+          commit(DEAUTHORIZE)
+          commit(UNSET_USER)
+
+          router.push('/login')
+
+          resolve()
+        }
+      })
+    },
+    async checkCookie ({ commit, state }) {
+      if (!state.isAuthorized) {
+        return
       }
 
-      router.push('/login')
+      if (!(cookies.get('token') && cookies.get('mediaToken'))) {
+        commit(DEAUTHORIZE)
+        commit(UNSET_USER)
+
+        await errorHandler.handle(
+          { data: { error: 'InvalidTokenError' } },
+          [{ name: 'InvalidTokenError', isFatal: false, isLocal: false }]
+        )
+      }
     }
   },
   getters: {

@@ -3,6 +3,11 @@
   border-radius: $radius;
   padding: 1.5rem;
 
+  h1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .input[disabled],
   .textarea[disabled] {
     border-color: $grey-lighter;

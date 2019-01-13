@@ -18,40 +18,38 @@
                 <h1 class="has-text-primary">Settings</h1>
 
                 <p>
-                  These settings are saved locally in your browser – they are
+                  These settings are saved locally in your browser; they are
                   not carried over to other browsers or devices.
                 </p>
 
+                <hr class="has-background-grey-lighter">
+
                 <form @submit.prevent="saveSettings">
 
-                  <p>
-                    <strong class="has-text-primary">Image size</strong>
-                  </p>
+                  <h2 class="has-paragraph-size has-text-primary">
+                    Image size
+                  </h2>
 
                   <image-size :restrictImageSize.sync="restrictImageSize" />
 
-                  <p>
-                    <strong class="has-text-primary">Tag colors</strong>
-                  </p>
+                  <h2 class="has-paragraph-size has-text-primary">
+                    Tag colors
+                  </h2>
 
                   <colors :colors.sync="colors" />
 
-                  <p>
-                    <strong class="has-text-primary">
-                      Default files sorting
-                    </strong>
-                  </p>
+                  <h2 class="has-paragraph-size has-text-primary">
+                    Default files sorting
+                  </h2>
 
                   <files-sorting
                     :filesSorting.sync="filesSorting"
                     :filesSortingDirection.sync="filesSortingDirection"
                     :filesSortingNamespaces.sync="filesSortingNamespaces" />
 
-                  <p>
-                    <strong class="has-text-primary">
-                      Default tags sorting
-                    </strong>
-                  </p>
+                  <h2 class="has-paragraph-size has-text-primary">
+                    Default tags sorting
+                  </h2>
 
                   <tags-sorting
                     :tagsSorting.sync="tagsSorting"

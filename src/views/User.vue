@@ -24,11 +24,23 @@
 
               <div class="content">
 
-                <h1 class="has-text-primary">User</h1>
+                <h1 class="has-text-primary" v-if="user">
+                  {{ user.username }}
+                </h1>
+                <h1 v-else>User</h1>
 
-                <p>
-                  <strong class="has-text-primary">Change username</strong>
+                <p v-if="user">
+                  Your user was created on
+                  <em>{{ user.createdAt | formatDate }}</em>.
+                  It was last edited on
+                  <em>{{ user.updatedAt | formatDate }}</em>.
                 </p>
+
+                <hr class="has-background-grey-lighter" v-if="user">
+
+                <h2 class="has-paragraph-size has-text-primary">
+                  Change username
+                </h2>
 
                 <change-username
                   :isWorking="isWorking"
@@ -41,9 +53,9 @@
 
                 <hr class="has-background-grey-lighter">
 
-                <p>
-                  <strong class="has-text-primary">Change password</strong>
-                </p>
+                <h2 class="has-paragraph-size has-text-primary">
+                  Change password
+                </h2>
 
                 <change-password
                   :isWorking="isWorking"
@@ -56,9 +68,7 @@
 
                 <hr class="has-background-grey-lighter">
 
-                <p>
-                  <strong class="has-text-primary">Log out</strong>
-                </p>
+                <h2 class="has-paragraph-size has-text-primary">Log out</h2>
 
                 <p>
                   <button
@@ -81,9 +91,9 @@
 
                 <hr class="has-background-grey-lighter">
 
-                <p>
-                  <strong class="has-text-primary">Delete user</strong>
-                </p>
+                <h2 class="has-paragraph-size has-text-primary">
+                  Delete user
+                </h2>
 
                 <p>
                   <delete-user
@@ -145,6 +155,7 @@ export default {
       return this.hasUpdatedUsername || this.hasUpdatedPassword
     },
     ...mapState({
+      user: state => state.auth.user,
       isUpdatingUsername: state => state.auth.isUpdatingUsername,
       hasUpdatedUsername: state => state.auth.hasUpdatedUsername,
       isUpdatingPassword: state => state.auth.isUpdatingPassword,

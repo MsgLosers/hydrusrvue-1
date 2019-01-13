@@ -7,33 +7,28 @@
 
       .dropdown-item {
         display: flex;
-
-        &.constraint {
-          color: $dark;
-        }
+        min-height: 2.25rem;
 
         &:focus {
           background-color: $dropdown-item-hover-background-color;
         }
 
-        span {
+        .icon {
+          color: $dark;
+          min-width: 1.5rem;
+        }
+
+        .suggestion {
           overflow: hidden;
           text-overflow: ellipsis;
 
-          &.icon {
-            min-width: 1.5rem;
+          &.constraint {
+            color: $dark;
           }
 
-          &.tag-name {
-            &::after {
-              content: '\00a0';
-            }
+          .file-amount {
+            color: $grey-light;
           }
-        }
-
-        .file-amount {
-          align-self: flex-end;
-          color: $grey-light;
         }
       }
     }

@@ -1,3 +1,15 @@
+.table-container {
+  &::-webkit-scrollbar {
+    appearance: none;
+    background: $white;
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $primary;
+  }
+}
+
 .table {
   th,
   td {

@@ -36,7 +36,10 @@ export default {
       await context.dispatch('api/fetchStatus', false, { root: true })
 
       if (!context.rootState.error.isFatal) {
-        await context.dispatch('auth/checkAuthorization', false, { root: true })
+        await context.dispatch('api/fetchInfo', false, { root: true })
+        await context.dispatch('auth/fetchUser', false, { root: true })
+        await context.dispatch('tags/fetchNamespaces', false, { root: true })
+        await context.dispatch('files/fetchMimeTypes', false, { root: true })
       }
 
       context.dispatch(

@@ -55,6 +55,13 @@ export default new Router({
       component: () => import(/* webpackChunkName: "user" */ '@/views/User'),
       meta: {
         isAuthenticationRequired: true
+      },
+      beforeEnter: async (to, from, next) => {
+        if (from.name) {
+          await store.dispatch('auth/fetchUser', false)
+        }
+
+        next()
       }
     },
     {
@@ -63,6 +70,13 @@ export default new Router({
       component: () => import(/* webpackChunkName: "settings" */ '@/views/Settings'),
       meta: {
         isAuthenticationRequired: config.isAuthenticationRequired
+      },
+      beforeEnter: async (to, from, next) => {
+        if (from.name) {
+          await store.dispatch('tags/fetchNamespaces', false)
+        }
+
+        next()
       }
     },
     {
@@ -115,9 +129,17 @@ export default new Router({
 
     store.dispatch('app/unsetSavedScrollPosition', false)
 
-    if (['home', 'registration', 'login', 'user', 'settings', 'file'].includes(
-      to.name
-    )) {
+    if (
+      [
+        'home',
+        'registration',
+        'login',
+        'user',
+        'settings',
+        'help',
+        'file'
+      ].includes(to.name)
+    ) {
       return { x: 0, y: 0 }
     }
   },

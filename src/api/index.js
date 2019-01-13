@@ -19,6 +19,17 @@ export default {
       headers: headers
     })
   },
+  fetchUser (token) {
+    const headers = {}
+
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`
+    }
+
+    return axios.get(`${config.apiUrl}/users`, {
+      headers: headers
+    })
+  },
   createUser (body) {
     return axios.post(`${config.apiUrl}/users`, body)
   },

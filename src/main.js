@@ -69,6 +69,14 @@ Vue.filter('formatNumber', number => {
   return number.toLocaleString()
 })
 
+Vue.filter('formatDate', dateString => {
+  if (!dateString) {
+    return ''
+  }
+
+  return new Date(dateString).toLocaleString()
+})
+
 Vue.filter('addFileExtension', (name, mime) => {
   if (!(name && mime)) {
     return ''
@@ -93,13 +101,13 @@ Vue.filter('addFileExtension', (name, mime) => {
   return `${name}.${extensions[mime]}`
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   store.dispatch('app/closeNavigation')
 
   store.dispatch('error/flush')
 
   if (to.path !== '/logout') {
-    store.dispatch('auth/checkCookie')
+    await store.dispatch('auth/checkCookie')
   }
 
   const isAuthenticationRequired = to.matched.some(

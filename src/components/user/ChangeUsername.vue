@@ -126,6 +126,9 @@ export default {
         newUsername: this.newUsername,
         currentPassword: this.currentPassword
       })
+
+      this.newUsername = ''
+      this.currentPassword = ''
     },
     ...mapActions({
       updateUsername: 'auth/updateUsername'

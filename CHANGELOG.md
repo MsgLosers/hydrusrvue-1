@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
++ Added the display of user information
+
+### Changed
+
++ Refactored code
+
 ## [3.3.0] - 2019-01-10
 
 ### Changed

@@ -82,6 +82,10 @@ export default {
   },
   getters: {
     currentColors: (state, getters, rootState) => {
+      if (!(state.colors.length && rootState.tags.namespaces.length)) {
+        return []
+      }
+
       const colors = []
 
       for (const namespace of rootState.tags.namespaces) {

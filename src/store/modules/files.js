@@ -113,10 +113,10 @@ export default {
             document.dispatchEvent(new Event('scroll'))
           })
         })
-        .catch(err => {
+        .catch(async err => {
           context.commit(UNSET_TOTAL_FILE_COUNT)
 
-          errorHandler.handle(
+          await errorHandler.handle(
             err.response,
             [
               { name: 'MissingTokenError', isFatal: false, isLocal: false },
@@ -201,10 +201,10 @@ export default {
             document.dispatchEvent(new Event('scroll'))
           })
         })
-        .catch(err => {
+        .catch(async err => {
           context.commit(UNSET_TOTAL_FILE_COUNT)
 
-          errorHandler.handle(
+          await errorHandler.handle(
             err.response,
             [
               { name: 'MissingTokenError', isFatal: false, isLocal: false },
@@ -280,8 +280,8 @@ export default {
         .then(res => {
           context.commit(SET_DETAIL_ITEM, res.data)
         })
-        .catch(err => {
-          errorHandler.handle(
+        .catch(async err => {
+          await errorHandler.handle(
             err.response,
             [
               { name: 'MissingTokenError', isFatal: false, isLocal: false },
@@ -312,12 +312,16 @@ export default {
     fetchMimeTypes (context) {
       context.dispatch('error/flush', false, { root: true })
 
+      if (!context.rootState.auth.token && config.isAuthenticationRequired) {
+        return
+      }
+
       return api.fetchMimeTypes(context.rootState.auth.token)
         .then(res => {
           context.commit(SET_MIME_TYPES, res.data.mimeTypes)
         })
-        .catch(err => {
-          errorHandler.handle(
+        .catch(async err => {
+          await errorHandler.handle(
             err.response,
             [
               { name: 'MissingTokenError', isFatal: false, isLocal: false },
