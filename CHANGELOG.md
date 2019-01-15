@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
++ Changed the settings so they can be applied for each user separately
 + Refactored code
 
 ## [3.3.0] - 2019-01-10

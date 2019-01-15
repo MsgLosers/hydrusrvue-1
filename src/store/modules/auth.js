@@ -407,6 +407,7 @@ export default {
           await context.dispatch('fetchUser')
           await context.dispatch('tags/fetchNamespaces', false, { root: true })
           await context.dispatch('files/fetchMimeTypes', false, { root: true })
+          context.dispatch('settings/load', false, { root: true })
 
           router.push('/')
         })
@@ -451,29 +452,28 @@ export default {
           context.commit(UNSET_CREATING_USER)
         })
     },
-    deauthorize ({ commit, state }, payload) {
+    deauthorize (context, payload) {
       return new Promise(async (resolve, reject) => {
         cookies.remove('token')
         cookies.remove('mediaToken')
 
-        if (state.token) {
-          await api.deauthorize({ all: payload }, state.token)
-            .then(() => {
-              commit(DEAUTHORIZE)
-              commit(UNSET_USER)
-            })
-            .catch(() => {
-              commit(DEAUTHORIZE)
-              commit(UNSET_USER)
-            })
+        if (context.state.token) {
+          await api.deauthorize({ all: payload }, context.state.token)
             .finally(() => {
+              context.commit(DEAUTHORIZE)
+              context.commit(UNSET_USER)
+
+              context.dispatch('settings/load', false, { root: true })
+
               router.push('/login')
 
               resolve()
             })
         } else {
-          commit(DEAUTHORIZE)
-          commit(UNSET_USER)
+          context.commit(DEAUTHORIZE)
+          context.commit(UNSET_USER)
+
+          context.dispatch('settings/load', false, { root: true })
 
           router.push('/login')
 
