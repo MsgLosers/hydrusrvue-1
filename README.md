@@ -56,6 +56,7 @@ The most prominent features are:
 + [Install](#install)
   + [Dependencies](#dependencies)
   + [Updating](#updating)
+    + [Upgrading from 3.x to 4.x](#upgrading-from-3x-to-4x)
     + [Upgrading from 2.x to 3.x](#upgrading-from-2x-to-3x)
     + [Upgrading from 1.x to 2.x](#upgrading-from-1x-to-2x)
 + [Usage](#usage)
@@ -84,7 +85,7 @@ user@local:hydrusrvue$ yarn
 
 ### Dependencies
 
-+ [hydrusrv][hydrusrv] (`6.x` for hydrusrvue `3.x`)
++ [hydrusrv][hydrusrv] (`7.x` for hydrusrvue `4.x`)
 + [Node.js][node-js]
 + [Yarn][yarn]
 
@@ -112,22 +113,30 @@ therefore always safe to simply install via the routine mentioned before.
 When necessary, this section will be expanded with upgrade guides to new major
 versions.
 
+#### Upgrading from 3.x to 4.x
+
+Upgrading from `3.x` to `4.x` can be done via `git pull && yarn`.
+
+The major version bump was made due to the incompatibility of `3.x` with
+hydrusrv `7.x`. So if you are using that version, you need to upgrade
+hydrusrvue to `4.x`.
+
 #### Upgrading from 2.x to 3.x
 
 Upgrading from `2.x` to `3.x` can be done via `git pull && yarn`.
 
 The major version bump was made due to the incompatibility of `2.x` with
-hydrusrv `6.x`. So if you are using that, you need to upgrade hydrusrvue to
-`3.x`.
+hydrusrv `6.x`. So if you are using that version, you need to upgrade
+hydrusrvue to `3.x`.
 
 #### Upgrading from 1.x to 2.x
 
 Upgrading from `1.x` to `2.x` can be done via `git pull && yarn` and requires
-only a few setting changes.
+manual updates/changes in `.env`.
 
 The major version bump was made due to the incompatibility of `1.x` with
-hydrusrv `5.x`. So if you are using that, you need to upgrade hydrusrvue to
-`2.x`.
+hydrusrv `5.x`. So if you are using that version, you need to upgrade
+hydrusrvue to `2.x`.
 
 ## Usage
 
