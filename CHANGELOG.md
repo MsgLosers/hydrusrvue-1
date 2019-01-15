@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.0.0] - 2019-01-15
+
+### Added
+
++ Added the display of user information
+
+### Changed
+
++ Changed the settings so they can be applied for each user separately
++ Refactored code
++ Updated dependencies
+
 ## [3.3.0] - 2019-01-10
 
 ### Changed
@@ -266,7 +278,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 + Initial release
 
-[Unreleased]: https://github.com/mserajnik/hydrusrvue/compare/3.3.0...develop
+[Unreleased]: https://github.com/mserajnik/hydrusrvue/compare/4.0.0...develop
+[4.0.0]: https://github.com/mserajnik/hydrusrvue/compare/3.3.0...4.0.0
 [3.3.0]: https://github.com/mserajnik/hydrusrvue/compare/3.2.0...3.3.0
 [3.2.0]: https://github.com/mserajnik/hydrusrvue/compare/3.1.0...3.2.0
 [3.1.0]: https://github.com/mserajnik/hydrusrvue/compare/3.0.2...3.1.0

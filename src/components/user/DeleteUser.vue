@@ -101,6 +101,8 @@ export default {
       }
 
       this.deleteUser({ currentPassword: this.currentPassword })
+
+      this.currentPassword = ''
     },
     ...mapActions({
       deleteUser: 'auth/deleteUser'

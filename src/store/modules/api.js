@@ -1,4 +1,5 @@
 import { SET_API_STATUS, SET_API_INFO } from '@/store/mutation-types'
+import config from '@/config'
 import api from '@/api'
 import errorHandler from '@/util/error-handler'
 
@@ -28,12 +29,32 @@ export default {
         .then(res => {
           commit(SET_API_STATUS, res.data.hydrusrv)
         })
-        .catch(err => {
-          errorHandler.handle(err.response)
+        .catch(async err => {
+          await errorHandler.handle(err.response)
         })
     },
-    setInfo ({ commit }, payload) {
-      commit(SET_API_INFO, payload)
+    fetchInfo (context) {
+      context.dispatch('error/flush', false, { root: true })
+
+      if (!context.rootState.auth.token && config.isAuthenticationRequired) {
+        return
+      }
+
+      return api.fetchInfo(context.rootState.auth.token)
+        .then(res => {
+          context.commit(SET_API_INFO, res.data)
+        })
+        .catch(async err => {
+          await errorHandler.handle(
+            err.response,
+            [
+              { name: 'MissingTokenError', isFatal: false, isLocal: false },
+              { name: 'InvalidTokenError', isFatal: false, isLocal: false },
+              { name: 'ShuttingDownError', isFatal: true, isLocal: false },
+              { name: 'InternalServerError', isFatal: true, isLocal: false }
+            ]
+          )
+        })
     }
   }
 }

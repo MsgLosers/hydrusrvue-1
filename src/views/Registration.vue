@@ -117,7 +117,7 @@ export default {
   },
   computed: {
     ...mapState({
-      isRegistering: state => state.auth.creatingUser,
+      isRegistering: state => state.auth.isCreatingUser,
       error: state => state.error
     })
   },

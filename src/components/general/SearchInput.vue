@@ -26,10 +26,8 @@
         <div class="dropdown-content">
           <a
             class="dropdown-item"
-            :class="{ 'constraint': suggestion.type === 'constraint' }"
             href="#"
             ref="suggestions"
-            :style="{ color: suggestion.color }"
             v-for="(suggestion, index) in suggestions"
             :key="index"
             @keydown.up.prevent="focusSuggestion(index - 1)"
@@ -45,12 +43,15 @@
             <span class="icon" v-if="suggestion.type === 'constraint'">
               <font-awesome-icon icon="tools" />
             </span>
-            <span :class="{
-              'tag-name': suggestion.type === 'tag'
-            }">{{ suggestion.name }}</span>
-            <small class="file-amount" v-if="suggestion.type === 'tag'">
-              {{ suggestion.fileCount | formatNumber }}
-            </small>
+            <span
+              class="suggestion"
+              :class="{ 'constraint': suggestion.type === 'constraint' }"
+              :style="{ color: suggestion.color }">
+              {{ suggestion.name }}
+              <small class="file-amount" v-if="suggestion.type === 'tag'">
+                {{ suggestion.fileCount | formatNumber }}
+              </small>
+            </span>
           </a>
         </div>
       </div>
@@ -165,12 +166,12 @@ export default {
           this.suggestions = this.getConstraintSuggestions(partialSearch)
             .concat(res.data.tags)
         })
-        .catch(err => {
+        .catch(async err => {
           if (axios.isCancel(err)) {
             return
           }
 
-          errorHandler.handle(
+          await errorHandler.handle(
             err.response,
             [
               { name: 'MissingTokenError', isFatal: false, isLocal: false },
@@ -190,8 +191,9 @@ export default {
             ]
           )
         })
-
-      this.isSearching = false
+        .finally(() => {
+          this.isSearching = false
+        })
     },
     getConstraintSuggestions: function (partialConstraint) {
       const suggestions = []
@@ -277,7 +279,9 @@ export default {
       this.suggestions = []
 
       this.$nextTick(() => {
-        this.$refs.search.focus()
+        if (this.$refs.search) {
+          this.$refs.search.focus()
+        }
       })
     },
     stopCompleting: function () {

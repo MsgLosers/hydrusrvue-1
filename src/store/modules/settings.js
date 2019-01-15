@@ -44,44 +44,119 @@ export default {
     }
   },
   actions: {
-    save ({ commit }, payload) {
-      commit(SET_RESTRICT_IMAGE_SIZE, payload.restrictImageSize)
-      localStorage.setItem(
-        'restrictImageSize', JSON.stringify(payload.restrictImageSize)
+    load (context) {
+      const userId = context.rootState.auth.user
+        ? `-${context.rootState.auth.user.id}`
+        : ''
+
+      const storedRestrictImageSize = localStorage.getItem(
+        `hydrusrvue-restrict-image-size${userId}`
+      )
+      const storedColors = localStorage.getItem(
+        `hydrusrvue-colors${userId}`
+      )
+      const storedFilesSorting = localStorage.getItem(
+        `hydrusrvue-files-sorting${userId}`
+      )
+      const storedFilesSortingDirection = localStorage.getItem(
+        `hydrusrvue-files-sorting-direction${userId}`
+      )
+      const storedFilesSortingNamespaces = localStorage.getItem(
+        `hydrusrvue-files-sorting-namespaces${userId}`
+      )
+      const storedTagsSorting = localStorage.getItem(
+        `hydrusrvue-tags-sorting${userId}`
+      )
+      const storedTagsSortingDirection = localStorage.getItem(
+        `hydrusrvue-tags-sorting-direction${userId}`
       )
 
-      commit(SET_COLORS, payload.colors)
-      localStorage.setItem('colors', JSON.stringify(payload.colors))
+      context.dispatch(
+        'save',
+        {
+          restrictImageSize: storedRestrictImageSize
+            ? JSON.parse(storedRestrictImageSize)
+            : undefined,
+          colors: storedColors ? JSON.parse(storedColors) : undefined,
+          filesSorting: storedFilesSorting
+            ? JSON.parse(storedFilesSorting)
+            : undefined,
+          filesSortingDirection: storedFilesSortingDirection
+            ? JSON.parse(storedFilesSortingDirection)
+            : undefined,
+          filesSortingNamespaces: storedFilesSortingNamespaces
+            ? JSON.parse(storedFilesSortingNamespaces)
+            : undefined,
+          tagsSorting: storedTagsSorting
+            ? JSON.parse(storedTagsSorting)
+            : undefined,
+          tagsSortingDirection: storedTagsSortingDirection
+            ? JSON.parse(storedTagsSortingDirection)
+            : undefined
+        }
+      )
+    },
+    save (context, payload) {
+      const userId = context.rootState.auth.user
+        ? `-${context.rootState.auth.user.id}`
+        : ''
 
-      commit(SET_FILES_SORTING, payload.filesSorting)
+      const {
+        restrictImageSize = false,
+        colors = config.defaultNamespaceColors,
+        filesSorting = 'id',
+        filesSortingDirection = 'default',
+        filesSortingNamespaces = [config.fallbackFilesSortingNamespace],
+        tagsSorting = 'id',
+        tagsSortingDirection = 'default'
+      } = payload
+
+      context.commit(SET_RESTRICT_IMAGE_SIZE, restrictImageSize)
       localStorage.setItem(
-        'filesSorting', JSON.stringify(payload.filesSorting)
+        `hydrusrvue-restrict-image-size${userId}`,
+        JSON.stringify(restrictImageSize)
       )
 
-      commit(SET_FILES_SORTING_DIRECTION, payload.filesSortingDirection)
+      context.commit(SET_COLORS, colors)
       localStorage.setItem(
-        'filesSortingDirection', JSON.stringify(payload.filesSortingDirection)
+        `hydrusrvue-colors${userId}`, JSON.stringify(colors)
       )
 
-      commit(SET_FILES_SORTING_NAMESPACES, payload.filesSortingNamespaces)
+      context.commit(SET_FILES_SORTING, filesSorting)
       localStorage.setItem(
-        'filesSortingNamespaces',
-        JSON.stringify(payload.filesSortingNamespaces)
+        `hydrusrvue-files-sorting${userId}`, JSON.stringify(filesSorting)
       )
 
-      commit(SET_TAGS_SORTING, payload.tagsSorting)
+      context.commit(SET_FILES_SORTING_DIRECTION, filesSortingDirection)
       localStorage.setItem(
-        'tagsSorting', JSON.stringify(payload.tagsSorting)
+        `hydrusrvue-files-sorting-direction${userId}`,
+        JSON.stringify(filesSortingDirection)
       )
 
-      commit(SET_TAGS_SORTING_DIRECTION, payload.tagsSortingDirection)
+      context.commit(SET_FILES_SORTING_NAMESPACES, filesSortingNamespaces)
       localStorage.setItem(
-        'tagsSortingDirection', JSON.stringify(payload.tagsSortingDirection)
+        `hydrusrvue-files-sorting-namespaces${userId}`,
+        JSON.stringify(filesSortingNamespaces)
+      )
+
+      context.commit(SET_TAGS_SORTING, tagsSorting)
+      localStorage.setItem(
+        `hydrusrvue-tags-sorting${userId}`, JSON.stringify(tagsSorting)
+      )
+
+      context.commit(SET_TAGS_SORTING_DIRECTION, tagsSortingDirection)
+      localStorage.setItem(
+        `hydrusrvue-tags-sorting-direction${userId}`,
+        JSON.stringify(tagsSortingDirection)
       )
     }
   },
   getters: {
     currentColors: (state, getters, rootState) => {
+      if (!(state.colors.length && rootState.tags.namespaces.length)) {
+        return []
+      }
+
       const colors = []
 
       for (const namespace of rootState.tags.namespaces) {

@@ -35,9 +35,7 @@
                   {{ tag.name }}
                 </router-link>
               </td>
-              <td>
-                {{ tag.fileCount | formatNumber }}
-              </td>
+              <td>{{ tag.fileCount | formatNumber }}</td>
             </tr>
 
           </tbody>
