@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.1.0] - 2019-01-19
+
 ### Changed
 
 + Improved the behavior on mobile devices
@@ -283,7 +285,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 + Initial release
 
-[Unreleased]: https://github.com/mserajnik/hydrusrvue/compare/4.0.0...develop
+[Unreleased]: https://github.com/mserajnik/hydrusrvue/compare/4.1.0...develop
+[4.1.0]: https://github.com/mserajnik/hydrusrvue/compare/4.0.0...4.1.0
 [4.0.0]: https://github.com/mserajnik/hydrusrvue/compare/3.3.0...4.0.0
 [3.3.0]: https://github.com/mserajnik/hydrusrvue/compare/3.2.0...3.3.0
 [3.2.0]: https://github.com/mserajnik/hydrusrvue/compare/3.1.0...3.2.0
