@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 
 + Improved the behavior on mobile devices
++ Updated dependencies
 
 ## [4.0.0] - 2019-01-15
 
