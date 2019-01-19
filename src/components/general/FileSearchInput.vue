@@ -1,5 +1,5 @@
 <template>
-  <div v-on-clickaway="stopCompleting">
+  <div v-click-outside="stopCompleting">
 
     <input
       type="text"
@@ -8,10 +8,10 @@
       ref="search"
       :placeholder="placeholder"
       @keydown.tab.prevent="focusActiveFilters"
-      @keyup="tryCompletion"
+      @keydown.down.prevent="focusSuggestion(0)"
+      @input="tryCompletion"
       @click="tryCompletion"
       @focus="tryCompletion"
-      @keydown.down.prevent="focusSuggestion(0)"
       v-model="localSearch"
       v-focus>
 
@@ -62,7 +62,6 @@
 
 <script>
 import { mapState } from 'vuex'
-import { mixin as clickaway } from 'vue-clickaway'
 import axios from 'axios'
 import debounce from 'lodash/debounce'
 
@@ -71,10 +70,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import api from '@/api'
 import errorHandler from '@/util/error-handler'
 import tagsHelper from '@/util/tags-helper'
+import visibilityHelper from '@/util/visibility-helper'
 
 export default {
-  name: 'SearchInput',
-  mixins: [clickaway],
+  name: 'FileSearchInput',
   props: {
     search: {
       type: String,
@@ -128,18 +127,20 @@ export default {
   },
   methods: {
     tryCompletion: function () {
-      api.cancelPendingTagAutocompleteRequest()
+      this.$nextTick(() => {
+        api.cancelPendingTagAutocompleteRequest()
 
-      this.isSearching = true
+        this.isSearching = true
 
-      if (['', '-'].includes(this.localSearch.trim())) {
-        this.isSearching = false
-        this.suggestions = []
+        if (['', '-'].includes(this.localSearch.trim())) {
+          this.isSearching = false
+          this.suggestions = []
 
-        return
-      }
+          return
+        }
 
-      this.fetchSuggestions(this.localSearch)
+        this.fetchSuggestions(this.localSearch)
+      })
     },
     fetchSuggestions: function (partialSearch) {
       partialSearch = partialSearch.trim().toLowerCase()
@@ -279,7 +280,10 @@ export default {
       this.suggestions = []
 
       this.$nextTick(() => {
-        if (this.$refs.search) {
+        if (
+          this.$refs.search &&
+          (type === 'constraint' || visibilityHelper.isDesktopResolution())
+        ) {
           this.$refs.search.focus()
         }
       })

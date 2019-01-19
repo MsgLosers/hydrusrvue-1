@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueHeadful from 'vue-headful'
 import VueHotkey from 'v-hotkey'
+import VueClickOutside from 'v-click-outside'
 import PhotoSwipe from 'vue-simple-photoswipe/dist/vue-simple-photoswipe'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
@@ -32,6 +33,7 @@ import {
 import config from '@/config'
 import router from '@/router'
 import store from '@/store'
+import visibilityHelper from '@/util/visibility-helper'
 
 import App from '@/App'
 
@@ -41,12 +43,16 @@ Vue.config.productionTip = false
 
 Vue.component('vue-headful', VueHeadful)
 Vue.use(VueHotkey)
+Vue.use(VueClickOutside)
 Vue.use(PhotoSwipe)
 
 Vue.directive('focus', {
   inserted: function (el) {
     Vue.nextTick(() => {
-      if (!store.state.app.hasSavedScrollPosition) {
+      if (
+        !store.state.app.hasSavedScrollPosition &&
+        visibilityHelper.isDesktopResolution()
+      ) {
         el.focus()
       }
     })

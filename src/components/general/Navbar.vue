@@ -2,7 +2,7 @@
   <nav
     id="navbar"
     class="navbar is-primary is-fixed-top"
-    v-on-clickaway="closeNavigation">
+    v-click-outside="closeNavigation">
 
     <div class="navbar-brand">
 
@@ -112,7 +112,6 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import { mixin as clickaway } from 'vue-clickaway'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -120,7 +119,6 @@ import config from '@/config'
 
 export default {
   name: 'Navbar',
-  mixins: [clickaway],
   props: {
     isInitialized: {
       type: Boolean,

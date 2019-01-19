@@ -11,8 +11,10 @@
       &.sortable {
         cursor: move;
 
-        &:hover {
-          background-color: $light;
+        @media (hover) {
+          &:hover {
+            background-color: $light;
+          }
         }
       }
     }
