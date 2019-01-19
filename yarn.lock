@@ -6147,7 +6147,7 @@ longest@^1.0.1:
   resolved "https://registry.yarnpkg.com/longest/-/longest-1.0.1.tgz#30a0b2da38f73770e8294a0d22e6625ed77d0097"
   integrity sha1-MKCy2jj3N3DoKUoNIuZiXtd9AJc=
 
-loose-envify@^1.0.0, loose-envify@^1.2.0:
+loose-envify@^1.0.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
   integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
@@ -10530,6 +10530,11 @@ uuid@^3.0.1, uuid@^3.3.2:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
   integrity sha512-yXJmeNaw3DnnKAOKJE51sL/ZaYfWJRl1pK9dr19YFCu0ObS231AB1/LbqTKRAQ5kw8A90rA6fr4riOUpTZvQZA==
 
+v-click-outside@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/v-click-outside/-/v-click-outside-2.0.2.tgz#7312e80ef72b979ff5144a08f36ebab24b5a2f8b"
+  integrity sha512-4dDekJloLi7WbVUM6IC/Gdv8qYaE+a2LY3sLUkzJc2WBf92kL0VPHGCTxVkTzZjHLVdkcjX0haiLXofrhZfHXA==
+
 v-hotkey@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/v-hotkey/-/v-hotkey-0.3.0.tgz#42fe7967d19d9d6a27ff0cefb0ac8246e7c94804"
@@ -10612,13 +10617,6 @@ vue-cli-plugin-electron-builder@^1.0.0-rc.10:
     webpack "^4.18.0"
     webpack-chain "^5.0.0"
     webpack-target-electron-renderer "^0.4.0"
-
-vue-clickaway@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/vue-clickaway/-/vue-clickaway-2.2.2.tgz#cecf6839575e8b2afc5d3edb3efb616d293dbb44"
-  integrity sha512-25SpjXKetL06GLYoLoC8pqAV6Cur9cQ//2g35GRFBV4FgoljbZZjTINR8g2NuVXXDMLSUXaKx5dutgO4PaDE7A==
-  dependencies:
-    loose-envify "^1.2.0"
 
 vue-color@^2.4.0:
   version "2.7.0"

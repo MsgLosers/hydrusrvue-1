@@ -46,7 +46,7 @@ import config from '@/config'
 import api from '@/api'
 import queryFormatter from '@/util/query-formatter'
 
-import SearchInput from '@/components/general/SearchInput'
+import SearchInput from '@/components/general/FileSearchInput'
 
 export default {
   name: 'Search',

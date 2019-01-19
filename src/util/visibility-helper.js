@@ -1,4 +1,7 @@
 export default {
+  isDesktopResolution () {
+    return window.matchMedia('(min-width: 1088px)').matches
+  },
   isBottomOfPageVisible (offset = 0) {
     const scrollY = window.scrollY
     const isVisible = document.documentElement.clientHeight

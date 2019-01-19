@@ -108,8 +108,9 @@ import api from '@/api'
 import queryFormatter from '@/util/query-formatter'
 import tagsHelper from '@/util/tags-helper'
 import constraintsHelper from '@/util/constraints-helper'
+import visibilityHelper from '@/util/visibility-helper'
 
-import SearchInput from '@/components/general/SearchInput'
+import SearchInput from '@/components/general/FileSearchInput'
 import Sorting from '@/components/files/Sorting'
 
 export default {
@@ -406,7 +407,9 @@ export default {
       })
     },
     focusSearchInput: function () {
-      this.$refs.searchInput.$refs.search.focus()
+      if (visibilityHelper.isDesktopResolution()) {
+        this.$refs.searchInput.$refs.search.focus()
+      }
     },
     startTyping: function (event) {
       if (event.key.match(/^[ -~]$/g)) {
