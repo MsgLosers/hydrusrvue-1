@@ -64,16 +64,14 @@
                         type="submit"
                         class="button is-primary"
                         :class="{ 'is-lowercase': !useNormalLetterCase }">
-                        <span class="icon" v-if="!isRegistering">
-                          <font-awesome-icon
-                            icon="user-plus"
-                            v-if="!isRegistering" />
-                        </span>
                         <span class="icon" v-if="isRegistering">
                           <font-awesome-icon icon="spinner" class="fa-pulse" />
                         </span>
-                        <span v-if="!isRegistering">Register</span>
+                        <span class="icon" v-else>
+                          <font-awesome-icon icon="user-plus" />
+                        </span>
                         <span v-if="isRegistering">Registering…</span>
+                        <span v-else>Register</span>
                       </button>
                     </div>
                   </div>

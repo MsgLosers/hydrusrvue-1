@@ -42,22 +42,18 @@
             hasUpdatedPassword ||
             isDeletingUser
           ">
-          <span
-            class="icon"
-            v-if="!(isUpdatingUsername || hasUpdatedUsername)">
-            <font-awesome-icon icon="save" />
-          </span>
           <span class="icon" v-if="isUpdatingUsername">
             <font-awesome-icon icon="spinner" class="fa-pulse" />
           </span>
-          <span class="icon" v-if="hasUpdatedUsername">
+          <span class="icon" v-else-if="hasUpdatedUsername">
             <font-awesome-icon icon="check" />
           </span>
-          <span v-if="!(isUpdatingUsername || hasUpdatedUsername)">
-            Save
+          <span class="icon" v-else>
+            <font-awesome-icon icon="save" />
           </span>
           <span v-if="isUpdatingUsername">Saving…</span>
-          <span v-if="hasUpdatedUsername">Saved</span>
+          <span v-else-if="hasUpdatedUsername">Saved</span>
+          <span v-else>Save</span>
         </button>
       </div>
     </div>

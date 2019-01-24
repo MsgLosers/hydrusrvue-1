@@ -65,14 +65,14 @@
                           'is-primary': !hasSaved,
                           'is-success': hasSaved
                         }">
-                        <span class="icon" v-if="!hasSaved">
-                          <font-awesome-icon icon="save" v-if="!hasSaved" />
-                        </span>
                         <span class="icon" v-if="hasSaved">
-                          <font-awesome-icon icon="check" v-if="hasSaved" />
+                          <font-awesome-icon icon="check" />
                         </span>
-                        <span v-if="!hasSaved">Save</span>
+                        <span class="icon" v-else>
+                          <font-awesome-icon icon="save" />
+                        </span>
                         <span v-if="hasSaved">Saved</span>
+                        <span v-else>Save</span>
                       </button>
                     </div>
                   </div>

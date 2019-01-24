@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 
 + Disabled source maps for production builds
++ Improved the display of submit buttons
++ Refactored code
 
 ### Fixed
 

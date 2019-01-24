@@ -8,7 +8,7 @@
           <div class="control">
             <search-input
               :search.sync="search"
-              :hasCompletedSearch.sync="hasCompletedSearch"
+              :hasCompletedInput.sync="hasCompletedInput"
               size="large"
               :placeholder="
                 'Search for files by tag or constraint…' |
@@ -53,7 +53,7 @@ export default {
   data: function () {
     return {
       search: '',
-      hasCompletedSearch: false,
+      hasCompletedInput: false,
       useNormalLetterCase: config.useNormalLetterCase
     }
   },
@@ -70,8 +70,8 @@ export default {
     }
   },
   watch: {
-    hasCompletedSearch: function (hasCompletedSearch) {
-      if (hasCompletedSearch) {
+    hasCompletedInput: function (hasCompletedInput) {
+      if (hasCompletedInput) {
         this.handleSubmit()
       }
     }

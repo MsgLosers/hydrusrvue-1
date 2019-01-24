@@ -26,18 +26,14 @@
             isUpdatingPassword ||
             hasUpdatedPassword
           ">
-          <span
-            class="icon"
-            v-if="!isDeletingUser">
-            <font-awesome-icon icon="trash" />
-          </span>
           <span class="icon" v-if="isDeletingUser">
             <font-awesome-icon icon="spinner" class="fa-pulse" />
           </span>
-          <span v-if="!isDeletingUser">
-            Delete user
+          <span class="icon" v-else>
+            <font-awesome-icon icon="trash" />
           </span>
           <span v-if="isDeletingUser">Deleting user…</span>
+          <span v-else>Delete user</span>
         </button>
       </div>
     </div>
