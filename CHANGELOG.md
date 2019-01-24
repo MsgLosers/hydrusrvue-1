@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 + Disabled source maps for production builds
 
+### Fixed
+
+Removed console message when not catching API promise error
+
 ## [4.1.0] - 2019-01-19
 
 ### Changed
