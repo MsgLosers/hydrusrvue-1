@@ -19,8 +19,8 @@
           :to="{ path: tag.path, query: tag.query }"
           :style="{ color: tag.color }">
           {{ tag.name }}
+          <small class="file-amount">{{ tag.fileCount | formatNumber }}</small>
         </router-link>
-        <small class="file-amount">{{ tag.fileCount | formatNumber }}</small>
       </li>
     </ul>
 

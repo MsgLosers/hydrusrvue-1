@@ -79,7 +79,7 @@ export default {
       type: String,
       required: true
     },
-    hasCompletedSearch: {
+    hasCompletedInput: {
       type: Boolean,
       required: true
     },
@@ -111,12 +111,12 @@ export default {
         this.$emit('update:search', localSearch)
       }
     },
-    localHasCompletedSearch: {
+    localHasCompletedInput: {
       get: function () {
-        return this.hasCompletedSearch
+        return this.hasCompletedInput
       },
-      set: function (localHasCompletedSearch) {
-        this.$emit('update:hasCompletedSearch', localHasCompletedSearch)
+      set: function (localHasCompletedInput) {
+        this.$emit('update:hasCompletedInput', localHasCompletedInput)
       }
     },
     ...mapState({
@@ -265,7 +265,7 @@ export default {
         if (suggestion.includes('=') && suggestion.split('=')[1].length) {
           this.localSearch = suggestion
 
-          this.localHasCompletedSearch = true
+          this.localHasCompletedInput = true
         } else {
           this.localSearch = suggestion
         }
@@ -274,7 +274,7 @@ export default {
           ? `-${suggestion}`
           : suggestion
 
-        this.localHasCompletedSearch = true
+        this.localHasCompletedInput = true
       }
 
       this.suggestions = []

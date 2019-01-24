@@ -56,10 +56,14 @@
               type="submit"
               class="button is-primary is-fullwidth"
               :class="{ 'is-lowercase': !useNormalLetterCase }">
-              <span class="icon">
+              <span class="icon" v-if="isLoading">
+                <font-awesome-icon icon="spinner" class="fa-pulse" />
+              </span>
+              <span class="icon" v-else>
                 <font-awesome-icon icon="search" />
               </span>
-              <span>Search</span>
+              <span v-if="isLoading">Searching…</span>
+              <span v-else>Search</span>
             </button>
           </div>
         </div>

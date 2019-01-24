@@ -459,10 +459,15 @@ export default {
 
         if (context.state.token) {
           await api.deauthorize({ all: payload }, context.state.token)
-            .finally(() => {
+            .then(() => {
               context.commit(DEAUTHORIZE)
               context.commit(UNSET_USER)
-
+            })
+            .catch(() => {
+              context.commit(DEAUTHORIZE)
+              context.commit(UNSET_USER)
+            })
+            .finally(() => {
               context.dispatch('settings/load', false, { root: true })
 
               router.push('/login')

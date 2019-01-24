@@ -71,14 +71,14 @@
                         type="submit"
                         class="button is-primary"
                         :class="{ 'is-lowercase': !useNormalLetterCase }">
-                        <span class="icon" v-if="!isLoggingIn">
-                          <font-awesome-icon icon="sign-in-alt" />
-                        </span>
                         <span class="icon" v-if="isLoggingIn">
                           <font-awesome-icon icon="spinner" class="fa-pulse" />
                         </span>
-                        <span v-if="!isLoggingIn">Log in</span>
+                        <span class="icon" v-else>
+                          <font-awesome-icon icon="sign-in-alt" />
+                        </span>
                         <span v-if="isLoggingIn">Logging in…</span>
+                        <span v-else>Log in</span>
                       </button>
                     </div>
                   </div>

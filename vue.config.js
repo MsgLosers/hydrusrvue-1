@@ -1,9 +1,9 @@
 module.exports = {
   configureWebpack: {
     resolve: {
-      extensions: ['.js', '.json', '.vue', '.scss']
+      extensions: ['.js', '.vue', '.scss']
     },
-    entry: (process.env.BUILD_FOR_ELECTRON === 'true')
+    entry: process.env.BUILD_FOR_ELECTRON === 'true'
       ? { app: './src/main-electron.js' }
       : { app: './src/main.js' }
   },
@@ -15,5 +15,6 @@ module.exports = {
           : '$primary: #3498db;'
       }
     }
-  }
+  },
+  productionSourceMap: false
 }

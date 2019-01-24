@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [4.2.0] - 2019-01-24
+
+### Changed
+
++ Disabled source maps for production builds
++ Improved the display of submit buttons
++ Refactored code
++ Updated dependencies
+
+### Fixed
+
+Removed console message when not catching API promise error
+
 ## [4.1.0] - 2019-01-19
 
 ### Changed
@@ -285,7 +298,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 + Initial release
 
-[Unreleased]: https://github.com/mserajnik/hydrusrvue/compare/4.1.0...develop
+[Unreleased]: https://github.com/mserajnik/hydrusrvue/compare/4.2.0...develop
+[4.2.0]: https://github.com/mserajnik/hydrusrvue/compare/4.1.0...4.2.0
 [4.1.0]: https://github.com/mserajnik/hydrusrvue/compare/4.0.0...4.1.0
 [4.0.0]: https://github.com/mserajnik/hydrusrvue/compare/3.3.0...4.0.0
 [3.3.0]: https://github.com/mserajnik/hydrusrvue/compare/3.2.0...3.3.0

@@ -10,7 +10,7 @@
             <search-input
               ref="searchInput"
               :search.sync="search"
-              :hasCompletedSearch.sync="hasCompletedSearch"
+              :hasCompletedInput.sync="hasCompletedInput"
               :placeholder="placeholderText | formatToConfiguredLetterCase"
               :parentRefs="$refs" />
           </div>
@@ -29,7 +29,7 @@
             <search-input
               ref="searchInput"
               :search.sync="search"
-              :hasCompletedSearch.sync="hasCompletedSearch"
+              :hasCompletedInput.sync="hasCompletedInput"
               :placeholder="placeholderText | formatToConfiguredLetterCase"
               :parentRefs="$refs" />
           </div>
@@ -51,10 +51,14 @@
               type="submit"
               class="button is-primary is-fullwidth"
               :class="{ 'is-lowercase': !useNormalLetterCase }">
-              <span class="icon">
+              <span class="icon" v-if="isLoading">
+                <font-awesome-icon icon="spinner" class="fa-pulse" />
+              </span>
+              <span class="icon" v-else>
                 <font-awesome-icon icon="search" />
               </span>
-              <span>Search</span>
+              <span v-if="isLoading">Searching…</span>
+              <span v-else>Search</span>
             </button>
           </div>
         </div>
@@ -140,7 +144,7 @@ export default {
       page: 1,
       activeTags: [],
       activeConstraints: [],
-      hasCompletedSearch: false,
+      hasCompletedInput: false,
       useNormalLetterCase: config.useNormalLetterCase
     }
   },
@@ -469,9 +473,9 @@ export default {
         this.setLastQuery(this.updateQueryAndGetStrings().queryString)
       }
     },
-    hasCompletedSearch: function (hasCompletedSearch) {
-      if (hasCompletedSearch) {
-        this.hasCompletedSearch = false
+    hasCompletedInput: function (hasCompletedInput) {
+      if (hasCompletedInput) {
+        this.hasCompletedInput = false
 
         this.handleSubmit()
       }
