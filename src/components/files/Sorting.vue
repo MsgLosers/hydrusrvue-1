@@ -130,7 +130,7 @@
               class="panel-block sortable"
               v-for="(namespace, index) in localSortingNamespaces"
               :key="index"
-              @touchstart.prevent>
+              @touchstart.self.prevent>
               <span class="namespace">{{ namespace }}</span>
               <button
                 type="button"

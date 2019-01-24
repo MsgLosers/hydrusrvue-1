@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
++ Fixed sorting namespaces not being removable
+
 ## [4.2.0] - 2019-01-24
 
 ### Changed
