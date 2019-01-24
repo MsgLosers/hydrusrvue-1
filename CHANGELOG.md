@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 + Disabled source maps for production builds
 + Improved the display of submit buttons
 + Refactored code
++ Updated dependencies
 
 ### Fixed
 
