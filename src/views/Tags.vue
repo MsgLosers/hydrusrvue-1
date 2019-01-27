@@ -75,7 +75,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Media from 'vue-media'
 
 import config from '@/config'
-import queryFormatter from '@/util/query-formatter'
+import queryHelper from '@/util/query-helper'
 import tagsHelper from '@/util/tags-helper'
 import visibilityHelper from '@/util/visibility-helper'
 
@@ -101,7 +101,7 @@ export default {
         tags.push({
           name: tag.name,
           path: '/files',
-          query: queryFormatter.generateDefaultFilesQuery(tag.name),
+          query: queryHelper.generateDefaultFilesQuery(tag.name),
           color: tagsHelper.getColor(
             tag.name, this.colors
           ),

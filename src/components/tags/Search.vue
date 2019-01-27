@@ -82,7 +82,7 @@ import qs from 'qs'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import config from '@/config'
-import queryFormatter from '@/util/query-formatter'
+import queryHelper from '@/util/query-helper'
 
 import Sorting from '@/components/tags/Sorting'
 
@@ -128,7 +128,7 @@ export default {
           this.contains = this.$route.query.contains.trim().toLowerCase()
         }
 
-        this.page = queryFormatter.ensureValidPage(this.$route.query.page)
+        this.page = queryHelper.ensureValidPage(this.$route.query.page)
 
         if (
           ['id', 'name', 'files', 'contains', 'random']
@@ -174,7 +174,7 @@ export default {
     updateQueryAndGetStrings: function () {
       this.contains = this.contains.trim().toLowerCase()
 
-      const query = queryFormatter.generateTagsQuery(
+      const query = queryHelper.generateTagsQuery(
         this.contains,
         this.sorting,
         this.sortingDirection,

@@ -64,11 +64,23 @@
                 <h4 class="has-text-primary">Tags</h4>
 
                 <p>
-                  Tags are straightforward and can either limit the search
-                  results by <em>including</em> a tag or <em>excluding</em>
-                  a tag by prefixing it with a <code>-</code>. To prevent
-                  confusion with tags that start with a <code>-</code>, prefix
-                  such tags with <code>\</code>, e.g., <code>\-house</code>.
+                  Tags are rather straightforward and can either limit the
+                  search results by <em>including</em> a tag or
+                  <em>excluding</em> a tag by prefixing it with a
+                  <code>-</code>. To prevent confusion with tags that start
+                  with a <code>-</code>, prefix such tags with <code>\</code>,
+                  e.g., <code>\-house</code>.
+                </p>
+
+                <p>
+                  You can also use <code>*</code> at the beginning or end of a
+                  tag as a wildcard. Like when excluding tags with
+                  <code>-</code>, prefix <code>*</code> with a <code>\</code>
+                  if you want to use it as an actual character in your search.
+                  This is only necessary for <code>*</code> at the beginning
+                  or end of a tag, e.g., <code>\*hai*r\*</code>. Wildcarded
+                  tags can also be excluded like normal tags (by prefixing with
+                  <code>-</code>).
                 </p>
 
                 <p>

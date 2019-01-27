@@ -44,7 +44,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import config from '@/config'
 import api from '@/api'
-import queryFormatter from '@/util/query-formatter'
+import queryHelper from '@/util/query-helper'
+import inputHelper from '@/util/input-helper'
 
 import SearchInput from '@/components/general/FileSearchInput'
 
@@ -61,10 +62,18 @@ export default {
     handleSubmit: function () {
       api.cancelPendingTagAutocompleteRequest()
 
+      if (this.search.trim() !== '') {
+        if (!inputHelper.isValidFileSearchInput(this.search, true)) {
+          return
+        }
+      }
+
       this.$router.push({
         path: '/files',
-        query: queryFormatter.generateDefaultFilesQuery(
-          this.search.trim().toLowerCase()
+        query: queryHelper.generateDefaultFilesQuery(
+          inputHelper.convertToShortcutIfNecessary(
+            this.search.trim().toLowerCase()
+          )
         )
       })
     }

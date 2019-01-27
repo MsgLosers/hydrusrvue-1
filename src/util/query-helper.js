@@ -3,7 +3,7 @@ import store from '@/store'
 
 export default {
   ensureValidPage (page) {
-    const validPage = (page && (!isNaN(page)) && page > 1 && page <= 999999999)
+    const validPage = page && !isNaN(page) && page > 1 && page <= 999999999
       ? parseInt(page, 10)
       : 1
 
