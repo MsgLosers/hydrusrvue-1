@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [5.0.0] - 2019-01-29
+
 ### Added
 
 + Added support for searching files with wildcarded tags
@@ -312,7 +314,8 @@ Removed console message when not catching API promise error
 
 + Initial release
 
-[Unreleased]: https://github.com/mserajnik/hydrusrvue/compare/4.2.1...develop
+[Unreleased]: https://github.com/mserajnik/hydrusrvue/compare/5.0.0...develop
+[5.0.0]: https://github.com/mserajnik/hydrusrvue/compare/4.2.1...5.0.0
 [4.2.1]: https://github.com/mserajnik/hydrusrvue/compare/4.2.0...4.2.1
 [4.2.0]: https://github.com/mserajnik/hydrusrvue/compare/4.1.0...4.2.0
 [4.1.0]: https://github.com/mserajnik/hydrusrvue/compare/4.0.0...4.1.0
