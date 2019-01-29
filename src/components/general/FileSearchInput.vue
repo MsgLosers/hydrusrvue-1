@@ -69,6 +69,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import api from '@/api'
 import errorHandler from '@/util/error-handler'
+import inputHelper from '@/util/input-helper'
 import tagsHelper from '@/util/tags-helper'
 import visibilityHelper from '@/util/visibility-helper'
 
@@ -132,7 +133,7 @@ export default {
 
         this.isSearching = true
 
-        if (['', '-'].includes(this.localSearch.trim())) {
+        if (!inputHelper.isValidFileSearchInput(this.localSearch)) {
           this.isSearching = false
           this.suggestions = []
 
@@ -143,12 +144,17 @@ export default {
       })
     },
     fetchSuggestions: function (partialSearch) {
-      partialSearch = partialSearch.trim().toLowerCase()
-
       const body = {
-        partialTag: partialSearch.startsWith('-')
-          ? partialSearch.substr(1)
-          : partialSearch
+        partialTag: partialSearch
+          .trim()
+          .toLowerCase()
+          .replace(/^-\*|^-|^\*/, '')
+          .replace(/^\\-/, '-')
+          .replace(/^\\\*/, '###ASTERISK###')
+          .replace(/\\\*$/, '###ASTERISK###')
+          .replace(/\*$/, '')
+          .split('###ASTERISK###')
+          .join('*')
       }
 
       api.autocompleteTag(body, this.token)

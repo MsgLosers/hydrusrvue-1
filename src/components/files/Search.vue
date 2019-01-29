@@ -109,7 +109,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import config from '@/config'
 import api from '@/api'
-import queryFormatter from '@/util/query-formatter'
+import queryHelper from '@/util/query-helper'
+import inputHelper from '@/util/input-helper'
 import tagsHelper from '@/util/tags-helper'
 import constraintsHelper from '@/util/constraints-helper'
 import visibilityHelper from '@/util/visibility-helper'
@@ -174,7 +175,7 @@ export default {
   methods: {
     initialize: function () {
       if (!isEmpty(this.$route.query)) {
-        this.page = queryFormatter.ensureValidPage(this.$route.query.page)
+        this.page = queryHelper.ensureValidPage(this.$route.query.page)
 
         if (this.$route.query.tags) {
           this.setFilters(this.$route.query.tags)
@@ -248,14 +249,24 @@ export default {
     handleSubmit: function () {
       api.cancelPendingTagAutocompleteRequest()
 
+      if (this.search.trim() !== '') {
+        if (!inputHelper.isValidFileSearchInput(this.search, true)) {
+          return
+        }
+      }
+
       this.page = 1
 
       this.loadFiles(false)
     },
     updateQueryAndGetStrings: function () {
-      const query = queryFormatter.generateFilesQuery(
+      const query = queryHelper.generateFilesQuery(
         this.activeTags.map(
-          tag => tag.exclude ? `-${tag.name}` : tag.name
+          tag => tag.exclude
+            ? `-${tag.name}`
+            : tag.name.startsWith('-')
+              ? `\\${tag.name}`
+              : tag.name
         ),
         this.activeConstraints.map(constraint => constraint.name),
         this.sorting,
@@ -283,11 +294,17 @@ export default {
       }
     },
     loadFiles: function (fetchNextPage) {
-      this.search = this.search.trim().toLowerCase()
+      this.search = inputHelper.convertToShortcutIfNecessary(
+        this.search.trim().toLowerCase()
+      )
 
       if (this.search !== '') {
         this.removeFilter(
-          this.search.startsWith('-') ? this.search.substr(1) : this.search,
+          this.search.startsWith('\\-')
+            ? this.search.substr(1)
+            : this.search.startsWith('-')
+              ? this.search.substr(1)
+              : this.search,
           constraintsHelper.isValidConstraint(this.search)
             ? 'constraint'
             : 'tag'
@@ -320,22 +337,17 @@ export default {
         return
       }
 
+      const filterName = filter.startsWith('-')
+        ? filter.replace('-', '')
+        : filter.startsWith('\\-')
+          ? filter.replace('\\-', '-')
+          : filter
+
       this.activeTags.push({
         type: 'tag',
-        name: filter.startsWith('-')
-          ? filter.replace('-', '')
-          : filter.startsWith('\\-')
-            ? filter.replace('\\-', '-')
-            : filter,
+        name: filterName,
         exclude: filter.startsWith('-'),
-        color: tagsHelper.getColor(
-          filter.startsWith('-')
-            ? filter.replace('-', '')
-            : filter.startsWith('\\-')
-              ? filter.replace('\\-', '')
-              : filter,
-          this.colors
-        )
+        color: tagsHelper.getColor(filterName, this.colors)
       })
     },
     setFilters: function (filters) {
