@@ -18,11 +18,6 @@
       src="https://img.shields.io/badge/code_style-standard-brightgreen.svg"
       alt="JavaScript Standard Style">
   </a>
-  <a href="https://app.fossa.io/projects/git%2Bgithub.com%2Fmserajnik%2Fhydrusrvue">
-    <img
-      src="https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmserajnik%2Fhydrusrvue.svg?type=shield"
-      alt="FOSSA status">
-  </a>
 </h1>
 
 > A Vue-based frontend for [hydrusrv][hydrusrv]
