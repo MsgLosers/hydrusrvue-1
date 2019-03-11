@@ -61,8 +61,6 @@ The most prominent features are:
   + [Build](#build)
   + [Deploy](#deploy)
   + [Electron](#electron)
-+ [Disclaimer](#disclaimer)
-+ [Demo](#demo) 
 + [Screenshots](#screenshots)
 + [Donate](#donate)
 + [Maintainer](#maintainer)
@@ -242,45 +240,6 @@ user@local:hydrusrvue$ yarn build:electron --win --x64
 For more elaborate configuration options, take a look at the
 [electron-builder configuration][electron-builder-configuration].
 
-## Disclaimer
-
-In addition to the points described in the [MIT license](LICENSE.md), I,
-[mserajnik][maintainer], creator and maintainer of hydrusrvue, hereby
-explicitly state that hydrusrvue is currently deployed on the following
-official installations:
-
-+ [https://hydrusrvue.mser.at][hydrusrvue-demo]
-
-No other installations are in any way affiliated with or controlled by me and I
-do not condone the usage of hydrusrvue for publishing content that is
-copyrighted and/or considered illegal in any country or place. hydrusrvue is
-open source software and it is up to the individual or group using it to make
-sure it is not used for illegal activities. I cannot be held accountable for
-any usage of hydrusrvue that is outside of the aforementioned official
-installations.
-
-## Demo
-
-You can find a demo installation at
-[https://hydrusrvue.mser.at][hydrusrvue-demo].
-
-Please take note that I am running this installation using
-[hydrusrv-docker][hydrusrv-docker] on a small
-[Vultr Cloud Compute][vultr-cloud-compute] instance with limited performance,
-bandwidth and traffic (meaning the demo could go down until the next month if
-the traffic limit gets exceeded).
-
-It contains only safe for work images tagged with `scenery` (take a look at the
-[screenshots](#screenshots) for some examples).
-
-Registration is enabled, so feel free to create as many users as you would
-like. __Created users are deleted at 12am every day.__
-
-If you are the creator of one or more of the images used in this demo
-installation and would like to have your content removed, please
-[message me](mailto:hello@mserajnik.at) or [open an issue][issues] and I will
-comply with your request at once.
-
 ## Screenshots
 
 ![Frontpage][screenshot-frontpage]
@@ -338,7 +297,6 @@ You are welcome to help out!
 [semantic-versioning]: https://semver.org/
 [electron-builder-cli]: https://www.electron.build/cli
 [electron-builder-configuration]: https://www.electron.build/configuration/configuration#configuration
-[hydrusrvue-demo]: https://hydrusrvue.mser.at
 [hydrusrv-docker]: https://github.com/mserajnik/hydrusrv-docker
 [vultr-cloud-compute]: https://www.vultr.com/pricing/
 

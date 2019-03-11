@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Removed
 
 + Removed FOSSA badge
++ Removed links to demo
 
 ## [5.2.0] - 2019-02-15
 
