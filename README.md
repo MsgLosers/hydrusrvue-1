@@ -22,6 +22,8 @@
 
 > A Vue-based frontend for [hydrusrv][hydrusrv]
 
+__Adandoned: hydrusrvue is no longer maintained.__
+
 hydrusrvue is a [Vue][vue]-based frontend for [hydrusrv][hydrusrv] that makes
 use of its entire feature set, allowing you to access your media managed with
 [hydrus server][hydrus-server] on the web. It is largely built with
